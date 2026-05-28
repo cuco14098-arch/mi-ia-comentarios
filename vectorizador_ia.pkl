@@ -1,0 +1,12 @@
+from sklearn.feature_extraction.text import CountVectorizer
+import joblib
+
+# Datos de entrenamiento
+textos = ["muy bueno", "excelente", "me encanta", "genial", "buen servicio",
+          "malo", "pésimo", "terrible", "no me gustó", "horrible"]
+
+vec = CountVectorizer()
+vec.fit(textos)
+
+# Guardamos el archivo
+joblib.dump(vec, "vectorizador_ia.pkl")
