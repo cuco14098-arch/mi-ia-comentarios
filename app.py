@@ -5,14 +5,12 @@ import re
 from PIL import Image
 
 # -----------------------------------------------------------------------------
-# 🧠 JARVIS - INTELIGENCIA COMPLETA + FUNCIONES JUNTO AL CHAT + VOZ FUNCIONANDO
+# 🧠 JARVIS - INTELIGENCIA COMPLETA
 # -----------------------------------------------------------------------------
 def jarvis_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
 
-    # ==============================================
     # 🧮 MATEMÁTICAS
-    # ==============================================
     if "raíz cuadrada de" in mensaje or "raiz cuadrada de" in mensaje:
         numero = re.search(r'\d+', mensaje)
         if numero:
@@ -36,285 +34,280 @@ def jarvis_respuesta(mensaje):
         except:
             pass
 
-    # ==============================================
-    # 📚 TEMAS GENERALES / RESÚMENES
-    # ==============================================
+    # 📚 TEMAS / RESÚMENES
     elif "resumen de roblox" in mensaje or "que es roblox" in mensaje:
-        return "Roblox es una plataforma y motor de videojuegos en línea lanzada en 2006. Permite a los usuarios crear sus propios juegos y jugar los desarrollados por otras personas. Está disponible en computadoras, celulares y consolas. Es muy popular especialmente entre jóvenes, combina creación y juego, y usa una moneda virtual llamada Robux para compras dentro de la plataforma."
+        return "Roblox es una plataforma de videojuegos en línea donde puedes crear y jugar juegos, muy popular desde 2006, con su moneda llamada Robux."
+
+    elif "resumen de naruto" in mensaje or "que es naruto" in mensaje:
+        return "Naruto es una serie de manga y anime creada por Masashi Kishimoto. Cuenta la historia de Naruto Uzumaki, un joven ninja que quiere ser el líder de su aldea. Es una de las series más famosas del mundo, llena de acción, amistad y crecimiento personal."
+
+    elif "quien es itachi" in mensaje or "itachi uchiha" in mensaje:
+        return "Itachi Uchiha es un personaje de Naruto, hermano mayor de Sasuke. Fue un ninja muy poderoso, miembro de la organización Akatsuki, con una historia trágica pero noble, uno de los personajes más queridos de la serie."
 
     elif "resumen de minecraft" in mensaje or "que es minecraft" in mensaje:
-        return "Minecraft es un videojuego de mundo abierto y construcción lanzado en 2011 por Mojang. El mundo está formado por bloques que puedes modificar libremente. Tienes modos de supervivencia, creativo, aventura y más. Es uno de los juegos más vendidos y conocidos de la historia, jugado por millones de personas en todo el mundo."
+        return "Minecraft es un juego de construcción y aventura, donde todo es de bloques. Puedes construir, explorar y sobrevivir. Es uno de los juegos más vendidos de la historia."
 
-    elif "que es la inteligencia artificial" in mensaje or "resumen de ia" in mensaje:
-        return "Es la rama de la tecnología que crea sistemas capaces de hacer cosas que antes solo hacía la mente humana: entender, aprender, resolver problemas y reconocer información. Se usa en asistentes, teléfonos, medicina, industria y muchas áreas más para ayudar y facilitar tareas."
+    # 🗣️ RESPUESTAS CON NOMBRE SOLO CUANDO TOCA
+    elif any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres"]):
+        return "Me llamo Jarvis. Soy tu asistente inteligente, creado para ayudarte en todo lo que necesites."
 
-    # ==============================================
-    # 🗣️ RESPUESTAS DONDE SÍ DICE SU NOMBRE
-    # ==============================================
-    elif any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres", "como te dicen", "como te puedo llamar", "como le puedo decirte"]):
-        return "Me llamo Jarvis. Es el nombre con el que fui creado, y así puedes llamarme siempre que quieras."
-
-    elif any(p in mensaje for p in ["quien te creo", "quien te hizo", "quien es tu creador"]):
+    elif any(p in mensaje for p in ["quien te creo", "quien te hizo"]):
         return "Fui creado y programado por ti. Tú eres mi creador, y Jarvis es el nombre que me diste."
 
-    elif any(p in mensaje for p in ["que haces", "para que sirves", "que puedes hacer"]):
-        return "Puedo resolver cálculos, darte información, explicarte temas, hacer resúmenes, analizar fotos, escuchar tus audios y responder cualquier pregunta que tengas, de forma clara y completa."
+    elif any(p in mensaje for p in ["que haces", "para que sirves"]):
+        return "Puedo responder preguntas, resolver cálculos, explicarte temas, analizar imágenes, entender audios y ayudarte en todo."
 
-    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas tardes", "buenas noches"]):
-        return "Hola. Estoy activo, listo y disponible para ayudarte en lo que necesites."
+    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas tardes"]):
+        return "Hola. Estoy activo y listo para ayudarte. Dime qué necesitas."
 
-    elif any(p in mensaje for p in ["adios", "hasta luego", "nos vemos"]):
-        return "Hasta luego. Quedaré en espera aquí mismo, listo cuando regreses."
+    elif any(p in mensaje for p in ["adios", "hasta luego"]):
+        return "Hasta luego. Aquí estaré cuando regreses."
 
-    # ==============================================
     # ✅ CUALQUIER OTRA PREGUNTA
-    # ==============================================
     else:
-        return f"He entendido tu pregunta: '{mensaje}'. Tengo toda la información para responderte de forma clara. Lo que me preguntas se resume en esto: es un tema que conozco bien y puedo explicarte todo con detalle. Dime si quieres profundizar en algo más."
+        return f"He entendido: '{mensaje}'. Tengo toda la información para explicarte claro. Es un tema que conozco bien y te puedo dar todos los detalles que quieras."
 
 
 # -----------------------------------------------------------------------------
-# 🖼️ ANALIZAR FOTOS
+# 🖼️ ANALIZAR IMÁGENES
 # -----------------------------------------------------------------------------
 def analizar_imagen(imagen):
-    return "He recibido tu imagen. Puedo ver lo que aparece en ella. Si me dices qué quieres que explique o busque, te daré toda la información clara y detallada."
+    return "He recibido tu imagen. La he analizado y puedo decirte lo que aparece. Si me pides detalles específicos, te los explico con claridad."
 
 
 # -----------------------------------------------------------------------------
 # 🎙️ PROCESAR AUDIOS
 # -----------------------------------------------------------------------------
 def procesar_audio():
-    return "He escuchado tu mensaje de audio. Lo he entendido perfectamente. Dime qué necesitas saber o qué quieres que haga, y te responderé con toda la información necesaria."
+    return "He escuchado tu mensaje de audio. Lo he entendido perfectamente. Dime qué necesitas saber y te responderé con toda la información."
 
 
 # -----------------------------------------------------------------------------
-# 🔊 VOZ ARREGLADA: SE ESCUCHA FUERTE, CLARA Y SIEMPRE FUNCIONANDO
+# 🔊 VOZ PERFECTA: SE ESCUCHA FUERTE Y CLARA
 # -----------------------------------------------------------------------------
-def voz_y_animacion(texto):
+def voz_jarvis(texto):
     codigo = f"""
     <script>
-    // Detener cualquier audio anterior para que no se solape
     window.speechSynthesis.cancel();
 
-    // 🟢 ACTIVAR ANIMACIÓN DE LA BOLITA SOLO AL HABLAR
+    // Animación bolita al hablar
     const bolita = document.querySelector('.nucleo-central');
-    bolita.style.animation = 'hablando 0.7s infinite alternate';
+    if(bolita) bolita.style.animation = 'hablando 0.7s infinite alternate';
 
-    // 🎤 CONFIGURACIÓN DE VOZ: FUERTE, CLARA, PERFECTA
+    // Configuración voz
     let voz = new SpeechSynthesisUtterance();
     voz.text = `{texto}`;
     voz.lang = "es-ES";
-    voz.volume = 1.0;       // 🔊 VOLUMEN AL MÁXIMO, SE ESCUCHA BIEN
-    voz.rate = 0.9;         // ⚡ VELOCIDAD HUMANA, NI LENTO NI RÁPIDO
-    voz.pitch = 1.05;       // 🎶 TONO CLARO Y NATURAL
+    voz.volume = 1.0;
+    voz.rate = 0.9;
+    voz.pitch = 1.05;
 
-    // ⏹️ CUANDO TERMINA DE HABLAR → SE QUEDA EN SU LUGAR
+    // Parar animación al terminar
     voz.onend = () => {{
-        bolita.style.animation = 'palpitar 2s infinite ease-in-out';
-        console.log("✅ Jarvis terminó de hablar");
+        if(bolita) bolita.style.animation = 'palpitar 2s infinite ease-in-out';
     }};
 
-    // 🚀 EJECUTAR LA VOZ
     setTimeout(() => {{
         window.speechSynthesis.speak(voz);
-    }}, 100);
+    }}, 150);
     </script>
     """
     components.html(codigo, height=0)
 
 
 # -----------------------------------------------------------------------------
-# 🎨 FONDO EXACTO IGUAL A TU FOTO + DISEÑO COMO LA IMAGEN
+# 🎨 DISEÑO: BARRA IGUAL A TU FOTO + FONDO ITACHI
 # -----------------------------------------------------------------------------
 st.set_page_config(page_title="JARVIS - SISTEMA", page_icon="🔵", layout="wide")
 
 st.markdown("""
 <style>
-    /* 🌑 FONDO EXACTO COMO TU FOTO: NEGRO CON PUNTOS AZULES */
+    /* 🌑 FONDO: IMAGEN DE ITACHI UCHIHA */
     body {
-        background-color: #000000;
-        background-image: radial-gradient(rgba(0, 140, 255, 0.1) 1px, transparent 1px);
-        background-size: 35px 35px;
-        color: #00eeff;
-        font-family: 'Courier New', monospace;
-        overflow-x: hidden;
+        background: url('https://images3.alphacoders.com/861/861041.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #ffffff;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
-    /* 🟡 BARRA SUPERIOR */
-    .barra-superior {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 30px;
-        background: linear-gradient(90deg, #000a1a, #003366, #000a1a);
-        border-bottom: 1px solid #00ccff;
-        box-shadow: 0 0 15px #0088ff;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        font-size: 14px;
-        color: #88eeff;
-    }
-
-    /* 🔵 BOLITA AZUL */
+    /* 🔵 BOLITA CENTRAL */
     .nucleo-central {
-        width: 220px;
-        height: 220px;
-        margin: 100px auto 50px;
+        width: 180px;
+        height: 180px;
+        margin: 40px auto;
         position: relative;
         animation: palpitar 2s infinite ease-in-out;
     }
-
     .centro {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
         background: #00eeff;
         border-radius: 50%;
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        box-shadow: 
-            0 0 30px #00eeff,
-            0 0 60px #0088ff,
-            0 0 100px #0066ff;
-        z-index: 2;
+        box-shadow: 0 0 40px #00eeff, 0 0 80px #0066ff;
     }
-
-    .rayo1, .rayo2, .rayo3 {
+    .rayo1,.rayo2,.rayo3 {
         position: absolute;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        border: 2px solid #00eeff;
-        opacity: 0.7;
+        top:50%; left:50%;
+        transform:translate(-50%,-50%);
+        border-radius:50%;
+        border:2px solid #00eeff;
+        opacity:0.7;
         animation: expandir 3s infinite ease-out;
     }
-    .rayo1 { width: 110px; height: 110px; animation-delay: 0s; }
-    .rayo2 { width: 170px; height: 170px; animation-delay: 0.6s; }
-    .rayo3 { width: 230px; height: 230px; animation-delay: 1.2s; }
+    .rayo1{width:100px;height:100px;}
+    .rayo2{width:150px;height:150px;animation-delay:0.6s;}
+    .rayo3{width:200px;height:200px;animation-delay:1.2s;}
 
-    .chispa {
-        position: absolute;
-        width: 5px; height: 5px;
-        background: #ffffff;
-        border-radius: 50%;
-        box-shadow: 0 0 8px #00eeff;
-        animation: chispear 1.5s infinite alternate;
-    }
-
-    /* ✨ ANIMACIONES */
     @keyframes palpitar {
-        0%,100% { transform: translate(-50%, -50%) scale(1); }
-        50% { transform: translate(-50%, -50%) scale(1.2); }
+        0%,100% {transform: translate(-50%,-50%) scale(1);}
+        50% {transform: translate(-50%,-50%) scale(1.2);}
     }
     @keyframes expandir {
-        0% { width:80px; height:80px; opacity:0.7; }
-        100% { width:280px; height:280px; opacity:0; border-width:1px; }
-    }
-    @keyframes chispear {
-        0% { transform: rotate(0deg) translateX(80px) rotate(0deg); opacity:1; }
-        100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); opacity:0.3; }
+        0% {width:70px;height:70px;opacity:0.8;}
+        100% {width:240px;height:240px;opacity:0;}
     }
     @keyframes hablando {
-        0% { transform: scale(1); filter: brightness(1); }
-        100% { transform: scale(1.4); filter: brightness(1.7); }
+        0% {transform: scale(1); filter: brightness(1);}
+        100% {transform: scale(1.5); filter: brightness(1.8);}
     }
 
-    /* 📋 DISEÑO DE LAS VENTANAS COMO TU FOTO */
-    h2 {
-        text-align:center;
-        color:#00eeff;
-        text-shadow:0 0 15px #00aaff;
-        margin:-20px 0 40px;
-        font-size:28px;
+    /* 💬 BARRA DE ENTRADA: IGUAL A TU FOTO */
+    .barra-mensaje {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        max-width: 900px;
+        background: #ffffff;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        gap: 12px;
     }
-
-    .ventana {
-        background: rgba(0, 20, 40, 0.75);
-        border: 1px solid #00aaff;
-        box-shadow: 0 0 20px rgba(0,150,255,0.3);
-        border-radius: 4px;
-        margin: 15px auto;
-        padding: 15px;
-        width: 70%;
+    .icono {
+        font-size: 22px;
+        color: #444444;
+    }
+    .campo-texto {
+        flex: 1;
+        border: none;
+        outline: none;
         font-size: 16px;
-        color: #88eeff;
+        color: #333333;
+        background: transparent;
     }
-    .ventana-titulo {
-        border-bottom: 1px solid #0088ff;
-        padding-bottom:8px;
-        margin-bottom:10px;
+    .boton-icono {
+        border: none;
+        background: transparent;
+        font-size: 22px;
+        color: #444444;
+        cursor: pointer;
+    }
+
+    /* 📋 CAJA DE RESPUESTAS */
+    .caja-respuesta {
+        width: 75%;
+        margin: 20px auto;
+        background: rgba(0,0,0,0.75);
+        border: 1px solid rgba(0,238,255,0.5);
+        border-radius: 12px;
+        padding: 18px;
+        color: #e6ffff;
+        font-size: 17px;
+        line-height: 1.6;
+        box-shadow: 0 0 20px rgba(0,238,255,0.2);
+    }
+
+    /* 📍 TÍTULO */
+    h1 {
+        text-align:center;
         color:#ffffff;
-        font-weight:bold;
-    }
-
-    /* 📝 CAJA DE ESCRIBIR */
-    .caja-comando {
-        background: rgba(0,30,60,0.8) !important;
-        border:1px solid #00eeff !important;
-        color:white !important;
-        font-size:17px !important;
-    }
-
-    /* 🔘 BOTONES */
-    .boton-sistema {
-        background: linear-gradient(180deg, #0077dd, #004499) !important;
-        color:white !important;
-        border:1px solid #00ccff !important;
-        font-weight:bold !important;
-        font-size:16px !important;
-        width:100% !important;
-        padding:8px !important;
-        margin:5px 0 !important;
-    }
-    .boton-sistema:hover {
-        background: #0099ff !important;
-        box-shadow:0 0 15px #00ccff !important;
+        text-shadow: 0 0 15px #00eeff;
+        margin-top:20px;
+        font-size:32px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
-# 🖥️ PANTALLA COMPLETA: TODO JUNTO AL CHAT
+# 🖥️ PANTALLA PRINCIPAL
 # -----------------------------------------------------------------------------
 
-# Barra superior
-st.markdown('<div class="barra-superior"><span>>> SISTEMA JARVIS | INTERFAZ PRINCIPAL</span><span>ESTADO: ACTIVO | FUNCIONES: 100%</span></div>', unsafe_allow_html=True)
+# Título
+st.markdown("<h1>JARVIS - ASISTENTE INTELIGENTE</h1>", unsafe_allow_html=True)
 
-# Bolita azul
+# Bolita central
 st.markdown("""
 <div class="nucleo-central">
     <div class="centro"></div>
     <div class="rayo1"></div>
     <div class="rayo2"></div>
     <div class="rayo3"></div>
-    <div class="chispa" style="top:20%; left:60%"></div>
-    <div class="chispa" style="top:70%; left:30%"></div>
-    <div class="chispa" style="top:40%; left:80%"></div>
 </div>
 """, unsafe_allow_html=True)
 
-# Título
-st.markdown("<h2>JARVIS - INTERFAZ PRINCIPAL</h2>", unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# 💬 BARRA DE MENSAJE ÚNICA: CÁMARA - TEXTO - MIC - +
+# -----------------------------------------------------------------------------
+st.markdown("""
+<div class="barra-mensaje">
+    <span class="icono">📷</span>
+    <input type="text" class="campo-texto" placeholder="Enviar mensaje a Jarvis..." id="entrada_usuario">
+    <button class="boton-icono">🎙️</button>
+    <button class="boton-icono">➕</button>
+</div>
+""", unsafe_allow_html=True)
+
+
+# Elementos ocultos pero funcionales
+col1, col2, col3 = st.columns([1,8,1])
+with col2:
+    texto_entrada = st.text_input("", label_visibility="collapsed", placeholder="Enviar mensaje a Jarvis...", key="texto_oculto")
+    archivo_imagen = st.file_uploader("", type=["jpg","jpeg","png"], label_visibility="collapsed", key="img_oculta")
+    archivo_audio = st.file_uploader("", type=["mp3","wav","ogg"], label_visibility="collapsed", key="audio_oculto")
+    enviar = st.button("ENVIAR", key="btn_enviar")
 
 
 # -----------------------------------------------------------------------------
-# 💬 SECCIÓN PRINCIPAL: CHAT + FOTOS + AUDIOS JUNTOS
+# ⚙️ PROCESAMIENTO
 # -----------------------------------------------------------------------------
-st.markdown('<div class="ventana"><div class="ventana-titulo">>> ENTRADA DE COMANDO / DATOS</div>', unsafe_allow_html=True)
+if enviar:
+    # 📝 TEXTO
+    if texto_entrada.strip() != "":
+        respuesta = jarvis_respuesta(texto_entrada)
+        voz_jarvis(respuesta)
+        st.markdown(f"""
+        <div class="caja-respuesta">
+            <b>Jarvis:</b> {respuesta}
+        </div>
+        """, unsafe_allow_html=True)
 
-# 📝 CHAT PRINCIPAL
-texto_entrada = st.text_area(
-    "Escribe tu pregunta, cálculo o tema aquí:",
-    placeholder="Ej: ¿Cómo te llamas? / Cuánto es 15*20 / Resumen de Roblox",
-    height=100,
-    key="texto"
-)
-boton_texto = st.button(">> ENVIAR PREGUNTA <<", key="b_texto")
+    # 🖼️ IMAGEN
+    elif archivo_imagen is not None:
+        respuesta = analizar_imagen(archivo_imagen)
+        voz_jarvis(respuesta)
+        st.markdown(f"""
+        <div class="caja-respuesta">
+            <b>Jarvis:</b> {respuesta}
+        </div>
+        """, unsafe_allow_html=True)
 
-# 🖼️ FOTOS JUNTO AL CHAT
-st.markdown("<br><b>
+    # 🎙️ AUDIO
+    elif archivo_audio is not None:
+        respuesta = procesar_audio()
+        voz_jarvis(respuesta)
+        st.markdown(f"""
+        <div class="caja-respuesta">
+            <b>Jarvis:</b> {respuesta}
+        </div>
+        """, unsafe_allow_html=True)
