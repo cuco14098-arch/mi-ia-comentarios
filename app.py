@@ -1,14 +1,13 @@
-
 import streamlit as st
 import math
 import re
 
 # --------------------------
-# ⚙️ CONFIGURACIÓN
+# ⚙️ CONFIGURACIÓN PRINCIPAL
 # --------------------------
 st.set_page_config(page_title="JARVIS - ASISTENTE", layout="wide", initial_sidebar_state="collapsed")
 
-# Inicializar historial
+# Inicializar historial de chat
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
@@ -40,7 +39,7 @@ def responder(mensaje):
 
 
 # --------------------------
-# 🎨 ESTILOS LIMPIOS
+# 🎨 ESTILOS (LIMPIO, SIN BASURA)
 # --------------------------
 st.markdown("""
 <style>
@@ -50,14 +49,15 @@ st.markdown("""
         background-size: cover;
     }
 
-    /* ❌ OCULTAR LO QUE NO QUEREMOS */
-    #MainMenu, footer, header, .stException, .stDeployButton {
+    /* ❌ OCULTAR ABSOLUTAMENTE TODO LO QUE NO QUEREMOS */
+    #MainMenu, footer, header, .stException, .stDeployButton, .element-container:has(.stMarkdown) .stTextInput:first-child,
+    div[data-testid="stVerticalBlock"] > div:first-child, .stTextInput > label, .stButton > button::after {
         display: none !important;
         visibility: hidden !important;
     }
 
-    /* ❌ QUITAR BARRA DE ARRIBA POR COMPLETO */
-    div[data-testid="stVerticalBlock"] > div:first-child .stTextInput {
+    /* ❌ QUITAR BARRA DE ARRIBA, ÍCONOS, PALOMITAS DE ARRIBA: TODO ELIMINADO */
+    .css-16huue1, .css-10trblm, .css-1kyxreq, .css-18e3th9 > div:first-child {
         display: none !important;
     }
 
@@ -110,7 +110,7 @@ st.markdown("""
         width: 90%;
         height: 70vh;
         margin: 0 auto 90px auto;
-        background: #FFFFFF;
+        background: #FFFFFF !important;
         border-radius: 14px;
         border: 1px solid #ddd;
         padding: 20px;
@@ -119,7 +119,7 @@ st.markdown("""
     .mensaje-tu {
         text-align: right;
         background: #f1f1f1;
-        color: #000000;
+        color: #000000 !important;
         border-radius: 18px 18px 4px 18px;
         padding: 10px 16px;
         margin: 6px 0 6px auto;
@@ -129,7 +129,7 @@ st.markdown("""
     .mensaje-jarvis {
         text-align: left;
         background: #e8f4f8;
-        color: #000000;
+        color: #000000 !important;
         border-radius: 18px 18px 18px 4px;
         padding: 10px 16px;
         margin: 6px auto 6px 0;
@@ -137,8 +137,8 @@ st.markdown("""
         font-size: 16px;
     }
 
-    /* 📥 BARRA DE ABAJO (ESTA ES LA QUE SÍ FUNCIONA) ✅ */
-    .barra-abajo {
+    /* 📥 BARRA DE ABAJO: ÚNICA, REAL, CONECTADA ✅ */
+    .barra-real {
         position: fixed;
         bottom: 20px;
         left: 50%;
@@ -150,18 +150,19 @@ st.markdown("""
         align-items: center;
         padding: 8px 20px;
         box-shadow: 0 2px 15px rgba(0,0,0,0.2);
-        z-index: 9999;
+        z-index: 99999;
     }
-    .icono {font-size: 18px; color: #555; margin: 0 8px;}
-    .campo-real {
+    .campo-texto {
         flex: 1;
         border: none !important;
         outline: none !important;
         font-size: 15px !important;
         color: #333 !important;
         background: transparent !important;
+        margin:0 !important;
+        padding:5px !important;
     }
-    .boton-enviar {
+    .boton-verde {
         background: #25c26e;
         color: white;
         border: none;
@@ -179,13 +180,13 @@ st.markdown("""
 
 
 # --------------------------
-# 🖥️ PANTALLA
+# 🖥️ ESTRUCTURA VISUAL
 # --------------------------
 
 # Título
 st.markdown("<div class='titulo'>JARVIS - ASISTENTE INTELIGENTE</div>", unsafe_allow_html=True)
 
-# Círculo
+# Círculo animado
 st.markdown("""
 <div class='circulo'>
     <div class='centro'></div>
@@ -208,40 +209,32 @@ caja += "</div>"
 st.markdown(caja, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ABAJO: **AHORA SÍ ESTÁ CONECTADA** ✅
-col1, col2, col3, col4 = st.columns([0.4, 8.2, 0.4, 0.4])
-texto_usuario = ""
+# 📥 AQUÍ ESTÁ LA BARRA REAL DE ABAJO, CONECTADA ✅
+col_texto, col_boton = st.columns([9, 1])
+texto_ingresado = ""
 enviar = False
 
-with col1:
-    st.markdown("<span class='icono'>📷</span>", unsafe_allow_html=True)
-with col2:
-    # ✅ ESTE ES EL CAMPO REAL DONDE ESCRIBES
-    texto_usuario = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_conectada")
-with col3:
-    st.markdown("<span class='icono'>🎙️</span>", unsafe_allow_html=True)
-with col4:
-    # ✅ ESTE BOTÓN SÍ ENVÍA
-    enviar = st.button("✔️", key="boton_conectado")
+with col_texto:
+    texto_ingresado = st.text_input("", placeholder="Escribe tu mensaje aquí...", label_visibility="collapsed", key="entrada_real_definitiva")
+with col_boton:
+    enviar = st.button("✔️", key="boton_real_definitivo")
 
 
-# ⚙️ PROCESAR: **AHORA SÍ FUNCIONA** ✅
-if enviar and texto_usuario.strip() != "":
-    # Guardar tu mensaje
-    st.session_state.chat.append(("tu", texto_usuario))
-    # Obtener respuesta
-    respuesta = responder(texto_usuario)
+# ⚙️ FUNCIÓN DE ENVIAR: **AHORA SÍ FUNCIONA** ✅
+if enviar and texto_ingresado.strip() != "":
+    # Guardamos tu mensaje
+    st.session_state.chat.append(("tu", texto_ingresado))
+    # Generamos respuesta
+    respuesta = responder(texto_ingresado)
     st.session_state.chat.append(("jarvis", respuesta))
-    # Recargar para que aparezca
+    # Recargamos para que aparezca
     st.rerun()
 
 
-# Barra decorativa
+# Barra visual
 st.markdown("""
-<div class='barra-abajo'>
-    <span class='icono'>📷</span>
-    <span class='icono'>🎙️</span>
-    <input type='text' class='campo-real' placeholder='Enviar mensaje a Jarvis...'>
-    <div class='boton-enviar'>✔️</div>
+<div class='barra-real'>
+    <input type='text' class='campo-texto' placeholder='Escribe tu mensaje aquí...'>
+    <div class='boton-verde'>✔️</div>
 </div>
 """, unsafe_allow_html=True)
