@@ -3,106 +3,78 @@ import math
 import re
 
 # --------------------------
-# 🧠 INTELIGENCIA DE JARVIS
+# ⚙️ CONFIGURACIÓN (LO MÁS IMPORTANTE PARA QUE NO DE ERROR)
 # --------------------------
-def jarvis_respuesta(mensaje):
-    mensaje = mensaje.lower().strip()
+st.set_page_config(page_title="JARVIS - ASISTENTE", layout="wide", initial_sidebar_state="collapsed")
 
-    # 🧮 MATEMÁTICAS
-    if "raíz cuadrada de" in mensaje or "raiz cuadrada de" in mensaje:
-        numero = re.search(r'\d+', mensaje)
-        if numero:
-            num = int(numero.group())
-            resultado = math.sqrt(num)
-            return f"La raíz cuadrada de {num} es aproximadamente {resultado:.2f}."
-
-    elif "elevado a" in mensaje or "potencia de" in mensaje or "^" in mensaje:
-        numeros = re.findall(r'\d+', mensaje)
-        if len(numeros) >= 2:
-            base = int(numeros[0])
-            exponente = int(numeros[1])
-            res = base ** exponente
-            return f"{base} elevado a {exponente} es igual a {res}."
-
-    operacion = re.sub(r'[^0-9+\-*/.]', '', mensaje)
-    if operacion and any(op in operacion for op in ['+', '-', '*', '/']):
-        try:
-            resultado = eval(operacion)
-            return f"El resultado de {operacion} es igual a {resultado}."
-        except:
-            pass
-
-    # 📚 TEMAS / JUEGOS / PERSONAJES
-    elif "free fire" in mensaje or "freefire" in mensaje:
-        return "Free Fire es un juego de disparo y supervivencia para celulares, de Garena. Salió en 2017 y es uno de los más famosos del mundo. Caen 50 jugadores en una isla, buscan armas, pelean y gana el último que queda vivo. Tiene personajes con habilidades, mascotas, mapas y eventos siempre nuevos."
-
-    elif "naruto" in mensaje:
-        return "Naruto es una historia de un joven ninja que quiere ser el mejor líder de su aldea. Está llena de acción, amistad, sentimientos y crecimiento. Es una de las series más queridas y famosas de todos los tiempos."
-
-    elif "itachi" in mensaje:
-        return "Itachi Uchiha es personaje de Naruto, hermano mayor de Sasuke. Fue un ninja muy poderoso, perteneció a la organización Akatsuki, pero su corazón era noble: sacrificó todo por proteger a su hermano y su aldea. Es uno de los personajes más admirados."
-
-    elif "roblox" in mensaje:
-        return "Roblox es una plataforma donde creas y juegas millones de juegos hechos por personas de todo el mundo. Existe desde 2006, usa su moneda llamada Robux y es muy divertido y creativo."
-
-    elif "minecraft" in mensaje:
-        return "Minecraft es un mundo hecho de bloques: construyes, exploras y sobrevives. Es el juego más vendido de la historia, aquí puedes hacer literalmente lo que se te ocurra."
-
-    # 🗣️ RESPUESTAS PERSONALES
-    elif any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres"]):
-        return "Me llamo Jarvis. Soy tu asistente inteligente, creado para ayudarte en todo lo que necesites."
-
-    elif any(p in mensaje for p in ["quien te creo", "quien te hizo"]):
-        return "Fui creado y programado por ti. Tú eres mi creador, y Jarvis es el nombre que me diste."
-
-    elif any(p in mensaje for p in ["que puedes hacer", "para que sirves"]):
-        return "Puedo responder cualquier pregunta, explicarte cosas, resolver matemáticas, contarte de juegos, analizar fotos, escuchar audios y ayudarte en todo."
-
-    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas tardes"]):
-        return "Hola. Estoy activo y listo para escucharte y responderte."
-
-    elif any(p in mensaje for p in ["adios", "hasta luego"]):
-        return "Hasta luego. Aquí estaré cuando vuelvas."
-
-    # ✅ CUALQUIER OTRA PREGUNTA
-    else:
-        return f"He entendido: '{mensaje}'. Tengo toda la información clara para explicarte. Es un tema que conozco muy bien y te puedo dar todos los detalles completos y sencillos."
-
-
-# --------------------------
-# 🎨 DISEÑO: LIMPIO, SIN ERRORES
-# --------------------------
-st.set_page_config(page_title="JARVIS - SISTEMA", layout="wide")
-
-# Historial
+# Inicializar historial
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
-# Estilos CORRECTOS, sin conflictos
+# --------------------------
+# 🧠 INTELIGENCIA DE JARVIS
+# --------------------------
+def responder(mensaje):
+    mensaje = mensaje.lower().strip()
+
+    if "hola" in mensaje:
+        return "Hola. Estoy activo y listo para escucharte y responderte."
+    elif "cómo te llamas" in mensaje or "como te llamas" in mensaje or "quién eres" in mensaje:
+        return "Me llamo Jarvis. Soy tu asistente inteligente, creado para ayudarte en todo lo que necesites."
+    elif "qué puedes hacer" in mensaje or "que puedes hacer" in mensaje:
+        return "Puedo responder preguntas, explicarte cosas, resolver cuentas, hablar de juegos, personajes y mucho más."
+    elif "adiós" in mensaje or "hasta luego" in mensaje:
+        return "¡Hasta luego! Aquí estaré cuando vuelvas."
+    elif "raíz cuadrada" in mensaje:
+        num = re.search(r'\d+', mensaje)
+        if num:
+            n = int(num.group())
+            return f"La raíz cuadrada de {n} es: {math.sqrt(n):.2f}"
+    elif "free fire" in mensaje:
+        return "Free Fire es un juego de disparos y supervivencia para celular, muy famoso, donde 50 jugadores caen en una isla y pelean hasta que queda uno solo."
+    elif "naruto" in mensaje or "itachi" in mensaje:
+        return "Naruto es una serie de anime muy querida sobre ninjas. Itachi es un personaje muy admirado por su historia y sacrificio por proteger a su hermano."
+    else:
+        return f"He entendido: '{mensaje}'. Te explico todo lo que sé sobre este tema con gusto."
+
+
+# --------------------------
+# 🎨 ESTILOS (LIMPIOS, SIN CONFLICTOS)
+# --------------------------
 st.markdown("""
 <style>
-    /* Fondo general */
+    /* Fondo de pantalla */
     body {
         background: url('https://images3.alphacoders.com/861/861041.jpg') no-repeat center center fixed;
         background-size: cover;
-        font-family: Arial, sans-serif;
     }
 
-    /* ❌ OCULTAR LO QUE NO QUEREMOS */
-    #MainMenu {display: none !important;}
-    footer {display: none !important;}
-    header {display: none !important;}
-    div[data-testid="stFileUploader"] {display: none !important;}
-    .stException {display: none !important;} /* ❌ OCULTA EL ERROR ROJO */
-    .element-container:has(.stTextInput) {margin-bottom: 0 !important;}
+    /* ❌ OCULTAR COSAS DE STREAMLIT Y EL ERROR */
+    #MainMenu, footer, header, .stException, .stDeployButton {
+        display: none !important;
+        visibility: hidden !important;
+    }
 
-    /* 🔵 Circulo animado */
-    .circulo-central {
+    /* ❌ QUITAR BARRA DE ARRIBA POR COMPLETO */
+    div[data-testid="stVerticalBlock"] > div:first-child .stTextInput {
+        display: none !important;
+    }
+
+    /* 🔤 TÍTULO */
+    .titulo {
+        text-align: center;
+        font-size: 42px;
+        color: #ffffff;
+        text-shadow: 0 0 15px #00eeff;
+        margin: 10px 0 20px 0;
+    }
+
+    /* 🔵 CIRCULO CENTRAL */
+    .circulo {
         width: 140px;
         height: 140px;
-        margin: 10px auto 15px auto;
+        margin: 0 auto 15px auto;
         position: relative;
-        animation: palpitar 2s infinite ease-in-out;
     }
     .centro {
         width: 55px;
@@ -112,104 +84,89 @@ st.markdown("""
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
-        box-shadow: 0 0 30px #00eeff, 0 0 70px #0066ff;
+        box-shadow: 0 0 30px #00eeff, 0 0 60px #0066ff;
     }
-    .anillo1, .anillo2, .anillo3 {
+    .anillo {
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         border: 2px solid #00eeff;
-        opacity: 0.7;
-        animation: expandir 3s infinite ease-out;
+        width: 85px; height: 85px;
+        opacity: 0.6;
+        animation: onda 3s infinite ease-out;
     }
-    .anillo1 {width: 85px; height: 85px;}
-    .anillo2 {width: 120px; height: 120px; animation-delay: 0.6s;}
-    .anillo3 {width: 150px; height: 150px; animation-delay: 1.2s;}
+    .anillo2 {width: 120px; height: 120px; animation-delay: 0.7s;}
+    .anillo3 {width: 150px; height: 150px; animation-delay: 1.4s;}
 
-    @keyframes palpitar {
-        0%,100% {transform: translate(-50%,-50%) scale(1);}
-        50% {transform: translate(-50%,-50%) scale(1.2);}
-    }
-    @keyframes expandir {
-        0% {width:55px;height:55px;opacity:0.8;}
-        100% {width:150px;height:150px;opacity:0;}
+    @keyframes onda {
+        0% {opacity: 0.6; width:85px; height:85px;}
+        100% {opacity: 0; width:160px; height:160px;}
     }
 
-    /* 🔤 Título */
-    h1 {
-        text-align: center;
-        font-size: 40px !important;
-        color: #ffffff;
-        text-shadow: 0 0 12px #00eeff;
-        margin: 0 0 20px 0;
-    }
-
-    /* 💬 CAJA DE CHAT: BLANCA, LETRAS NEGRAS ✅ */
+    /* 💬 CAJA DE MENSAJES: BLANCA, LETRAS NEGRAS ✅ */
     .caja-chat {
         width: 90%;
-        height: 72vh;
-        margin: 0 auto 80px auto;
-        background-color: #FFFFFF !important;
-        border-radius: 12px;
-        border: 1px solid #eee;
-        color: #000000 !important;
-        font-size: 17px;
-        padding: 15px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.08);
+        height: 70vh;
+        margin: 0 auto 90px auto;
+        background: #FFFFFF;
+        border-radius: 14px;
+        border: 1px solid #ddd;
+        padding: 20px;
         overflow-y: auto;
     }
     .mensaje-tu {
         text-align: right;
-        background-color: #f5f5f5;
-        color: #000000 !important;
-        border-radius: 16px 16px 3px 16px;
+        background: #f1f1f1;
+        color: #000000;
+        border-radius: 18px 18px 4px 18px;
         padding: 10px 16px;
         margin: 6px 0 6px auto;
-        max-width: 70%;
+        max-width: 75%;
+        font-size: 16px;
     }
     .mensaje-jarvis {
         text-align: left;
-        background-color: #f0f9fc;
-        color: #000000 !important;
-        border-radius: 16px 16px 16px 3px;
+        background: #e8f4f8;
+        color: #000000;
+        border-radius: 18px 18px 18px 4px;
         padding: 10px 16px;
         margin: 6px auto 6px 0;
-        max-width: 70%;
+        max-width: 75%;
+        font-size: 16px;
     }
 
-    /* 📥 BARRA SOLO ABAJO ✅ */
-    .barra-fija {
+    /* 📥 BARRA DE ABAJO (ÚNICA) ✅ */
+    .barra-abajo {
         position: fixed;
-        bottom: 15px;
+        bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
         width: 85%;
         background: #ffffff;
-        border-radius: 25px;
+        border-radius: 30px;
         display: flex;
         align-items: center;
-        padding: 8px 18px;
-        box-shadow: 0 3px 15px rgba(0,0,0,0.2);
-        gap: 10px;
-        z-index: 9999;
+        padding: 8px 20px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        z-index: 999;
     }
-    .icono {font-size: 19px; color: #666;}
-    .campo-texto {
+    .icono {font-size: 18px; color: #555; margin: 0 8px;}
+    .campo {
         flex: 1;
-        border: none !important;
-        outline: none !important;
-        font-size: 15px !important;
-        color: #333 !important;
-        background: transparent !important;
+        border: none;
+        outline: none;
+        font-size: 15px;
+        color: #333;
+        background: transparent;
     }
-    .boton-enviar {
-        background-color: #28c76f;
+    .boton {
+        background: #25c26e;
         color: white;
         border: none;
         border-radius: 50%;
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         font-size: 16px;
         display: flex;
         align-items: center;
@@ -221,63 +178,67 @@ st.markdown("""
 
 
 # --------------------------
-# 🖥️ PANTALLA
+# 🖥️ ESTRUCTURA VISUAL
 # --------------------------
 
 # Título
-st.markdown("<h1>JARVIS - ASISTENTE INTELIGENTE</h1>", unsafe_allow_html=True)
+st.markdown("<div class='titulo'>JARVIS - ASISTENTE INTELIGENTE</div>", unsafe_allow_html=True)
 
-# Círculo
+# Círculo animado
 st.markdown("""
-<div class="circulo-central">
-    <div class="centro"></div>
-    <div class="anillo1"></div>
-    <div class="anillo2"></div>
-    <div class="anillo3"></div>
+<div class='circulo'>
+    <div class='centro'></div>
+    <div class='anillo'></div>
+    <div class='anillo anillo2'></div>
+    <div class='anillo anillo3'></div>
 </div>
 """, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ABAJO (ÚNICA QUE EXISTE)
-col1, col2, col3, col4 = st.columns([0.4, 8.4, 0.4, 0.4])
-texto = ""
+# 💬 MOSTRAR CHAT
+caja = "<div class='caja-chat'>"
+for tipo, texto in st.session_state.chat:
+    if tipo == "tu":
+        caja += f"<div class='mensaje-tu'><b>Tú:</b> {texto}</div>"
+    else:
+        caja += f"<div class='mensaje-jarvis'><b>Jarvis:</b> {texto}</div>"
+caja += "</div>"
+
+st.markdown(caja, unsafe_allow_html=True)
+
+
+# 📥 BARRA DE ESCRITURA SOLO ABAJO (AQUÍ ES DONDE SE ESCRIBE Y ENVÍA)
+col1, col2, col3, col4 = st.columns([0.4, 8.2, 0.4, 0.4])
+texto_usuario = ""
 enviar = False
 
 with col1:
     st.markdown("<span class='icono'>📷</span>", unsafe_allow_html=True)
 with col2:
-    texto = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_final")
+    texto_usuario = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_final_definitiva")
 with col3:
     st.markdown("<span class='icono'>🎙️</span>", unsafe_allow_html=True)
 with col4:
-    enviar = st.button("✔️", key="enviar_final")
+    enviar = st.button("✔️", key="boton_enviar_definitivo")
 
 
-# ⚙️ PROCESAR
-if enviar and texto.strip() != "":
-    st.session_state.chat.append(("tu", texto))
-    respuesta = jarvis_respuesta(texto)
+# ⚙️ PROCESAR MENSAJE
+if enviar and texto_usuario.strip() != "":
+    # Guardar mensaje tuyo
+    st.session_state.chat.append(("tu", texto_usuario))
+    # Obtener mi respuesta
+    respuesta = responder(texto_usuario)
     st.session_state.chat.append(("jarvis", respuesta))
+    # Recargar para que aparezca
+    st.rerun()
 
 
-# 💬 MOSTRAR CHAT
-caja = '<div class="caja-chat">'
-for tipo, contenido in st.session_state.chat:
-    if tipo == "tu":
-        caja += f'<div class="mensaje-tu"><b>Tú:</b> {contenido}</div>'
-    else:
-        caja += f'<div class="mensaje-jarvis"><b>Jarvis:</b> {contenido}</div>'
-caja += '</div>'
-
-st.markdown(caja, unsafe_allow_html=True)
-
-
-# Barra visible
+# Barra decorativa visible
 st.markdown("""
-<div class="barra-fija">
+<div class='barra-abajo'>
     <span class='icono'>📷</span>
     <span class='icono'>🎙️</span>
-    <input type='text' class='campo-texto' placeholder='Enviar mensaje a Jarvis...'>
-    <div class='boton-enviar'>✔️</div>
+    <input type='text' class='campo' placeholder='Enviar mensaje a Jarvis...'>
+    <div class='boton'>✔️</div>
 </div>
 """, unsafe_allow_html=True)
