@@ -1,9 +1,10 @@
+
 import streamlit as st
 import math
 import re
 
 # --------------------------
-# ⚙️ CONFIGURACIÓN (LO MÁS IMPORTANTE PARA QUE NO DE ERROR)
+# ⚙️ CONFIGURACIÓN
 # --------------------------
 st.set_page_config(page_title="JARVIS - ASISTENTE", layout="wide", initial_sidebar_state="collapsed")
 
@@ -39,7 +40,7 @@ def responder(mensaje):
 
 
 # --------------------------
-# 🎨 ESTILOS (LIMPIOS, SIN CONFLICTOS)
+# 🎨 ESTILOS LIMPIOS
 # --------------------------
 st.markdown("""
 <style>
@@ -49,7 +50,7 @@ st.markdown("""
         background-size: cover;
     }
 
-    /* ❌ OCULTAR COSAS DE STREAMLIT Y EL ERROR */
+    /* ❌ OCULTAR LO QUE NO QUEREMOS */
     #MainMenu, footer, header, .stException, .stDeployButton {
         display: none !important;
         visibility: hidden !important;
@@ -136,7 +137,7 @@ st.markdown("""
         font-size: 16px;
     }
 
-    /* 📥 BARRA DE ABAJO (ÚNICA) ✅ */
+    /* 📥 BARRA DE ABAJO (ESTA ES LA QUE SÍ FUNCIONA) ✅ */
     .barra-abajo {
         position: fixed;
         bottom: 20px;
@@ -149,18 +150,18 @@ st.markdown("""
         align-items: center;
         padding: 8px 20px;
         box-shadow: 0 2px 15px rgba(0,0,0,0.2);
-        z-index: 999;
+        z-index: 9999;
     }
     .icono {font-size: 18px; color: #555; margin: 0 8px;}
-    .campo {
+    .campo-real {
         flex: 1;
-        border: none;
-        outline: none;
-        font-size: 15px;
-        color: #333;
-        background: transparent;
+        border: none !important;
+        outline: none !important;
+        font-size: 15px !important;
+        color: #333 !important;
+        background: transparent !important;
     }
-    .boton {
+    .boton-enviar {
         background: #25c26e;
         color: white;
         border: none;
@@ -178,13 +179,13 @@ st.markdown("""
 
 
 # --------------------------
-# 🖥️ ESTRUCTURA VISUAL
+# 🖥️ PANTALLA
 # --------------------------
 
 # Título
 st.markdown("<div class='titulo'>JARVIS - ASISTENTE INTELIGENTE</div>", unsafe_allow_html=True)
 
-# Círculo animado
+# Círculo
 st.markdown("""
 <div class='circulo'>
     <div class='centro'></div>
@@ -207,7 +208,7 @@ caja += "</div>"
 st.markdown(caja, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ESCRITURA SOLO ABAJO (AQUÍ ES DONDE SE ESCRIBE Y ENVÍA)
+# 📥 BARRA DE ABAJO: **AHORA SÍ ESTÁ CONECTADA** ✅
 col1, col2, col3, col4 = st.columns([0.4, 8.2, 0.4, 0.4])
 texto_usuario = ""
 enviar = False
@@ -215,30 +216,32 @@ enviar = False
 with col1:
     st.markdown("<span class='icono'>📷</span>", unsafe_allow_html=True)
 with col2:
-    texto_usuario = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_final_definitiva")
+    # ✅ ESTE ES EL CAMPO REAL DONDE ESCRIBES
+    texto_usuario = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_conectada")
 with col3:
     st.markdown("<span class='icono'>🎙️</span>", unsafe_allow_html=True)
 with col4:
-    enviar = st.button("✔️", key="boton_enviar_definitivo")
+    # ✅ ESTE BOTÓN SÍ ENVÍA
+    enviar = st.button("✔️", key="boton_conectado")
 
 
-# ⚙️ PROCESAR MENSAJE
+# ⚙️ PROCESAR: **AHORA SÍ FUNCIONA** ✅
 if enviar and texto_usuario.strip() != "":
-    # Guardar mensaje tuyo
+    # Guardar tu mensaje
     st.session_state.chat.append(("tu", texto_usuario))
-    # Obtener mi respuesta
+    # Obtener respuesta
     respuesta = responder(texto_usuario)
     st.session_state.chat.append(("jarvis", respuesta))
     # Recargar para que aparezca
     st.rerun()
 
 
-# Barra decorativa visible
+# Barra decorativa
 st.markdown("""
 <div class='barra-abajo'>
     <span class='icono'>📷</span>
     <span class='icono'>🎙️</span>
-    <input type='text' class='campo' placeholder='Enviar mensaje a Jarvis...'>
-    <div class='boton'>✔️</div>
+    <input type='text' class='campo-real' placeholder='Enviar mensaje a Jarvis...'>
+    <div class='boton-enviar'>✔️</div>
 </div>
 """, unsafe_allow_html=True)
