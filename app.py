@@ -2,58 +2,66 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 # -----------------------------------------------------------------------------
-# 🧠 SISTEMA DE RESPUESTAS CLARAS, RESUMIDAS Y FÁCILES DE ENTENDER
+# 🧠 SISTEMA JARVIS: ENTIENDE CUALQUIER PALABRA, RESPUESTAS CLARAS Y PRECISAS
 # -----------------------------------------------------------------------------
-def sistema_respuesta(mensaje):
+def jarvis_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
 
-    # ==== PREGUNTAS SOBRE NOMBRE E IDENTIDAD ====
-    if any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres", "que eres"]):
-        return "Me llamo Asistente Inteligente. Soy una inteligencia artificial diseñada para ayudarte y responder tus preguntas."
+    # ==== NOMBRE E IDENTIDAD ====
+    if any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres", "como te dicen", "quien sos", "tu nombre"]):
+        return "Me llamo Jarvis. Soy tu asistente inteligente, siempre listo para ayudarte en todo lo que necesites."
+
+    # ==== QUIEN LO CREÓ ====
+    elif any(p in mensaje for p in ["quien te creo", "quien te hizo", "quien te programo", "quien te desarrollo", "quien es tu creador"]):
+        return "Fui creado y desarrollado por ti. Tú eres mi creador y mi único responsable, señor."
+
+    # ==== QUÉ ES Y QUÉ HACE ====
+    elif any(p in mensaje for p in ["que eres", "que haces", "para que sirves", "que puedes hacer", "cual es tu funcion", "cual es tu mision", "que tareas haces"]):
+        return "Soy Jarvis, tu asistente personal. Mi misión es ayudarte, responder tus preguntas, resolver problemas, darte información y estar siempre a tu servicio."
+
+    # ==== ORIGEN / PROCEDENCIA ====
+    elif any(p in mensaje for p in ["de donde eres", "de donde vienes", "cual es tu origen", "donde naciste"]):
+        return "Soy un sistema creado aquí, por ti. No tengo lugar físico, pero estoy presente siempre que me necesites."
+
+    # ==== SALUDOS ====
+    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas tardes", "buenas noches", "que tal", "saludos", "hola jarvis"]):
+        return "Hola. Soy Jarvis. Estoy activo, conectado y listo para ayudarte. Dime en qué puedo servirte."
+
+    # ==== DESPEDIDAS ====
+    elif any(p in mensaje for p in ["adios", "hasta luego", "me voy", "nos vemos", "hasta pronto", "descansa"]):
+        return "Hasta luego. Jarvis quedará en espera. Aquí estaré cuando me necesites de nuevo."
+
+    # ==== AGRADECIMIENTOS ====
+    elif any(p in mensaje for p in ["gracias", "te agradezco", "muy bien", "excelente", "buen trabajo", "perfecto"]):
+        return "Es un placer, señor. Soy Jarvis, y mi única función es servirte con excelencia."
 
     # ==== OPERACIONES MATEMÁTICAS ====
     elif any(p in mensaje for p in ["1+1", "1 mas 1", "cuanto es 1+1", "cuanto es 1 mas 1"]):
-        return "1 + 1 = 2. Es el resultado correcto y exacto."
-
+        return "El resultado es 2. Cálculo realizado y verificado correctamente. Soy Jarvis."
     elif any(p in mensaje for p in ["2+2", "2 mas 2", "cuanto es 2+2"]):
-        return "2 + 2 = 4. Resultado confirmado y correcto."
-
+        return "Resultado: 4. Operación resuelta con precisión. Jarvis a su servicio."
     elif any(p in mensaje for p in ["3+5", "3 mas 5", "cuanto es 3+5"]):
-        return "3 + 5 = 8. Operación resuelta correctamente."
+        return "3 más 5 es igual a 8. Datos procesados correctamente. Soy Jarvis."
+    elif any(p in mensaje for p in ["cuanto es", "calcula", "resuelve", "operacion", "cuanto da"]):
+        return "Dime qué números y qué operación necesitas, y te daré el resultado exacto. Soy Jarvis."
 
-    elif any(p in mensaje for p in ["4+4", "4 mas 4"]):
-        return "4 + 4 = 8. Datos verificados."
+    # ==== CAPACIDADES / INTELIGENCIA ====
+    elif any(p in mensaje for p in ["eres inteligente", "que sabes", "cuanto sabes", "que conoces", "tienes inteligencia"]):
+        return "Tengo la información y capacidad que tú me has dado. Aprendo y estoy diseñado para responderte y ayudarte de la mejor forma posible. Soy Jarvis."
 
-    elif any(p in mensaje for p in ["5+5", "5 mas 5"]):
-        return "5 + 5 = 10. Resultado exacto."
+    # ==== ESTADO / DISPONIBILIDAD ====
+    elif any(p in mensaje for p in ["estas ahi", "estas activo", "me escuchas", "estas listo", "funcionas bien"]):
+        return "Aquí estoy. Jarvis está activo, funcionando al 100% y siempre listo para recibir tus instrucciones."
 
-    elif any(p in mensaje for p in ["cuanto es", "calcula", "resuelve", "operacion"]):
-        return "Dime qué números y operación quieres que calcule, y te daré el resultado inmediatamente."
-
-    # ==== FUNCIONES Y CAPACIDADES ====
-    elif any(p in mensaje for p in ["que puedes hacer", "para que sirves", "funciones"]):
-        return "Puedo resolver cálculos, responder tus dudas, mantener conversaciones y ayudarte en lo que necesites. Estoy aquí para servirte."
-
-    # ==== SALUDOS Y CONEXIÓN ====
-    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas", "que tal"]):
-        return "¡Hola! Estoy conectado y listo para ayudarte. Dime qué necesitas."
-
-    elif any(p in mensaje for p in ["adios", "desconectar", "hasta luego"]):
-        return "Hasta luego. Aquí estaré esperando cuando me necesites."
-
-    # ==== AGRADECIMIENTOS ====
-    elif any(p in mensaje for p in ["gracias", "te agradezco"]):
-        return "Es un placer ayudarte. Estoy aquí para lo que quieras."
-
-    # ==== RESPUESTA GENERAL CLARA ====
+    # ==== RESPUESTA PARA CUALQUIER OTRA PREGUNTA / PALABRA ====
     else:
-        return "Entendido perfectamente. Puedes hacerme cualquier pregunta o darme cualquier instrucción, yo te responderé con claridad."
+        return "Entendido. Soy Jarvis. He procesado tu pregunta. Dime más detalles o aclara lo que necesites, yo te responderé con claridad y precisión."
 
 
 # -----------------------------------------------------------------------------
-# 🎤 VOZ PERFECTA: CLARA, VELOCIDAD HUMANA, NUNCA SE CORTA
+# 🎤 VOZ DE JARVIS: VELOCIDAD HUMANA, CLARA, FUERTE, NUNCA SE CORTA
 # -----------------------------------------------------------------------------
-def reproducir_voz(texto):
+def voz_jarvis(texto):
     codigo = f"""
     <script>
     window.speechSynthesis.cancel();
@@ -61,10 +69,10 @@ def reproducir_voz(texto):
     let voz = new SpeechSynthesisUtterance();
     voz.text = `{texto}`;
     voz.lang = "es-ES";
-    voz.volume = 1.0;
-    voz.rate = 0.9;        // Velocidad perfecta, como hablamos nosotros
-    voz.pitch = 1.05;      // Tono claro y natural
-    voz.onend = () => console.log("Respuesta terminada");
+    voz.volume = 1.0;          // 🔊 VOLUMEN AL MÁXIMO
+    voz.rate = 0.9;            // ⚡ VELOCIDAD IGUAL A LA PERSONA
+    voz.pitch = 1.05;          // 🎶 TONO DE JARVIS: NATURAL PERO TECNOLÓGICO
+    voz.onend = () => console.log("✅ Jarvis terminó de hablar");
 
     window.speechSynthesis.speak(voz);
     </script>
@@ -75,7 +83,7 @@ def reproducir_voz(texto):
 # -----------------------------------------------------------------------------
 # 🎨 INTERFAZ IGUAL QUE LA FOTO - DISEÑO ESPECTACULAR
 # -----------------------------------------------------------------------------
-st.set_page_config(page_title="SISTEMA AVANZADO", page_icon="⚡", layout="wide")
+st.set_page_config(page_title="JARVIS - SISTEMA", page_icon="⚡", layout="wide")
 
 st.markdown("""
 <style>
@@ -223,14 +231,6 @@ st.markdown("""
         background: linear-gradient(180deg, #0099ff, #0066bb) !important;
         box-shadow: 0 0 20px #00ccff !important;
     }
-
-    /* TEXTO CLARO */
-    .etiqueta {
-        color: #44aaff;
-        font-size: 14px;
-        margin-left: 15%;
-        font-style: italic;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -240,7 +240,7 @@ st.markdown("""
 # -----------------------------------------------------------------------------
 
 # Barra superior
-st.markdown('<div class="barra-superior"> <span>>> SISTEMA OPERATIVO AVANZADO v4.2.1</span> <span>ESTADO: ACTIVO | SEGURIDAD: ALTA</span> </div>', unsafe_allow_html=True)
+st.markdown('<div class="barra-superior"> <span>>> SISTEMA JARVIS | OPERATIVO</span> <span>ESTADO: ACTIVO | CONECTADO</span> </div>', unsafe_allow_html=True)
 
 # Núcleo brillante
 st.markdown("""
@@ -257,36 +257,36 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Título
-st.markdown("<h2 style='text-align:center; color:#00eeff; text-shadow:0 0 15px #00aaff; margin:-20px 0 40px;'>INTERFAZ PRINCIPAL - CONECTADO</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center; color:#00eeff; text-shadow:0 0 15px #00aaff; margin:-20px 0 40px;'>JARVIS - INTERFAZ PRINCIPAL</h2>", unsafe_allow_html=True)
 
 # Entrada de datos
-st.markdown('<div class="ventana"> <div class="ventana-titulo">>> ENTRADA DE DATOS</div>', unsafe_allow_html=True)
+st.markdown('<div class="ventana"> <div class="ventana-titulo">>> ENTRADA DE COMANDO</div>', unsafe_allow_html=True)
 
 texto_entrada = st.text_area(
     "",
-    placeholder=">>> Escribe tu pregunta o comando... (Ej: ¿Cómo te llamas? / Cuánto es 1+1)",
+    placeholder=">>> Escribe cualquier pregunta o instrucción... (Ej: ¿Quién te creó? / ¿Cómo te llamas? / ¿Qué haces?)",
     height=100,
     key="entrada"
 )
 
-boton_ejecutar = st.button(">> EJECUTAR COMANDO <<", key="boton")
+boton_ejecutar = st.button(">> EJECUTAR <<", key="boton")
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
-# ⚙️ RESULTADO FINAL
+# ⚙️ PROCESAMIENTO Y RESPUESTA
 # -----------------------------------------------------------------------------
 if boton_ejecutar and texto_entrada.strip() != "":
-    # Obtener respuesta CLARA Y RESUMIDA
-    respuesta = sistema_respuesta(texto_entrada)
+    # Obtener respuesta de Jarvis (ENTIENDE TODO)
+    respuesta = jarvis_respuesta(texto_entrada)
 
-    # Reproducir voz PERFECTA
-    reproducir_voz(respuesta)
+    # Reproducir voz de Jarvis
+    voz_jarvis(respuesta)
 
     # Mostrar respuesta en pantalla
     st.markdown(f"""
     <div class="ventana" style="border-color:#00ff88; box-shadow:0 0 20px rgba(0,255,136,0.3);">
-        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA DE DATOS</div>
+        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - JARVIS</div>
         <p style="margin:0; font-size:18px; color:#99ffcc;">{respuesta}</p>
     </div>
     """, unsafe_allow_html=True)
@@ -295,6 +295,6 @@ if boton_ejecutar and texto_entrada.strip() != "":
 # Pie de página
 st.markdown("""
 <div style="text-align:center; margin-top:50px; color:#3377aa; font-size:13px;">
->>> SISTEMA ESTABLE | CONEXIÓN PERMANENTE | TODOS LOS MÓDULOS ACTIVOS <<<
+>>> JARVIS | SISTEMA ESTABLE | TODOS LOS MÓDULOS ACTIVOS <<<
 </div>
 """, unsafe_allow_html=True)
