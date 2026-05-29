@@ -108,7 +108,7 @@ def voz_jarvis(texto):
 
 
 # --------------------------
-# 🎨 DISEÑO Y ESTRUCTURA
+# 🎨 DISEÑO: BLANCO, LETRAS NEGRAS, BARRA ABAJO
 # --------------------------
 st.set_page_config(page_title="JARVIS - SISTEMA", layout="wide")
 
@@ -119,14 +119,14 @@ if "chat" not in st.session_state:
 # Ocultar cosas que no te gustan
 st.markdown("""
 <style>
-    /* 🌑 FONDO DE ITACHI */
+    /* 🌑 FONDO GENERAL */
     body {
         background: url('https://images3.alphacoders.com/861/861041.jpg') no-repeat center center fixed;
         background-size: cover;
         font-family: Arial, sans-serif;
     }
 
-    /* ❌ QUITAR ELEMENTOS FEOS DE STREAMLIT */
+    /* ❌ QUITAR ELEMENTOS FEOS */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
@@ -188,24 +188,24 @@ st.markdown("""
         margin: 0 0 25px 0;
     }
 
-    /* 💬 CAJA DE MENSAJES */
+    /* 💬 CAJA DE CHAT: FONDO BLANCO, LETRAS NEGRAS ✅ */
     .caja-chat {
         width: 92%;
         height: 70vh;
         margin: 0 auto 90px auto;
-        background-color: rgba(0, 0, 0, 0.65);
+        background-color: #FFFFFF !important; /* BLANCO TOTAL */
         border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.2);
-        color: #ffffff;
+        border: 1px solid #ddd;
+        color: #000000 !important; /* LETRAS NEGRAS */
         font-size: 18px;
         padding: 20px;
-        box-shadow: 0 0 30px rgba(0,238,255,0.15);
+        box-shadow: 0 0 30px rgba(0,0,0,0.1);
         overflow-y: auto;
     }
     .mensaje-tu {
         text-align: right;
-        background-color: rgba(255, 255, 255, 0.15);
-        color: #ffffff;
+        background-color: #f1f1f1;
+        color: #000000 !important;
         border-radius: 18px 18px 4px 18px;
         padding: 12px 18px;
         margin: 8px 0 8px auto;
@@ -214,8 +214,8 @@ st.markdown("""
     }
     .mensaje-jarvis {
         text-align: left;
-        background-color: rgba(0, 238, 255, 0.12);
-        color: #f0f9ff;
+        background-color: #e8f4f8;
+        color: #000000 !important;
         border-radius: 18px 18px 18px 4px;
         padding: 12px 18px;
         margin: 8px auto 8px 0;
@@ -223,7 +223,7 @@ st.markdown("""
         font-size: 17px;
     }
 
-    /* 📥 BARRA DE ABAJO: FUNCIONA DE VERDAD */
+    /* 📥 BARRA DE ESCRITURA: AHORA ABAJO ✅ */
     .barra-entrada {
         position: fixed;
         bottom: 20px;
@@ -265,6 +265,9 @@ st.markdown("""
         box-shadow: 0 0 8px rgba(37, 194, 110, 0.5);
     }
     .boton-enviar:hover {background-color: #1da85a;}
+
+    /* ❌ QUITAR LA BARRA DE ARRIBA */
+    .barra-arriba {display: none !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -287,7 +290,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ESCRITURA QUE SÍ ENVÍA
+# 📥 BARRA DE ESCRITURA: SOLO ABAJO, FUNCIONA ✅
 col1, col2, col3, col4 = st.columns([0.5, 8.2, 0.5, 0.5])
 texto_ingresado = ""
 enviar = False
@@ -302,18 +305,15 @@ with col4:
     enviar = st.button("✔️", key="enviar_real")
 
 
-# ⚙️ PROCESAR MENSAJE CUANDO DAS CLIC
+# ⚙️ PROCESAR MENSAJE
 if enviar and texto_ingresado.strip() != "":
-    # Guardar tu mensaje
     st.session_state.chat.append(("tu", texto_ingresado))
-    # Obtener respuesta
     respuesta = jarvis_respuesta(texto_ingresado)
     st.session_state.chat.append(("jarvis", respuesta))
-    # Voz
     voz_jarvis(respuesta)
 
 
-# 💬 MOSTRAR CHAT
+# 💬 CHAT: BLANCO Y NEGRO ✅
 caja_chat = '<div class="caja-chat">'
 for tipo, texto in st.session_state.chat:
     if tipo == "tu":
@@ -325,7 +325,7 @@ caja_chat += '</div>'
 st.markdown(caja_chat, unsafe_allow_html=True)
 
 
-# 🎨 BARRA VISIBLE
+# 🎨 BARRA VISIBLE SOLO ABAJO
 st.markdown("""
 <div class="barra-entrada">
     <span class='icono-barra'>📷</span>
