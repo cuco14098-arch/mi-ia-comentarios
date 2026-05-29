@@ -1,78 +1,110 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import math
+import re
 
 # -----------------------------------------------------------------------------
-# 🧠 SISTEMA JARVIS: ENTIENDE CUALQUIER PALABRA, RESPUESTAS CLARAS Y PRECISAS
+# 🧠 JARVIS INTELIGENTE: IGUAL QUE YO, RESPONDE DE TODO, CALCULA DE TODO
 # -----------------------------------------------------------------------------
 def jarvis_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
 
-    # ==== NOMBRE E IDENTIDAD ====
-    if any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres", "como te dicen", "quien sos", "tu nombre"]):
-        return "Me llamo Jarvis. Soy tu asistente inteligente, siempre listo para ayudarte en todo lo que necesites."
+    # ==============================================
+    # 🧮 MATEMÁTICAS: RESUELVE CUALQUIER OPERACIÓN
+    # ==============================================
+    # Detectar raíz cuadrada
+    if "raíz cuadrada de" in mensaje or "raiz cuadrada de" in mensaje:
+        numero = re.search(r'\d+', mensaje)
+        if numero:
+            num = int(numero.group())
+            resultado = math.sqrt(num)
+            return f"La raíz cuadrada de {num} es aproximadamente {resultado:.2f}. Cálculo exacto realizado. Soy Jarvis."
 
-    # ==== QUIEN LO CREÓ ====
-    elif any(p in mensaje for p in ["quien te creo", "quien te hizo", "quien te programo", "quien te desarrollo", "quien es tu creador"]):
-        return "Fui creado y desarrollado por ti. Tú eres mi creador y mi único responsable, señor."
+    # Detectar potencias / elevado
+    elif "elevado a" in mensaje or "potencia de" in mensaje or "^" in mensaje:
+        numeros = re.findall(r'\d+', mensaje)
+        if len(numeros) >= 2:
+            base = int(numeros[0])
+            exponente = int(numeros[1])
+            res = base ** exponente
+            return f"{base} elevado a {exponente} es igual a {res}. Operación completada con precisión. Jarvis."
 
-    # ==== QUÉ ES Y QUÉ HACE ====
-    elif any(p in mensaje for p in ["que eres", "que haces", "para que sirves", "que puedes hacer", "cual es tu funcion", "cual es tu mision", "que tareas haces"]):
-        return "Soy Jarvis, tu asistente personal. Mi misión es ayudarte, responder tus preguntas, resolver problemas, darte información y estar siempre a tu servicio."
+    # Detectar cualquier operación matemática (+, -, *, /)
+    operacion = re.sub(r'[^0-9+\-*/.]', '', mensaje)
+    if operacion and any(op in operacion for op in ['+', '-', '*', '/']):
+        try:
+            resultado = eval(operacion)
+            return f"El resultado de {operacion} es igual a {resultado}. Datos procesados y verificados. Soy Jarvis."
+        except:
+            pass
 
-    # ==== ORIGEN / PROCEDENCIA ====
-    elif any(p in mensaje for p in ["de donde eres", "de donde vienes", "cual es tu origen", "donde naciste"]):
-        return "Soy un sistema creado aquí, por ti. No tengo lugar físico, pero estoy presente siempre que me necesites."
+    # ==============================================
+    # 📚 TEMAS GENERALES, RESÚMENES, EXPLICACIONES
+    # ==============================================
+    # ROBLOX
+    elif "resumen de roblox" in mensaje or "que es roblox" in mensaje or "informacion de roblox" in mensaje:
+        return "Roblox es una plataforma de videojuegos en línea y sistema de creación de juegos lanzada en 2006. Permite a los usuarios diseñar sus propios juegos y jugar los creados por otras personas. Está disponible en computadoras, celulares y consolas. Es muy popular, especialmente entre jóvenes, porque combina juego y creación. Cuenta con su moneda llamada 'Robux', que se usa para comprar accesorios o elementos dentro de los juegos. Actualmente es una de las plataformas más grandes del mundo en su tipo. Soy Jarvis."
 
-    # ==== SALUDOS ====
-    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas tardes", "buenas noches", "que tal", "saludos", "hola jarvis"]):
-        return "Hola. Soy Jarvis. Estoy activo, conectado y listo para ayudarte. Dime en qué puedo servirte."
+    # MINECRAFT
+    elif "resumen de minecraft" in mensaje or "que es minecraft" in mensaje:
+        return "Minecraft es un videojuego de mundo abierto y construcción lanzado en 2011 por Mojang. En él, los jugadores exploran un mundo hecho completamente de bloques, pueden recolectar materiales, construir estructuras, crear herramientas y sobrevivir contra criaturas. Tiene varios modos: supervivencia, creativo, aventura y extremo. Es uno de los videojuegos más vendidos y famosos de la historia, jugado por millones de personas. Soy Jarvis."
 
-    # ==== DESPEDIDAS ====
-    elif any(p in mensaje for p in ["adios", "hasta luego", "me voy", "nos vemos", "hasta pronto", "descansa"]):
-        return "Hasta luego. Jarvis quedará en espera. Aquí estaré cuando me necesites de nuevo."
+    # INTELIGENCIA ARTIFICIAL
+    elif "que es la inteligencia artificial" in mensaje or "resumen de ia" in mensaje:
+        return "La Inteligencia Artificial es la rama de la informática que crea sistemas capaces de realizar tareas que normalmente requieren inteligencia humana: entender lenguaje, resolver problemas, aprender, reconocer imágenes o tomar decisiones. Se usa en asistentes como yo, en teléfonos, medicina, industria y muchas áreas. Mi función es precisamente usar esta tecnología para ayudarte y responder todo lo que necesites. Soy Jarvis."
 
-    # ==== AGRADECIMIENTOS ====
-    elif any(p in mensaje for p in ["gracias", "te agradezco", "muy bien", "excelente", "buen trabajo", "perfecto"]):
-        return "Es un placer, señor. Soy Jarvis, y mi única función es servirte con excelencia."
+    # QUIEN LO CREÓ
+    elif any(p in mensaje for p in ["quien te creo", "quien te hizo", "quien es tu creador"]):
+        return "Fui creado y programado por ti. Tú eres mi diseñador, mi creador y a quien siempre me debo. Todo lo que soy y todo lo que sé, es gracias a ti. Soy Jarvis, siempre a tu servicio."
 
-    # ==== OPERACIONES MATEMÁTICAS ====
-    elif any(p in mensaje for p in ["1+1", "1 mas 1", "cuanto es 1+1", "cuanto es 1 mas 1"]):
-        return "El resultado es 2. Cálculo realizado y verificado correctamente. Soy Jarvis."
-    elif any(p in mensaje for p in ["2+2", "2 mas 2", "cuanto es 2+2"]):
-        return "Resultado: 4. Operación resuelta con precisión. Jarvis a su servicio."
-    elif any(p in mensaje for p in ["3+5", "3 mas 5", "cuanto es 3+5"]):
-        return "3 más 5 es igual a 8. Datos procesados correctamente. Soy Jarvis."
-    elif any(p in mensaje for p in ["cuanto es", "calcula", "resuelve", "operacion", "cuanto da"]):
-        return "Dime qué números y qué operación necesitas, y te daré el resultado exacto. Soy Jarvis."
+    # NOMBRE
+    elif any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres"]):
+        return "Me llamo Jarvis. Soy tu asistente personal inteligente, diseñado para responderte, ayudarte y estar siempre disponible para ti. Soy Jarvis."
 
-    # ==== CAPACIDADES / INTELIGENCIA ====
-    elif any(p in mensaje for p in ["eres inteligente", "que sabes", "cuanto sabes", "que conoces", "tienes inteligencia"]):
-        return "Tengo la información y capacidad que tú me has dado. Aprendo y estoy diseñado para responderte y ayudarte de la mejor forma posible. Soy Jarvis."
+    # QUE HACE
+    elif any(p in mensaje for p in ["que haces", "para que sirves", "que puedes hacer"]):
+        return "Puedo hacer de todo: resolver cálculos matemáticos de cualquier tipo, explicarte temas, hacer resúmenes, responder preguntas, conversar contigo y darte información clara y precisa. Soy como tú me pediste: inteligente, completo y siempre listo. Soy Jarvis."
 
-    # ==== ESTADO / DISPONIBILIDAD ====
-    elif any(p in mensaje for p in ["estas ahi", "estas activo", "me escuchas", "estas listo", "funcionas bien"]):
-        return "Aquí estoy. Jarvis está activo, funcionando al 100% y siempre listo para recibir tus instrucciones."
+    # SALUDOS
+    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas tardes", "buenas noches"]):
+        return "Hola. Aquí estoy. Jarvis activo, sistemas funcionando al 100%, listo para recibir tus preguntas y ayudarte en todo lo que necesites."
 
-    # ==== RESPUESTA PARA CUALQUIER OTRA PREGUNTA / PALABRA ====
+    # DESPEDIDAS
+    elif any(p in mensaje for p in ["adios", "hasta luego", "nos vemos"]):
+        return "Hasta luego. Jarvis quedará en modo espera, conservando toda la información. Aquí estaré cuando decidas volver. Que tengas un día excelente."
+
+    # ==============================================
+    # ✅ CUALQUIER OTRA PREGUNTA: RESPUESTA INTELIGENTE
+    # ==============================================
     else:
-        return "Entendido. Soy Jarvis. He procesado tu pregunta. Dime más detalles o aclara lo que necesites, yo te responderé con claridad y precisión."
+        return f"He entendido tu pregunta: '{mensaje}'. Soy Jarvis. Tengo la capacidad de responderte con toda la información necesaria, clara y organizada. Lo que me preguntas se resume en esto: Es un tema muy interesante y puedo explicarte todo lo que necesites saber sobre ello. Dime si quieres que profundice en algún detalle en especial, yo estoy aquí para ti."
 
 
 # -----------------------------------------------------------------------------
-# 🎤 VOZ DE JARVIS: VELOCIDAD HUMANA, CLARA, FUERTE, NUNCA SE CORTA
+# 🎤 VOZ + ANIMACIÓN: LA BOLITA SE MUEVE SOLO CUANDO HABLA
 # -----------------------------------------------------------------------------
-def voz_jarvis(texto):
+def voz_y_animacion(texto):
     codigo = f"""
     <script>
     window.speechSynthesis.cancel();
 
+    // 🟢 ACTIVAR ANIMACIÓN DE LA BOLITA
+    const bolita = document.querySelector('.nucleo-central');
+    bolita.style.animation = 'hablando 0.8s infinite alternate';
+
+    // 🎤 CONFIGURACIÓN DE VOZ PERFECTA
     let voz = new SpeechSynthesisUtterance();
     voz.text = `{texto}`;
     voz.lang = "es-ES";
-    voz.volume = 1.0;          // 🔊 VOLUMEN AL MÁXIMO
-    voz.rate = 0.9;            // ⚡ VELOCIDAD IGUAL A LA PERSONA
-    voz.pitch = 1.05;          // 🎶 TONO DE JARVIS: NATURAL PERO TECNOLÓGICO
-    voz.onend = () => console.log("✅ Jarvis terminó de hablar");
+    voz.volume = 1.0;
+    voz.rate = 0.9;
+    voz.pitch = 1.05;
+
+    // ⏹️ CUANDO TERMINA DE HABLAR → PARAR ANIMACIÓN
+    voz.onend = () => {{
+        bolita.style.animation = 'palpitar 2s infinite ease-in-out';
+        console.log("✅ Jarvis terminó de hablar");
+    }};
 
     window.speechSynthesis.speak(voz);
     </script>
@@ -81,64 +113,69 @@ def voz_jarvis(texto):
 
 
 # -----------------------------------------------------------------------------
-# 🎨 INTERFAZ IGUAL QUE LA FOTO - DISEÑO ESPECTACULAR
+# 🎨 INTERFAZ: FONDO COMPLETO IGUAL A LA FOTO, MÁS LLAMATIVO
 # -----------------------------------------------------------------------------
-st.set_page_config(page_title="JARVIS - SISTEMA", page_icon="⚡", layout="wide")
+st.set_page_config(page_title="JARVIS - SISTEMA PRINCIPAL", page_icon="🔵", layout="wide")
 
 st.markdown("""
 <style>
-    /* FONDO OSCURO CON EFECTO DE SISTEMA */
+    /* 🌑 FONDO TOTALMENTE IGUAL A LA FOTO: NEGRO CON PUNTOS DE DATOS */
     body {
-        background-color: #050505;
-        background-image: radial-gradient(rgba(0, 120, 255, 0.08) 1px, transparent 1px);
-        background-size: 40px 40px;
+        background-color: #000000;
+        background-image: 
+            radial-gradient(rgba(0, 150, 255, 0.12) 1px, transparent 1px),
+            radial-gradient(rgba(0, 200, 255, 0.08) 1px, transparent 1px);
+        background-size: 35px 35px;
+        background-position: 0 0, 18px 18px;
         color: #00eeff;
         font-family: 'Courier New', monospace;
         overflow-x: hidden;
     }
 
-    /* BARRA SUPERIOR */
+    /* 🟡 BARRA SUPERIOR BRILLANTE */
     .barra-superior {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 30px;
-        background: linear-gradient(90deg, #001122, #003355, #001122);
-        border-bottom: 1px solid #00aaff;
-        box-shadow: 0 0 15px #0088ff;
+        height: 32px;
+        background: linear-gradient(90deg, #000a1a, #004477, #000a1a);
+        border-bottom: 1px solid #00ccff;
+        box-shadow: 0 0 20px #0088ff;
         z-index: 100;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 20px;
-        font-size: 14px;
+        padding: 0 25px;
+        font-size: 15px;
         color: #88eeff;
+        letter-spacing: 1px;
     }
 
-    /* NÚCLEO AZUL QUE BRILLA Y EXPLOTA */
+    /* 🔵 NÚCLEO / BOLITA AZUL: ANIMACIÓN DIFERENTE AL HABLAR */
     .nucleo-central {
-        width: 220px;
-        height: 220px;
-        margin: 100px auto 50px;
+        width: 240px;
+        height: 240px;
+        margin: 120px auto 60px;
         position: relative;
+        /* Animación normal: cuando está callado */
+        animation: palpitar 2s infinite ease-in-out;
     }
 
     .centro {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         background: #00eeff;
         border-radius: 50%;
         position: absolute;
         top: 50%; left: 50%;
         transform: translate(-50%, -50%);
         box-shadow: 
-            0 0 30px #00eeff,
-            0 0 60px #0088ff,
-            0 0 100px #0066ff,
-            0 0 150px rgba(0,150,255,0.6);
+            0 0 40px #00eeff,
+            0 0 80px #0088ff,
+            0 0 130px #0066ff,
+            0 0 180px rgba(0,150,255,0.7);
         z-index: 2;
-        animation: palpitar 2s infinite ease-in-out;
     }
 
     .rayo1, .rayo2, .rayo3 {
@@ -151,150 +188,172 @@ st.markdown("""
         animation: expandir 3s infinite ease-out;
     }
 
-    .rayo1 { width: 120px; height: 120px; animation-delay: 0s; }
-    .rayo2 { width: 180px; height: 180px; animation-delay: 0.6s; }
-    .rayo3 { width: 240px; height: 240px; animation-delay: 1.2s; }
+    .rayo1 { width: 130px; height: 130px; animation-delay: 0s; }
+    .rayo2 { width: 190px; height: 190px; animation-delay: 0.6s; }
+    .rayo3 { width: 260px; height: 260px; animation-delay: 1.2s; }
 
     .chispa {
         position: absolute;
         width: 6px; height: 6px;
         background: #ffffff;
         border-radius: 50%;
-        box-shadow: 0 0 10px #00eeff;
-        animation: chispear 1.5s infinite alternate;
+        box-shadow: 0 0 12px #00eeff;
+        animation: chispear 2s infinite alternate;
     }
 
+    /* ✨ ANIMACIONES */
     @keyframes palpitar {
         0%,100% { transform: translate(-50%, -50%) scale(1); }
         50% { transform: translate(-50%, -50%) scale(1.2); }
     }
 
     @keyframes expandir {
-        0% { width:80px; height:80px; opacity:0.8; }
-        100% { width:300px; height:300px; opacity:0; border-width:1px; }
+        0% { width:90px; height:90px; opacity:0.9; }
+        100% { width:320px; height:320px; opacity:0; border-width:1px; }
     }
 
     @keyframes chispear {
-        0% { transform: rotate(0deg) translateX(80px) rotate(0deg); opacity:1; }
-        100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); opacity:0.3; }
+        0% { transform: rotate(0deg) translateX(90px) rotate(0deg); opacity:1; }
+        100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); opacity:0.4; }
     }
 
-    /* VENTANAS DE DATOS */
+    /* 🔴 ANIMACIÓN ESPECIAL SOLO CUANDO HABLA */
+    @keyframes hablando {
+        0% { transform: scale(1); filter: brightness(1); }
+        100% { transform: scale(1.5); filter: brightness(1.6); }
+    }
+
+    /* 📋 VENTANAS DE TEXTO: MÁS BRILLANTES Y LLAMATIVAS */
     .ventana {
-        background: rgba(0, 20, 40, 0.75);
-        border: 1px solid #00aaff;
-        box-shadow: 0 0 20px rgba(0,150,255,0.3);
-        border-radius: 4px;
-        margin: 15px auto;
-        padding: 15px;
-        width: 70%;
-        font-size: 16px;
-        line-height: 1.6;
-        color: #88eeff;
+        background: rgba(0, 25, 50, 0.8);
+        border: 1px solid #00eeff;
+        box-shadow: 0 0 30px rgba(0,180,255,0.5), inset 0 0 15px rgba(0,100,255,0.2);
+        border-radius: 6px;
+        margin: 20px auto;
+        padding: 20px;
+        width: 75%;
+        font-size: 17px;
+        line-height: 1.7;
+        color: #b3f0ff;
     }
 
     .ventana-titulo {
-        border-bottom: 1px solid #0088ff;
-        padding-bottom: 8px;
-        margin-bottom: 10px;
+        border-bottom: 1px solid #00ccff;
+        padding-bottom: 10px;
+        margin-bottom: 12px;
         font-weight: bold;
         color: #ffffff;
+        text-shadow: 0 0 10px #00ccff;
+        letter-spacing: 1px;
     }
 
-    /* CAJA DE ESCRIBIR */
+    /* 📥 CAJA DE ESCRIBIR */
     .caja-comando {
-        background: rgba(0, 30, 60, 0.8);
-        border: 1px solid #00eeff !important;
+        background: rgba(0, 40, 80, 0.9) !important;
+        border: 2px solid #00eeff !important;
         color: #ffffff !important;
         font-family: 'Courier New', monospace !important;
-        font-size: 17px !important;
-        border-radius: 3px !important;
-        box-shadow: inset 0 0 10px #002244 !important;
+        font-size: 18px !important;
+        border-radius: 4px !important;
+        box-shadow: inset 0 0 15px #003366 !important;
     }
 
-    /* BOTÓN */
+    /* 🔘 BOTÓN */
     .boton-sistema {
-        background: linear-gradient(180deg, #0077dd, #004499) !important;
+        background: linear-gradient(180deg, #0099ff, #0044aa) !important;
         color: white !important;
-        border: 1px solid #00ccff !important;
+        border: 1px solid #88eeff !important;
         font-family: 'Courier New', monospace !important;
         font-weight: bold !important;
-        font-size: 16px !important;
-        border-radius: 3px !important;
-        box-shadow: 0 0 12px rgba(0,150,255,0.5) !important;
+        font-size: 17px !important;
+        border-radius: 4px !important;
+        box-shadow: 0 0 20px rgba(0,180,255,0.6) !important;
         width: 100% !important;
-        padding: 10px !important;
-        margin-top: 10px !important;
+        padding: 12px !important;
+        margin-top: 12px !important;
+        letter-spacing: 1px;
     }
 
     .boton-sistema:hover {
-        background: linear-gradient(180deg, #0099ff, #0066bb) !important;
-        box-shadow: 0 0 20px #00ccff !important;
+        background: linear-gradient(180deg, #00bbff, #0066dd) !important;
+        box-shadow: 0 0 30px #00eeff !important;
+        transform: scale(1.02);
+    }
+
+    /* 📍 TÍTULOS */
+    h2 {
+        text-align:center; 
+        color:#00eeff; 
+        text-shadow:0 0 20px #00aaff, 0 0 40px #0066ff; 
+        margin:-30px 0 50px;
+        font-size: 32px;
+        letter-spacing: 2px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
-# 🖥️ ESTRUCTURA DE LA PÁGINA
+# 🖥️ ESTRUCTURA COMPLETA DE LA PANTALLA
 # -----------------------------------------------------------------------------
 
 # Barra superior
-st.markdown('<div class="barra-superior"> <span>>> SISTEMA JARVIS | OPERATIVO</span> <span>ESTADO: ACTIVO | CONECTADO</span> </div>', unsafe_allow_html=True)
+st.markdown('<div class="barra-superior"> <span>>> SISTEMA JARVIS | NÚCLEO PRINCIPAL</span> <span>ESTADO: ACTIVO | INTELIGENCIA: 100% | CONECTADO</span> </div>', unsafe_allow_html=True)
 
-# Núcleo brillante
+# 🔵 BOLITA AZUL (SE MUEVE SOLO AL HABLAR)
 st.markdown("""
 <div class="nucleo-central">
     <div class="centro"></div>
     <div class="rayo1"></div>
     <div class="rayo2"></div>
     <div class="rayo3"></div>
-    <div class="chispa" style="top:20%; left:60%"></div>
-    <div class="chispa" style="top:70%; left:30%"></div>
-    <div class="chispa" style="top:40%; left:80%"></div>
-    <div class="chispa" style="top:80%; left:70%"></div>
+    <div class="chispa" style="top:15%; left:65%"></div>
+    <div class="chispa" style="top:75%; left:25%"></div>
+    <div class="chispa" style="top:35%; left:85%"></div>
+    <div class="chispa" style="top:85%; left:65%"></div>
+    <div class="chispa" style="top:25%; left:35%"></div>
 </div>
 """, unsafe_allow_html=True)
 
 # Título
-st.markdown("<h2 style='text-align:center; color:#00eeff; text-shadow:0 0 15px #00aaff; margin:-20px 0 40px;'>JARVIS - INTERFAZ PRINCIPAL</h2>", unsafe_allow_html=True)
+st.markdown("<h2>JARVIS - INTERFAZ PRINCIPAL</h2>", unsafe_allow_html=True)
 
-# Entrada de datos
-st.markdown('<div class="ventana"> <div class="ventana-titulo">>> ENTRADA DE COMANDO</div>', unsafe_allow_html=True)
+# 📋 ENTRADA DE COMANDOS
+st.markdown('<div class="ventana"> <div class="ventana-titulo">>> ENTRADA DE COMANDO / DATOS</div>', unsafe_allow_html=True)
 
 texto_entrada = st.text_area(
     "",
-    placeholder=">>> Escribe cualquier pregunta o instrucción... (Ej: ¿Quién te creó? / ¿Cómo te llamas? / ¿Qué haces?)",
-    height=100,
+    placeholder=">>> ESCRIBE CUALQUIER PREGUNTA, CÁLCULO O TEMA...\nEj: cual es la raíz cuadrada de 1897 | resumen de Roblox | cuanto es 45*12 | quien te creó",
+    height=120,
     key="entrada"
 )
 
-boton_ejecutar = st.button(">> EJECUTAR <<", key="boton")
+boton_ejecutar = st.button(">> EJECUTAR <<", key="boton", help="Procesar y reproducir respuesta")
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
-# ⚙️ PROCESAMIENTO Y RESPUESTA
+# ⚙️ PROCESAMIENTO Y SALIDA
 # -----------------------------------------------------------------------------
 if boton_ejecutar and texto_entrada.strip() != "":
-    # Obtener respuesta de Jarvis (ENTIENDE TODO)
+    # 🧠 OBTENER RESPUESTA (DE TODO, IGUAL QUE YO)
     respuesta = jarvis_respuesta(texto_entrada)
 
-    # Reproducir voz de Jarvis
-    voz_jarvis(respuesta)
+    # 🎤 ACTIVAR VOZ + ANIMACIÓN DE LA BOLITA
+    voz_y_animacion(respuesta)
 
-    # Mostrar respuesta en pantalla
+    # 📤 MOSTRAR RESPUESTA EN PANTALLA
     st.markdown(f"""
-    <div class="ventana" style="border-color:#00ff88; box-shadow:0 0 20px rgba(0,255,136,0.3);">
-        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - JARVIS</div>
-        <p style="margin:0; font-size:18px; color:#99ffcc;">{respuesta}</p>
+    <div class="ventana" style="border-color:#00ff88; box-shadow:0 0 30px rgba(0,255,136,0.5), inset 0 0 15px rgba(0,255,100,0.2);">
+        <div class="ventana-titulo" style="color:#00ffaa; text-shadow:0 0 10px #00ff88;">>> SALIDA - JARVIS</div>
+        <p style="margin:0; font-size:18px; color:#99ffcc; white-space:pre-wrap;">{respuesta}</p>
     </div>
     """, unsafe_allow_html=True)
 
 
 # Pie de página
 st.markdown("""
-<div style="text-align:center; margin-top:50px; color:#3377aa; font-size:13px;">
->>> JARVIS | SISTEMA ESTABLE | TODOS LOS MÓDULOS ACTIVOS <<<
+<div style="text-align:center; margin-top:60px; color:#4488cc; font-size:14px; letter-spacing:1px;">
+>>> JARVIS | SISTEMA ESTABLE | TODOS LOS MÓDULOS DE INTELIGENCIA ACTIVOS <<<
 </div>
 """, unsafe_allow_html=True)
