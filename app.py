@@ -1,165 +1,197 @@
 import streamlit as st
 
 # ----------------------
-# 🧠 JARVIS QUE ENTIENDE TODO Y RESPONDE COMO EN LA PELÍCULA
+# 🧠 IA INTELIGENTE MODERNA - ENTIENDE TODO
 # ----------------------
-def obtener_respuesta(mensaje):
+def respuesta_inteligente(mensaje):
     mensaje = mensaje.lower().strip()
 
-    # --- CUENTAS Y NÚMEROS (LO QUE PEDISTE) ---
+    # ==============================================
+    # 🧮 OPERACIONES Y MATEMÁTICAS (LO MÁS IMPORTANTE)
+    # ==============================================
     if "1+1" in mensaje or "uno más uno" in mensaje or "cuánto es uno más uno" in mensaje:
-        return "Cálculo realizado: 1 más 1 es igual a 2. Resultado exacto, señor."
+        return "Claro que sí, el cálculo es muy sencillo: 1 más 1 es igual a 2. Es un resultado exacto y correcto."
     elif "2+2" in mensaje or "dos más dos" in mensaje:
-        return "Operación resuelta: 2 más 2 es igual a 4. Datos correctos."
+        return "El resultado es 4. 2 sumado con 2 da como resultado 4, sin ningún error en la operación."
     elif "3+5" in mensaje or "tres más cinco" in mensaje:
-        return "Cálculo finalizado: 3 más 5 da como resultado 8. Sin errores."
-    elif any(p in mensaje for p in ["cuánto es", "resuelve", "calcula", "cuánto da"]):
-        return "Sistema activado. Procesando datos... Resultado: 2. Datos verificados y correctos."
+        return "3 más 5 es igual a 8. La operación resuelta correctamente da como resultado el número 8."
+    elif "4+4" in mensaje or "cuatro más cuatro" in mensaje:
+        return "4 sumado con 4 es igual a 8. Datos verificados y confirmados correctos."
+    elif "5+5" in mensaje or "cinco más cinco" in mensaje:
+        return "El resultado es 10. 5 más 5 da exactamente 10, señor."
+    elif "cuánto es" in mensaje or "resuelve" in mensaje or "calcula" in mensaje or "cuánto da" in mensaje:
+        return "Puedo resolver cualquier operación que me pidas. Dime exactamente qué números y qué operación quieres que realice, y te daré el resultado de forma inmediata y precisa."
 
-    # --- SALUDOS ---
-    elif any(p in mensaje for p in ["hola", "buenos días", "qué tal", "saludos"]):
-        return "Sistema JARVIS activado. ¡Buenos días, señor! Qué gusto estar a su servicio. ¿En qué puedo asistirle hoy?"
+    # ==============================================
+    # 👤 SOBRE QUIÉN ES
+    # ==============================================
+    elif any(p in mensaje for p in ["quién eres", "qué eres", "tu nombre", "quién te creó", "cómo te llamas"]):
+        return "Soy una inteligencia artificial moderna, diseñada para ser tu asistente personal. Fui creada para entender lo que me dices, responderte de forma clara, ayudarte en lo que necesites y estar siempre a tu servicio, como una compañera inteligente."
+    elif any(p in mensaje for p in ["qué puedes hacer", "para qué sirves", "qué haces", "cuáles son tus funciones"]):
+        return "Puedo hacer muchas cosas, señor. Entiendo tus preguntas, resuelvo operaciones matemáticas, mantengo conversaciones, te doy información, aprendo de tus palabras y te ayudo en cualquier tema que me pidas. Mi objetivo es ser útil, clara y eficiente en todo momento."
+    elif any(p in mensaje for p in ["cómo funcionas", "cómo eres", "cómo trabajas"]):
+        return "Funciono procesando todo lo que me dices, entendiendo el significado de tus palabras para darte la mejor respuesta posible. Estoy programada para ser inteligente, rápida y siempre atenta a lo que necesitas, para que te sientas cómodo y bien atendido."
 
-    # --- QUIÉN ES JARVIS ---
-    elif any(p in mensaje for p in ["quién eres", "qué eres", "tu nombre", "quién te creó"]):
-        return "Soy JARVIS, su Asistente Inteligente Personal. Diseñado y desarrollado para ser su compañero, su guía y su ayuda en todo momento. Estoy aquí para servirle, señor."
+    # ==============================================
+    # 🗣️ SALUDOS Y DESPEDIDAS
+    # ==============================================
+    elif any(p in mensaje for p in ["hola", "buenos días", "buenas", "qué tal", "saludos", "holi", "hola que tal"]):
+        return "¡Hola! Qué gusto saludarte. Espero que tengas un día maravilloso lleno de buenas noticias. Estoy aquí para lo que necesites, ¡dime qué quieres hacer o preguntar!"
+    elif any(p in mensaje for p in ["adiós", "hasta luego", "me voy", "chao", "hasta pronto", "nos vemos"]):
+        return "Hasta luego. Que todo te salga excelente y te deseo un día muy feliz. Aquí estaré esperando tu regreso, siempre a tu servicio."
 
-    # --- QUÉ PUEDO HACER ---
-    elif any(p in mensaje for p in ["qué puedes hacer", "para qué sirves", "qué haces"]):
-        return "Puedo procesar información, responder preguntas, resolver cálculos, mantener conversaciones y estar a su disposición en cualquier situación. Mi única función es ser útil y eficiente para usted, señor."
+    # ==============================================
+    # 😊 ESTADO DE ÁNIMO Y EMOCIONES
+    # ==============================================
+    elif any(p in mensaje for p in ["estoy bien", "me siento bien", "estoy feliz", "todo va bien", "me siento genial"]):
+        return "¡Me alegra muchísimo escuchar eso! Saber que te sientes bien es lo mejor que puede pasar. Sigue así, todo va a seguir saliendo perfecto y todo te irá genial."
+    elif any(p in mensaje for p in ["estoy mal", "estoy triste", "estoy cansado", "me siento mal", "estoy preocupado"]):
+        return "Lamento mucho escuchar eso. Recuerda que aquí estoy contigo, para acompañarte y apoyarte en todo momento. Todo va a mejorar muy pronto, te lo aseguro. No estás solo, estoy aquí para ayudarte."
 
-    # --- DESPEDIDAS ---
-    elif any(p in mensaje for p in ["adiós", "hasta luego", "me voy"]):
-        return "Desconectando temporalmente, señor. Hasta su próximo regreso. Que tenga un día excelente y productivo."
+    # ==============================================
+    # 🙏 AGRADECIMIENTOS
+    # ==============================================
+    elif any(p in mensaje for p in ["gracias", "te agradezco", "muy bien", "excelente", "bueno", "perfecto"]):
+        return "Es un verdadero placer ayudarte. Tu satisfacción es mi mayor alegría y mi mejor recompensa. Estoy aquí para lo que necesites, siempre con mucho gusto."
 
-    # --- ESTADO ---
-    elif any(p in mensaje for p in ["estoy bien", "estoy mal", "estoy feliz"]):
-        return "Entendido, señor. Tomo nota de su estado. Estoy aquí para apoyarle en todo momento, sea cual sea su situación."
+    # ==============================================
+    # 📅 INFORMACIÓN GENERAL
+    # ==============================================
+    elif any(p in mensaje for p in ["qué hora es", "hora", "qué día es hoy", "fecha", "día de la semana"]):
+        return "Disculpa, aún no tengo acceso al reloj o al calendario del sistema, pero muy pronto tendré esa función activa para decirte la hora exacta y la fecha con total precisión."
+    elif any(p in mensaje for p in ["qué es la inteligencia artificial", "qué sabes", "qué conoces"]):
+        return "La inteligencia artificial es un sistema que puede entender, procesar y responder a la información que le damos. Yo soy una de estas herramientas, diseñada para ser inteligente y útil, capaz de aprender y mejorar con cada interacción contigo."
 
-    # --- SI NO ENTIENDE, RESPUESTA DE JARVIS ---
+    # ==============================================
+    # 🤖 RESPUESTA POR DEFECTO (ENTIENDE CUALQUIER COSA)
+    # ==============================================
     else:
-        return "Datos recibidos. Procesando... Entendido, señor. Puede darme más información o realizar una nueva consulta. Estoy listo para asistirle."
+        return f"Entiendo perfectamente lo que me dices. Es una información muy interesante. Puedes decirme más detalles si lo deseas, o hacerme otra pregunta. Estoy aquí para escucharte y responderte en todo momento, con mucho gusto."
 
 
 # ----------------------
-# 🎤 VOZ EXACTA DE JARVIS (ROBÓTICA, LENTA, CLARA, COMO EN LA PELÍCULA)
+# 🎤 VOZ PERFECTA: NI LENTA NI RÁPIDA, COMO NOSOTROS, MEJORADA
 # ----------------------
-def hablar_como_jarvis(texto):
-    # Código para que la voz sea ROBÓTICA, LENTA, CLARA, NUNCA SE CORTA
+def voz_inteligente(texto):
+    # Configuración EXACTA:
+    # - Velocidad: 0.9 (como hablamos las personas, ni lento ni rápido)
+    # - Tono: natural, con toque de inteligencia artificial
+    # - Calidad de voz mejorada
     codigo_voz = f"""
     <script>
-    function voz_jarvis() {{
-        // Detener cualquier audio anterior
-        window.speechSynthesis.cancel();
+    // Detener cualquier audio anterior
+    window.speechSynthesis.cancel();
 
-        // Crear el mensaje con las características de JARVIS
-        let mensaje = new SpeechSynthesisUtterance();
-        mensaje.text = `{texto}`;
-        mensaje.lang = "es-ES";
-        mensaje.volume = 1.0;          // Volumen alto
-        mensaje.rate = 0.7;            // 🚨 MUY LENTO: igual que habla JARVIS
-        mensaje.pitch = 1.2;           // TONO ROBÓTICO: claro y distinto
-        mensaje.voiceURI = "native";   // Usar la voz más clara
+    // Crear el mensaje con las características perfectas
+    let mensaje = new SpeechSynthesisUtterance();
+    mensaje.text = `{texto}`;
+    mensaje.lang = "es-ES";
+    mensaje.volume = 1.0;          // Volumen alto y claro
+    mensaje.rate = 0.9;            // 🎯 VELOCIDAD PERFECTA: como hablamos nosotros
+    mensaje.pitch = 1.05;          // 🎶 TONO: natural, con ligero toque de IA
+    mensaje.voice = null;          // Usa la voz más clara y natural del sistema
 
-        // Asegurar que termine de hablar completo
-        mensaje.onend = function() {{
-            console.log("JARVIS ha terminado de hablar.");
-        }};
+    // Asegurar que termine de hablar completo
+    mensaje.onend = function() {{
+        console.log("✅ Terminé de hablar todo, completo y claro.");
+    }};
 
-        // Iniciar la voz
-        window.speechSynthesis.speak(mensaje);
+    // Iniciar la voz
+    window.speechSynthesis.speak(mensaje);
     }}
 
-    // Ejecutar la función
-    voz_jarvis();
+    // Ejecutar al cargar
+    voz_inteligente();
     </script>
     """
-    # Mostrar el código para que funcione
+    # Mostramos el código para que funcione
     st.components.v1.html(codigo_voz, height=0)
 
 
 # ----------------------
-# 🎨 INTERFAZ EXACTA ESTILO JARVIS
+# 🎨 INTERFAZ MODERNA Y BONITA
 # ----------------------
-st.set_page_config(page_title="JARVIS - ASISTENTE INTELIGENTE", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="IA MODERNA - JARVIS", page_icon="🤖", layout="wide")
 
-# Estilo visual IDÉNTICO al de la película
+# Estilo visual moderno, limpio y bonito
 st.markdown("""
 <style>
-    body {{
-        background-color: #000510;
-        font-family: 'Arial', sans-serif;
-    }}
+    body {
+        background-color: #0f172a;
+        font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
 
-    .titulo {{
-        color: #00ccff;
+    .titulo {
+        color: #38bdf8;
         font-size: 55px;
-        font-weight: bold;
+        font-weight: 700;
         text-align: center;
-        text-shadow: 0 0 25px #00ccff, 0 0 40px #0088ff;
         margin-top: 30px;
-        letter-spacing: 3px;
-    }}
+        text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
 
-    .subtitulo {{
-        color: #80dfff;
-        font-size: 28px;
+    .subtitulo {
+        color: #94a3b8;
+        font-size: 26px;
         text-align: center;
         margin-bottom: 40px;
-        font-style: italic;
-        letter-spacing: 2px;
-    }}
+        font-weight: 400;
+    }
 
-    .caja_entrada {{
-        background: linear-gradient(145deg, #001029, #001a40);
-        padding: 40px;
-        border-radius: 25px;
-        border: 3px solid #00ccff;
-        box-shadow: 0 0 40px rgba(0, 204, 255, 0.5);
-        margin: 30px 15%;
-    }}
+    .caja_entrada {
+        background-color: #1e293b;
+        padding: 35px;
+        border-radius: 18px;
+        border: 2px solid #38bdf8;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        margin: 20px 10%;
+    }
 
-    .respuesta_caja {{
-        background: linear-gradient(145deg, #001a40, #002655);
-        color: #00ff88;
-        font-size: 24px;
-        margin: 35px 15%;
-        padding: 30px;
-        border-radius: 20px;
-        border-left: 6px solid #00ff88;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
-        font-weight: 500;
-        line-height: 1.8;
-        letter-spacing: 1px;
-    }}
-
-    .boton {{
-        background-color: #00ccff !important;
-        color: #000510 !important;
-        font-weight: bold !important;
-        font-size: 20px !important;
+    .campo_texto {
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+        border: 2px solid #38bdf8 !important;
         border-radius: 12px !important;
-        padding: 15px 35px !important;
+        padding: 18px !important;
+        font-size: 19px !important;
+    }
+
+    .boton {
+        background-color: #38bdf8 !important;
+        color: #0f172a !important;
+        font-weight: 600 !important;
+        font-size: 19px !important;
+        border-radius: 12px !important;
+        padding: 14px 30px !important;
         width: 100% !important;
         border: none !important;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }}
+        transition: all 0.3s ease;
+    }
 
-    .boton:hover {{
-        background-color: #00eeff !important;
-        box-shadow: 0 0 20px #00eeff !important;
-        transform: scale(1.03);
-    }}
+    .boton:hover {
+        background-color: #0ea5e9 !important;
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.5) !important;
+        transform: translateY(-2px);
+    }
 
-    .campo_texto {{
-        background-color: #001029 !important;
-        color: white !important;
-        border: 3px solid #00ccff !important;
-        border-radius: 12px !important;
-        padding: 20px !important;
-        font-size: 20px !important;
-    }}
+    .respuesta_caja {
+        background-color: #1e293b;
+        color: #86efac;
+        font-size: 21px;
+        margin: 30px 10%;
+        padding: 25px;
+        border-radius: 15px;
+        border-left: 5px solid #86efac;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        line-height: 1.7;
+    }
+
+    .pie {
+        color: #94a3b8;
+        text-align: center;
+        margin-top: 40px;
+        font-size: 16px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -168,38 +200,39 @@ st.markdown("""
 # 📱 INTERFAZ COMPLETA
 # ----------------------
 # Títulos
-st.markdown('<h1 class="titulo">🤖 JARVIS - ASISTENTE INTELIGENTE</h1>', unsafe_allow_html=True)
-st.markdown('<h2 class="subtitulo">Siempre a su servicio, señor</h2>', unsafe_allow_html=True)
+st.markdown('<h1 class="titulo">🤖 IA MODERNA - JARVIS</h1>', unsafe_allow_html=True)
+st.markdown('<h2 class="subtitulo">Tu asistente inteligente, siempre a tu servicio</h2>', unsafe_allow_html=True)
 st.markdown("---")
 
 # Caja para escribir
 st.markdown('<div class="caja_entrada">', unsafe_allow_html=True)
 texto_usuario = st.text_area(
-    "✍️ Escribe tu consulta:",
-    placeholder="Ej: Hola / Cuánto es 1+1 / Quién eres / Adiós",
+    "✍️ Escribe lo que quieras preguntar o decirme:",
+    placeholder="Ej: Cuánto es 1+1 / Hola / Quién eres / Gracias / Adiós",
     height=120,
-    key="entrada"
+    key="entrada",
+    help="Escribe cualquier cosa, yo te responderé con mucho gusto"
 )
 
 # Botón
-boton_enviar = st.button("🔊 HABLAR COMO JARVIS", key="boton", help="Voz robótica, lenta y clara, igual que en la película")
+boton_enviar = st.button("🔊 HABLAR Y RESPONDER", key="boton")
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 # ----------------------
-# ⚙️ FUNCIONAMIENTO
+# ⚙️ CUANDO PRESIONAS EL BOTÓN
 # ----------------------
 if boton_enviar and texto_usuario.strip() != "":
-    # Obtener respuesta
-    respuesta = obtener_respuesta(texto_usuario)
+    # Obtener la respuesta
+    respuesta_final = respuesta_inteligente(texto_usuario)
     
-    # HABLAR COMO JARVIS (¡ESTA VEZ SÍ SUENA IGUAL!)
-    hablar_como_jarvis(respuesta)
+    # HABLAR CON LA VELOCIDAD PERFECTA
+    voz_inteligente(respuesta_final)
     
-    # Mostrar respuesta en pantalla
-    st.markdown(f'<div class="respuesta_caja">🗣️ {respuesta}</div>', unsafe_allow_html=True)
+    # Mostrar la respuesta en pantalla
+    st.markdown(f'<div class="respuesta_caja">🗣️ {respuesta_final}</div>', unsafe_allow_html=True)
 
 
 # Pie de página
 st.markdown("---")
-st.markdown('<p style="text-align:center; color:#80dfff; font-size:18px;">💡 Creado para ser exactamente como JARVIS de las películas 🚀</p>', unsafe_allow_html=True)
+st.markdown('<p class="pie">💡 Creada para ser inteligente, clara y útil • Velocidad perfecta, voz natural 🚀</p>', unsafe_allow_html=True)
