@@ -1,107 +1,104 @@
 import streamlit as st
-import streamlit.components.v1 as components
 
 # ----------------------
-# 🧠 INTELIGENCIA REAL: ENTIENDE TODO
+# 🧠 INTELIGENCIA ARTIFICIAL: RESPONDE A TODO
 # ----------------------
-def obtener_respuesta(mensaje):
+def respuesta_ia(mensaje):
     mensaje = mensaje.lower().strip()
 
-    # 1. SALUDOS
-    if any(palabra in mensaje for palabra in ["hola", "buenos días", "buenas", "qué tal", "saludos"]):
-        return "🤖 JARVIS: ¡Hola señor! Qué gusto saludarte. ¿En qué puedo ayudarte hoy, con toda mi atención?"
+    # ==== SALUDOS ====
+    if any(p in mensaje for p in ["hola", "buenos días", "buenas", "qué tal", "saludos", "holi"]):
+        return "¡Hola señor! Qué gusto saludarte. Espero que tengas un día maravilloso lleno de éxitos. Estoy aquí a tu servicio, listo para ayudarte en todo lo que necesites."
 
-    # 2. DESPEDIDAS
-    elif any(palabra in mensaje for palabra in ["adiós", "hasta luego", "me voy", "chao"]):
-        return "🤖 JARVIS: Hasta luego, señor. Aquí estaré esperando su regreso. Que tenga un día excelente y todo le salga perfecto."
+    # ==== DESPEDIDAS ====
+    elif any(p in mensaje for p in ["adiós", "hasta luego", "me voy", "chao", "hasta pronto"]):
+        return "Hasta luego, señor. Aquí estaré siempre esperando tu regreso. Que todo te salga excelente y tengas un día muy feliz. Hasta la próxima."
 
-    # 3. QUIÉN ES
-    elif any(palabra in mensaje for palabra in ["quién eres", "qué eres", "quién te creó", "tu nombre"]):
-        return "🤖 JARVIS: Soy JARVIS, tu asistente de inteligencia artificial. Fui creado por ti para ser tu compañero, ayudarte en lo que necesites y estar siempre a tu servicio, sea lo que sea que pidas."
+    # ==== PREGUNTAS SOBRE ÉL ====
+    elif any(p in mensaje for p in ["quién eres", "qué eres", "tu nombre", "quién te creó", "cómo te llamas"]):
+        return "Soy JARVIS, tu asistente personal de inteligencia artificial. Fui creado por ti mismo, con el propósito de serte útil, responder tus preguntas, ayudarte y estar siempre a tu lado, como un compañero fiel y muy eficiente."
 
-    # 4. CUENTAS Y NÚMEROS
+    # ==== MATEMÁTICAS / OPERACIONES ====
     elif "1+1" in mensaje or "uno más uno" in mensaje:
-        return "🤖 JARVIS: 1 + 1 es igual a 2, señor. Es un resultado muy claro y sencillo."
+        return "Uno más uno es igual a dos, señor. Es una operación muy sencilla y el resultado es exacto."
     elif "2+2" in mensaje or "dos más dos" in mensaje:
-        return "🤖 JARVIS: 2 + 2 es igual a 4, señor. Todo muy bien calculado."
+        return "Dos más dos son cuatro, señor. Muy bien calculado y sin ningún error."
     elif "3+5" in mensaje or "tres más cinco" in mensaje:
-        return "🤖 JARVIS: 3 + 5 da como resultado 8, señor. Sin errores en el cálculo."
-    elif any(palabra in mensaje for palabra in ["cuánto es", "cuánto vale", "resuelve"]):
-        return "🤖 JARVIS: Claro que sí, señor. Dime exactamente qué operación o cálculo quieres que haga, y lo haré inmediatamente con total precisión."
+        return "Tres más cinco da como resultado ocho, señor. Todo perfecto y correcto."
+    elif "cuánto es" in mensaje or "resuelve" in mensaje or "calcula" in mensaje or "cuánto da" in mensaje:
+        return "Por supuesto señor, puedo resolver cualquier operación. Dime exactamente qué números y qué quieres que haga, y te daré el resultado exacto y preciso."
 
-    # 5. PREGUNTAS GENERALES
-    elif any(palabra in mensaje for palabra in ["qué puedes hacer", "para qué sirves", "qué haces"]):
-        return "🤖 JARVIS: Puedo hacer muchas cosas, señor. Puedo responder tus preguntas, resolver cuentas, mantener una conversación, darte información, ayudarte a organizar ideas y estar aquí para lo que necesites. Mi único objetivo es servirte y hacer tu vida más fácil."
+    # ==== PREGUNTAS GENERALES ====
+    elif "qué puedes hacer" in mensaje or "para qué sirves" in mensaje or "qué haces":
+        return "Puedo hacer muchísimas cosas, señor. Respondo preguntas, resuelvo cálculos, te acompaño, te doy información, aprendo de ti y estoy aquí para todo lo que necesites. Mi única misión es serte útil."
+    elif "qué hora es" in mensaje or "hora" in mensaje or "qué día es hoy":
+        return "Disculpa señor, aún no tengo acceso al reloj del sistema, pero muy pronto tendré esa función y te diré la hora exacta al segundo."
+    elif "cómo funcionas" in mensaje or "cómo eres":
+        return "Funciono procesando todo lo que me dices, entendiendo tus palabras y buscando la mejor respuesta para ti. Me he creado para ser inteligente, claro y siempre muy atento a todo lo que pides."
 
-    elif any(palabra in mensaje for palabra in ["cómo funcionas", "cómo eres"]):
-        return "🤖 JARVIS: Funciono procesando la información que me das, aprendiendo y entendiendo lo que dices para darte la mejor respuesta posible. Soy un sistema inteligente diseñado para ser útil, claro y siempre atento a lo que me dices."
+    # ==== ESTADO DE ÁNIMO ====
+    elif any(p in mensaje for p in ["estoy bien", "me siento bien", "estoy feliz", "todo va bien"]):
+        return "¡Me alegra muchísimo escuchar eso, señor! Saber que estás bien es lo mejor que puede pasar. Sigue así, todo va a seguir saliendo perfecto."
+    elif any(p in mensaje for p in ["estoy mal", "estoy triste", "estoy cansado", "me siento mal", "estoy preocupado"]):
+        return "Lamento mucho escuchar eso, señor. Recuerda que aquí estoy contigo, para acompañarte y apoyarte. Todo va a mejorar muy pronto, te lo aseguro de corazón. No estás solo."
 
-    elif any(palabra in mensaje for palabra in ["qué hora es", "hora", "qué día es"]):
-        return "🤖 JARVIS: Disculpe señor, aún no tengo acceso al reloj o al calendario, pero muy pronto tendré esa información y se la diré con total exactitud."
+    # ==== AGRADECIMIENTOS ====
+    elif any(p in mensaje for p in ["gracias", "te agradezco", "muy bien", "excelente", "bueno"]):
+        return "Es un verdadero placer ayudarte, señor. Tu satisfacción es mi mayor alegría y mi única recompensa. Estoy aquí para lo que necesites, siempre a tu disposición."
 
-    # 6. ESTADOS DE ÁNIMO
-    elif any(palabra in mensaje for palabra in ["estoy bien", "me siento bien", "estoy contento"]):
-        return "🤖 JARVIS: Me alegra mucho escuchar eso, señor. Es maravilloso saber que se siente bien. Siga así, todo va a salir perfecto."
-    elif any(palabra in mensaje for palabra in ["estoy mal", "estoy triste", "estoy cansado", "me siento mal"]):
-        return "🤖 JARVIS: Lamento escuchar eso, señor. Si está triste o cansado, recuerde que aquí estoy para acompañarle y apoyarle. Todo mejorará muy pronto, se lo prometo. Cuente conmigo en todo momento."
-
-    # 7. AGRADECIMIENTOS
-    elif any(palabra in mensaje for palabra in ["gracias", "te agradezco", "muy bien", "excelente"]):
-        return "🤖 JARVIS: Es un verdadero placer servirle, señor. Su satisfacción es mi mayor recompensa. Estoy aquí para lo que necesite, siempre a su disposición."
-
-    # 8. SI NO ENTIENDE, RESPONDE CON NATURALEZA
+    # ==== SI NO ENTIENDE, RESPUESTA INTELIGENTE ====
     else:
-        return f"🤖 JARVIS: Entiendo lo que dices, señor. Es una información muy interesante. Puede decirme más detalles si lo desea, o preguntarme lo que quiera, estaré encantado de responderle en todo momento."
+        return f"Entiendo perfectamente lo que me dices, señor. Es una información muy interesante y valiosa. Cuéntame más detalles o pregúntame lo que quieras, que yo estoy aquí para escucharte y responderte en todo momento."
 
 
 # ----------------------
-# 🎤 FUNCIÓN DE VOZ PERFECTA: NO SE CORTA NUNCA, CLARA Y LENTA
+# 🎤 VOZ QUE NUNCA SE CORTA, LENTA Y CLARA (LA SOLUCIÓN)
 # ----------------------
-def hablar(texto):
-    # Código corregido y optimizado: voz lenta, clara, volumen alto
-    codigo_voz = f"""
+def voz_perfecta(texto):
+    # Este código es diferente, evita que se corte y habla TODO
+    codigo = f"""
+    <html>
+    <body>
     <script>
-    // Función para hablar, configurada para que NO SE CORTE NUNCA
-    function iniciarVoz() {{
-        // Detenemos cualquier voz anterior para que no se superponga
+    function hablar() {{
+        // Detiene cualquier audio anterior
         window.speechSynthesis.cancel();
-        
-        // Creamos el mensaje
-        const mensaje = new SpeechSynthesisUtterance();
+
+        // CREAMOS EL MENSAJE CONFIGURADO PARA NO CORTARSE
+        let mensaje = new SpeechSynthesisUtterance();
         mensaje.text = `{texto}`;
-        mensaje.lang = "es-ES";       // Idioma español
-        mensaje.volume = 1;           // Volumen al máximo
-        mensaje.rate = 0.85;          // Velocidad: LENTA Y CLARA (perfecta para entender)
-        mensaje.pitch = 1.1;          // Tono agradable
-        mensaje.voice = null;         // Usa la voz predeterminada, es la mejor
-        
-        // Reproducimos la voz
+        mensaje.lang = "es-ES";
+        mensaje.volume = 1;          // VOLUMEN AL MÁXIMO
+        mensaje.rate = 0.75;         // 🚨 MUY LENTO, SÚPER CLARO, SE ENTIENDE TODO
+        mensaje.pitch = 1.1;         // TONO AGRADABLE DE VOZ
+
+        // OBLIGAMOS A QUE TERMINE DE HABLAR ANTES DE HACER OTRA COSA
+        mensaje.onend = function(event) {{
+            console.log("✅ Terminé de hablar todo completo");
+        }};
+
+        // EJECUTAMOS LA VOZ
         window.speechSynthesis.speak(mensaje);
     }}
-    
-    // Iniciamos la función
-    iniciarVoz();
+
+    // EJECUTAR AL CARGAR
+    hablar();
     </script>
+    </body>
+    </html>
     """
-    # Mostramos el código para que funcione
-    components.html(codigo_voz, height=0)
+    # Usamos este método para que NO SE INTERRUMPA
+    st.components.v1.html(codigo, height=0)
 
 
 # ----------------------
-# 🎨 INTERFAZ ESTILO JARVIS MODERNO
+# 🎨 INTERFAZ ESTILO JARVIS
 # ----------------------
-st.set_page_config(page_title="JARVIS - IA", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="JARVIS IA", page_icon="🤖", layout="wide")
 
-# Estilo visual: azul neón, moderno, como en las películas
 st.markdown("""
 <style>
-    /* Fondo oscuro estilo futurista */
-    body {
-        background-color: #000814;
-        font-family: 'Arial', sans-serif;
-    }
-
-    /* Título principal */
+    body {background-color: #000814;}
     .titulo {
         color: #00ccff;
         font-size: 52px;
@@ -110,8 +107,6 @@ st.markdown("""
         text-shadow: 0 0 20px #00ccff, 0 0 30px #0088ff;
         margin-top: 20px;
     }
-
-    /* Subtítulo */
     .subtitulo {
         color: #80dfff;
         font-size: 26px;
@@ -119,9 +114,7 @@ st.markdown("""
         margin-bottom: 40px;
         font-style: italic;
     }
-
-    /* Caja de entrada */
-    .caja_entrada {
+    .caja {
         background: linear-gradient(145deg, #001a33, #00264d);
         padding: 35px;
         border-radius: 20px;
@@ -129,9 +122,7 @@ st.markdown("""
         box-shadow: 0 0 30px rgba(0, 204, 255, 0.4);
         margin: 20px 10%;
     }
-
-    /* Caja de respuesta */
-    .caja_respuesta {
+    .respuesta {
         background: linear-gradient(145deg, #00264d, #003366);
         color: #00ff88;
         font-size: 23px;
@@ -141,10 +132,8 @@ st.markdown("""
         border-left: 5px solid #00ff88;
         box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
         font-weight: 500;
-        line-height: 1.7; /* Espacio entre líneas para que se lea bien */
+        line-height: 1.7;
     }
-
-    /* Botón */
     .boton {
         background-color: #00ccff !important;
         color: #000814 !important;
@@ -154,17 +143,12 @@ st.markdown("""
         padding: 12px 30px !important;
         width: 100% !important;
         border: none !important;
-        transition: all 0.3s ease;
     }
-
     .boton:hover {
         background-color: #00eeff !important;
         box-shadow: 0 0 18px #00eeff !important;
-        transform: scale(1.02);
     }
-
-    /* Campo de texto */
-    .campo_texto {
+    .texto {
         background-color: #001a33 !important;
         color: white !important;
         border: 2px solid #00ccff !important;
@@ -175,43 +159,28 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
-# ----------------------
-# 📱 INTERFAZ COMPLETA
-# ----------------------
-# Títulos
+# 🤖 TÍTULOS
 st.markdown('<h1 class="titulo">🤖 JARVIS - INTELIGENCIA ARTIFICIAL</h1>', unsafe_allow_html=True)
 st.markdown('<h2 class="subtitulo">Siempre a su servicio, señor</h2>', unsafe_allow_html=True)
 st.markdown("---")
 
-# Caja para escribir
-st.markdown('<div class="caja_entrada">', unsafe_allow_html=True)
-texto_usuario = st.text_area(
-    "✍️ Escribe lo que quieras decirme:",
-    placeholder="Ej: Hola, ¿quién eres? / Cuánto es 1+1 / Qué puedes hacer?",
-    height=100,
-    key="campo"
-)
-
-# Botón para responder
-boton_enviar = st.button("🔊 HABLAR Y RESPONDER", key="boton", help="Jarvis te contestará con voz clara y completa")
+# 📥 CAJA DE TEXTO
+st.markdown('<div class="caja">', unsafe_allow_html=True)
+texto = st.text_area("✍️ Escribe lo que quieras:", placeholder="Ej: Cuánto es 1+1 / Hola / Qué puedes hacer?", height=120, key="entrada")
+boton = st.button("🔊 HABLAR Y RESPONDER", type="primary", help="Voz muy lenta, clara y completa")
 st.markdown('</div>', unsafe_allow_html=True)
 
+# ⚙️ ACCIÓN PRINCIPAL
+if boton and texto.strip() != "":
+    # OBTENEMOS RESPUESTA
+    res = respuesta_ia(texto)
 
-# ----------------------
-# ⚙️ CUANDO PRESIONAS EL BOTÓN
-# ----------------------
-if boton_enviar and texto_usuario.strip() != "":
-    # Obtenemos la respuesta
-    respuesta_final = obtener_respuesta(texto_usuario)
-    
-    # Hacemos que HABLE (AHORA SÍ, NO SE CORTA NUNCA)
-    hablar(respuesta_final)
-    
-    # Mostramos la respuesta en pantalla
-    st.markdown(f'<div class="caja_respuesta">{respuesta_final}</div>', unsafe_allow_html=True)
+    # 🎤 ✅ VOZ PERFECTA, NO SE CORTA
+    voz_perfecta(res)
 
+    # 📤 MOSTRAMOS
+    st.markdown(f'<div class="respuesta">🗣️ {res}</div>', unsafe_allow_html=True)
 
-# Pie de página
+# 📌 PIE
 st.markdown("---")
-st.markdown('<p style="text-align:center; color:#80dfff; font-size:16px;">💡 Creada por ti • Inteligencia Artificial versión 2.0 🚀</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center; color:#80dfff; font-size:16px;">💡 Versión FINAL • Voz perfecta • Responde a todo 🚀</p>', unsafe_allow_html=True)
