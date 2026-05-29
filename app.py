@@ -2,21 +2,16 @@ import streamlit as st
 import math
 import re
 
-# --------------------------
-# CONFIGURACIÓN BÁSICA
-# --------------------------
+# ⚙️ CONFIGURACIÓN
 st.set_page_config(page_title="JARVIS - ASISTENTE", layout="wide", initial_sidebar_state="collapsed")
 
-# Guardar mensajes
+# Historial de mensajes
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
-# --------------------------
-# RESPUESTAS DE JARVIS
-# --------------------------
+# 🧠 RESPUESTAS DE JARVIS
 def responder(mensaje):
     mensaje = mensaje.lower().strip()
-
     if "hola" in mensaje:
         return "Hola. Estoy activo y listo para escucharte y responderte."
     elif "cómo te llamas" in mensaje or "como te llamas" in mensaje or "quién eres" in mensaje:
@@ -38,9 +33,7 @@ def responder(mensaje):
         return f"He entendido: '{mensaje}'. Te explico todo lo que sé sobre este tema con gusto."
 
 
-# --------------------------
-# ESTILOS - SOLO LO QUE HACE FALTA
-# --------------------------
+# 🎨 ESTILOS - SOLO QUITAMOS LA BARRA DE ABAJO
 st.markdown("""
 <style>
     /* Fondo de pantalla */
@@ -50,13 +43,24 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
 
-    /* OCULTAR COSAS QUE NO QUEREMOS */
+    /* ❌ OCULTAR COSAS QUE NO QUEREMOS */
     #MainMenu, footer, header, .stException, .stDeployButton {
         display: none !important;
         visibility: hidden !important;
     }
 
-    /* TÍTULO */
+    /* ❌ AQUÍ ES LO IMPORTANTE: QUITAR SOLO LA BARRA DE ABAJO */
+    div[data-testid="stVerticalBlock"] > div:last-child .stTextInput,
+    div[data-testid="stVerticalBlock"] > div:last-child .stButton,
+    .barra-abajo-falsa, .barra-fija {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 🔤 TÍTULO */
     .titulo {
         text-align: center;
         font-size: 42px;
@@ -65,12 +69,47 @@ st.markdown("""
         margin: 10px 0 20px 0;
     }
 
-    /* CAJA DE CHAT (BLANCA, LETRAS NEGRAS) */
+    /* 🔵 CIRCULO CENTRAL */
+    .circulo {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 15px auto;
+        position: relative;
+    }
+    .centro {
+        width: 55px;
+        height: 55px;
+        background: #00eeff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 30px #00eeff, 0 0 60px #0066ff;
+    }
+    .anillo {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 2px solid #00eeff;
+        width: 85px; height: 85px;
+        opacity: 0.6;
+        animation: onda 3s infinite ease-out;
+    }
+    .anillo2 {width: 120px; height: 120px; animation-delay: 0.7s;}
+    .anillo3 {width: 150px; height: 150px; animation-delay: 1.4s;}
+
+    @keyframes onda {
+        0% {opacity: 0.6; width:85px; height:85px;}
+        100% {opacity: 0; width:160px; height:160px;}
+    }
+
+    /* 💬 CAJA DE CHAT (BLANCA, LETRAS NEGRAS) */
     .caja-chat {
         width: 90%;
         height: 65vh;
         margin: 0 auto 20px auto;
-        background: #FFFFFF;
+        background: #FFFFFF !important;
         border-radius: 14px;
         border: 1px solid #ddd;
         padding: 20px;
@@ -95,45 +134,6 @@ st.markdown("""
         margin: 6px auto 6px 0;
         max-width: 75%;
     }
-
-    /* BARRA DE ESCRITURA DE ABAJO */
-    .barra-abajo {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 85%;
-        background: #ffffff;
-        border-radius: 30px;
-        display: flex;
-        align-items: center;
-        padding: 8px 20px;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.2);
-        z-index: 9999;
-    }
-    .campo {
-        flex: 1;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        color: #333;
-        background: transparent;
-        padding: 5px;
-    }
-    .boton {
-        background: #25c26e;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        margin-left: 10px;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -145,39 +145,29 @@ st.markdown("""
 # Título
 st.markdown("<div class='titulo'>JARVIS - ASISTENTE INTELIGENTE</div>", unsafe_allow_html=True)
 
-# Círculo pequeño
+# Círculo animado
 st.markdown("""
-<div style="text-align:center; margin-bottom:15px;">
-    <div style="width:55px; height:55px; background:#00eeff; border-radius:50%; display:inline-block; box-shadow:0 0 20px #00eeff;"></div>
+<div class='circulo'>
+    <div class='centro'></div>
+    <div class='anillo'></div>
+    <div class='anillo anillo2'></div>
+    <div class='anillo anillo3'></div>
 </div>
 """, unsafe_allow_html=True)
 
 
-# 💬 MOSTRAR CHAT
-caja = "<div class='caja-chat'>"
-for tipo, texto in st.session_state.chat:
-    if tipo == "tu":
-        caja += f"<div class='mensaje-tu'><b>Tú:</b> {texto}</div>"
-    else:
-        caja += f"<div class='mensaje-jarvis'><b>Jarvis:</b> {texto}</div>"
-caja += "</div>"
-
-st.markdown(caja, unsafe_allow_html=True)
-
-
-# 📥 BARRA DE ESCRITURA (DONDE PUEDES ESCRIBIR Y MANDAR)
+# 📥 BARRA DE ARRIBA: ESTA SÍ SE QUEDA, ES LA QUE SIRVE
 col1, col2 = st.columns([8.5, 1.5])
+texto = ""
+enviar = False
 
 with col1:
-    # AQUÍ ESCRIBES
-    texto = st.text_input("", placeholder="Escribe tu mensaje aquí...", label_visibility="collapsed", key="entrada_mensaje")
-
+    texto = st.text_input("", placeholder="Escribe tu mensaje aquí...", label_visibility="collapsed", key="barra_arriba_que_sirve")
 with col2:
-    # AQUÍ MANDAS (SE PUEDE PICAR SIN PROBLEMAS)
-    enviar = st.button("✔️", key="boton_enviar")
+    enviar = st.button("✔️", key="boton_arriba_funcional")
 
 
-# ⚙️ CUANDO DAS CLIC, SE MANDA EL MENSAJE
+# ⚙️ PROCESAR MENSAJE
 if enviar and texto.strip() != "":
     st.session_state.chat.append(("tu", texto))
     respuesta = responder(texto)
@@ -185,10 +175,16 @@ if enviar and texto.strip() != "":
     st.rerun()
 
 
-# Barra visible
-st.markdown("""
-<div class='barra-abajo'>
-    <input type='text' class='campo' placeholder="Escribe tu mensaje aquí...">
-    <div class='boton'>✔️</div>
-</div>
-""", unsafe_allow_html=True)
+# 💬 MOSTRAR CHAT
+caja = "<div class='caja-chat'>"
+for tipo, texto_mensaje in st.session_state.chat:
+    if tipo == "tu":
+        caja += f"<div class='mensaje-tu'><b>Tú:</b> {texto_mensaje}</div>"
+    else:
+        caja += f"<div class='mensaje-jarvis'><b>Jarvis:</b> {texto_mensaje}</div>"
+caja += "</div>"
+
+st.markdown(caja, unsafe_allow_html=True)
+
+
+# ❌ YA NO HAY BARRA DE ABAJO, SE QUITÓ POR COMPLETO
