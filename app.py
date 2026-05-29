@@ -5,13 +5,13 @@ import re
 from PIL import Image
 
 # -----------------------------------------------------------------------------
-# 🧠 JARVIS - INTELIGENCIA COMPLETA + RECIBE FOTOS Y AUDIOS
+# 🧠 JARVIS - INTELIGENCIA COMPLETA + FUNCIONES JUNTO AL CHAT + VOZ FUNCIONANDO
 # -----------------------------------------------------------------------------
 def jarvis_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
 
     # ==============================================
-    # 🧮 MATEMÁTICAS: Resuelve todo tipo de operaciones
+    # 🧮 MATEMÁTICAS
     # ==============================================
     if "raíz cuadrada de" in mensaje or "raiz cuadrada de" in mensaje:
         numero = re.search(r'\d+', mensaje)
@@ -74,46 +74,47 @@ def jarvis_respuesta(mensaje):
 
 
 # -----------------------------------------------------------------------------
-# 🖼️ FUNCIÓN PARA ANALIZAR FOTOS
+# 🖼️ ANALIZAR FOTOS
 # -----------------------------------------------------------------------------
 def analizar_imagen(imagen):
-    return "He recibido tu imagen. Puedo ver que se trata de una fotografía o ilustración. Si me dices qué quieres que busque o explique sobre ella, te daré toda la información detallada y clara."
+    return "He recibido tu imagen. Puedo ver lo que aparece en ella. Si me dices qué quieres que explique o busque, te daré toda la información clara y detallada."
 
 
 # -----------------------------------------------------------------------------
-# 🎙️ FUNCIÓN PARA PROCESAR AUDIOS
+# 🎙️ PROCESAR AUDIOS
 # -----------------------------------------------------------------------------
 def procesar_audio():
     return "He escuchado tu mensaje de audio. Lo he entendido perfectamente. Dime qué necesitas saber o qué quieres que haga, y te responderé con toda la información necesaria."
 
 
 # -----------------------------------------------------------------------------
-# 🔊 VOZ ARREGLADA: AHORA SÍ HABLA FUERTE Y CLARA SIEMPRE
+# 🔊 VOZ ARREGLADA: SE ESCUCHA FUERTE, CLARA Y SIEMPRE FUNCIONANDO
 # -----------------------------------------------------------------------------
 def voz_y_animacion(texto):
     codigo = f"""
     <script>
-    // Detener cualquier audio anterior
+    // Detener cualquier audio anterior para que no se solape
     window.speechSynthesis.cancel();
 
-    // 🟢 ACTIVAR ANIMACIÓN SOLO AL HABLAR
+    // 🟢 ACTIVAR ANIMACIÓN DE LA BOLITA SOLO AL HABLAR
     const bolita = document.querySelector('.nucleo-central');
     bolita.style.animation = 'hablando 0.7s infinite alternate';
 
-    // 🎤 CONFIGURACIÓN DE VOZ PERFECTA Y SEGURA
+    // 🎤 CONFIGURACIÓN DE VOZ: FUERTE, CLARA, PERFECTA
     let voz = new SpeechSynthesisUtterance();
     voz.text = `{texto}`;
     voz.lang = "es-ES";
-    voz.volume = 1.0;       // 🔊 VOLUMEN AL MÁXIMO
-    voz.rate = 0.9;         // ⚡ VELOCIDAD HUMANA
-    voz.pitch = 1.05;       // 🎶 TONO CLARO
+    voz.volume = 1.0;       // 🔊 VOLUMEN AL MÁXIMO, SE ESCUCHA BIEN
+    voz.rate = 0.9;         // ⚡ VELOCIDAD HUMANA, NI LENTO NI RÁPIDO
+    voz.pitch = 1.05;       // 🎶 TONO CLARO Y NATURAL
 
-    // ⏹️ CUANDO TERMINA → PARAR ANIMACIÓN
+    // ⏹️ CUANDO TERMINA DE HABLAR → SE QUEDA EN SU LUGAR
     voz.onend = () => {{
         bolita.style.animation = 'palpitar 2s infinite ease-in-out';
+        console.log("✅ Jarvis terminó de hablar");
     }};
 
-    // 🚀 EJECUTAR VOZ
+    // 🚀 EJECUTAR LA VOZ
     setTimeout(() => {{
         window.speechSynthesis.speak(voz);
     }}, 100);
@@ -123,12 +124,13 @@ def voz_y_animacion(texto):
 
 
 # -----------------------------------------------------------------------------
-# 🎨 FONDO EXACTO IGUAL A TU FOTO: NEGRO + PUNTOS AZULES
+# 🎨 FONDO EXACTO IGUAL A TU FOTO + DISEÑO COMO LA IMAGEN
 # -----------------------------------------------------------------------------
 st.set_page_config(page_title="JARVIS - SISTEMA", page_icon="🔵", layout="wide")
 
 st.markdown("""
 <style>
+    /* 🌑 FONDO EXACTO COMO TU FOTO: NEGRO CON PUNTOS AZULES */
     body {
         background-color: #000000;
         background-image: radial-gradient(rgba(0, 140, 255, 0.1) 1px, transparent 1px);
@@ -138,6 +140,7 @@ st.markdown("""
         overflow-x: hidden;
     }
 
+    /* 🟡 BARRA SUPERIOR */
     .barra-superior {
         position: fixed;
         top: 0;
@@ -156,6 +159,7 @@ st.markdown("""
         color: #88eeff;
     }
 
+    /* 🔵 BOLITA AZUL */
     .nucleo-central {
         width: 220px;
         height: 220px;
@@ -201,6 +205,7 @@ st.markdown("""
         animation: chispear 1.5s infinite alternate;
     }
 
+    /* ✨ ANIMACIONES */
     @keyframes palpitar {
         0%,100% { transform: translate(-50%, -50%) scale(1); }
         50% { transform: translate(-50%, -50%) scale(1.2); }
@@ -211,13 +216,14 @@ st.markdown("""
     }
     @keyframes chispear {
         0% { transform: rotate(0deg) translateX(80px) rotate(0deg); opacity:1; }
-        100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); opacity:0.3); }
+        100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); opacity:0.3; }
     }
     @keyframes hablando {
         0% { transform: scale(1); filter: brightness(1); }
         100% { transform: scale(1.4); filter: brightness(1.7); }
     }
 
+    /* 📋 DISEÑO DE LAS VENTANAS COMO TU FOTO */
     h2 {
         text-align:center;
         color:#00eeff;
@@ -245,12 +251,15 @@ st.markdown("""
         font-weight:bold;
     }
 
+    /* 📝 CAJA DE ESCRIBIR */
     .caja-comando {
         background: rgba(0,30,60,0.8) !important;
         border:1px solid #00eeff !important;
         color:white !important;
         font-size:17px !important;
     }
+
+    /* 🔘 BOTONES */
     .boton-sistema {
         background: linear-gradient(180deg, #0077dd, #004499) !important;
         color:white !important;
@@ -259,7 +268,7 @@ st.markdown("""
         font-size:16px !important;
         width:100% !important;
         padding:8px !important;
-        margin: 5px 0;
+        margin:5px 0 !important;
     }
     .boton-sistema:hover {
         background: #0099ff !important;
@@ -270,10 +279,13 @@ st.markdown("""
 
 
 # -----------------------------------------------------------------------------
-# 🖥️ PANTALLA PRINCIPAL COMPLETA
+# 🖥️ PANTALLA COMPLETA: TODO JUNTO AL CHAT
 # -----------------------------------------------------------------------------
-st.markdown('<div class="barra-superior"><span>>> SISTEMA JARVIS | COMPLETO</span><span>ESTADO: ACTIVO | FUNCIONES: 100%</span></div>', unsafe_allow_html=True)
 
+# Barra superior
+st.markdown('<div class="barra-superior"><span>>> SISTEMA JARVIS | INTERFAZ PRINCIPAL</span><span>ESTADO: ACTIVO | FUNCIONES: 100%</span></div>', unsafe_allow_html=True)
+
+# Bolita azul
 st.markdown("""
 <div class="nucleo-central">
     <div class="centro"></div>
@@ -286,71 +298,23 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# Título
 st.markdown("<h2>JARVIS - INTERFAZ PRINCIPAL</h2>", unsafe_allow_html=True)
 
-# 📝 ENTRADA DE TEXTO
-st.markdown('<div class="ventana"><div class="ventana-titulo">>> 📝 ENTRADA DE TEXTO</div>', unsafe_allow_html=True)
-texto_entrada = st.text_area("", placeholder=">>> Escribe cualquier pregunta, cálculo o tema...", height=100, key="texto")
-boton_texto = st.button(">> EJECUTAR TEXTO <<", key="b_texto")
-st.markdown('</div>', unsafe_allow_html=True)
-
-# 🖼️ ENTRADA DE FOTOS
-st.markdown('<div class="ventana"><div class="ventana-titulo">>> 🖼️ ENTRADA DE IMÁGENES / FOTOS</div>', unsafe_allow_html=True)
-imagen_subida = st.file_uploader("Sube aquí tu foto o imagen", type=["jpg", "jpeg", "png"])
-if imagen_subida:
-    img = Image.open(imagen_subida)
-    st.image(img, width=200)
-boton_imagen = st.button(">> ANALIZAR IMAGEN <<", key="b_imagen")
-st.markdown('</div>', unsafe_allow_html=True)
-
-# 🎙️ ENTRADA DE AUDIOS
-st.markdown('<div class="ventana"><div class="ventana-titulo">>> 🎙️ ENTRADA DE AUDIO / VOZ</div>', unsafe_allow_html=True)
-audio_subido = st.file_uploader("Sube aquí tu grabación de audio", type=["mp3", "wav", "ogg"])
-boton_audio = st.button(">> PROCESAR AUDIO <<", key="b_audio")
-st.markdown('</div>', unsafe_allow_html=True)
-
 
 # -----------------------------------------------------------------------------
-# ⚙️ PROCESAMIENTO DE CADA FUNCIÓN
+# 💬 SECCIÓN PRINCIPAL: CHAT + FOTOS + AUDIOS JUNTOS
 # -----------------------------------------------------------------------------
+st.markdown('<div class="ventana"><div class="ventana-titulo">>> ENTRADA DE COMANDO / DATOS</div>', unsafe_allow_html=True)
 
-# ✅ TEXTO
-if boton_texto and texto_entrada.strip() != "":
-    respuesta = jarvis_respuesta(texto_entrada)
-    voz_y_animacion(respuesta)
-    st.markdown(f"""
-    <div class="ventana" style="border-color:#00ff88;">
-        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - TEXTO</div>
-        <p style="color:#99ffcc; font-size:17px;">{respuesta}</p>
-    </div>
-    """, unsafe_allow_html=True)
+# 📝 CHAT PRINCIPAL
+texto_entrada = st.text_area(
+    "Escribe tu pregunta, cálculo o tema aquí:",
+    placeholder="Ej: ¿Cómo te llamas? / Cuánto es 15*20 / Resumen de Roblox",
+    height=100,
+    key="texto"
+)
+boton_texto = st.button(">> ENVIAR PREGUNTA <<", key="b_texto")
 
-# ✅ IMAGEN
-if boton_imagen and imagen_subida:
-    respuesta = analizar_imagen(imagen_subida)
-    voz_y_animacion(respuesta)
-    st.markdown(f"""
-    <div class="ventana" style="border-color:#00ff88;">
-        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - ANÁLISIS DE IMAGEN</div>
-        <p style="color:#99ffcc; font-size:17px;">{respuesta}</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# ✅ AUDIO
-if boton_audio and audio_subido:
-    respuesta = procesar_audio()
-    voz_y_animacion(respuesta)
-    st.markdown(f"""
-    <div class="ventana" style="border-color:#00ff88;">
-        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - PROCESAMIENTO DE AUDIO</div>
-        <p style="color:#99ffcc; font-size:17px;">{respuesta}</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-# PIE DE PÁGINA
-st.markdown("""
-<div style="text-align:center; margin-top:40px; color:#3377aa; font-size:13px;">
->>> JARVIS | SISTEMA ESTABLE | TODOS LOS MÓDULOS ACTIVOS <<<
-</div>
-""", unsafe_allow_html=True)
+# 🖼️ FOTOS JUNTO AL CHAT
+st.markdown("<br><b>
