@@ -2,64 +2,69 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 # -----------------------------------------------------------------------------
-# 🧠 SISTEMA DE INTELIGENCIA: ENTIENDE TODO, DETECTA BIEN PALABRAS Y CÁLCULOS
+# 🧠 SISTEMA DE RESPUESTAS CLARAS, RESUMIDAS Y FÁCILES DE ENTENDER
 # -----------------------------------------------------------------------------
 def sistema_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
 
-    # ==== OPERACIONES MATEMÁTICAS (detecta incluso sin acentos o con espacios) ====
-    if any(frase in mensaje for frase in ["1+1", "1 mas 1", "uno mas uno", "cuanto es 1+1", "cuanto es 1 mas 1"]):
-        return ">> SISTEMA: CÁLCULO PROCESADO\n>> OPERACIÓN: 1 + 1\n>> RESULTADO: 2\n>> ESTADO: CORRECTO | DATOS VERIFICADOS"
+    # ==== PREGUNTAS SOBRE NOMBRE E IDENTIDAD ====
+    if any(p in mensaje for p in ["como te llamas", "cual es tu nombre", "quien eres", "que eres"]):
+        return "Me llamo Asistente Inteligente. Soy una inteligencia artificial diseñada para ayudarte y responder tus preguntas."
 
-    elif any(frase in mensaje for frase in ["2+2", "2 mas 2", "dos mas dos", "cuanto es 2+2"]):
-        return ">> SISTEMA: CÁLCULO PROCESADO\n>> OPERACIÓN: 2 + 2\n>> RESULTADO: 4\n>> ESTADO: CORRECTO | DATOS VERIFICADOS"
+    # ==== OPERACIONES MATEMÁTICAS ====
+    elif any(p in mensaje for p in ["1+1", "1 mas 1", "cuanto es 1+1", "cuanto es 1 mas 1"]):
+        return "1 + 1 = 2. Es el resultado correcto y exacto."
 
-    elif any(frase in mensaje for frase in ["3+5", "3 mas 5", "tres mas cinco", "cuanto es 3+5"]):
-        return ">> SISTEMA: CÁLCULO PROCESADO\n>> OPERACIÓN: 3 + 5\n>> RESULTADO: 8\n>> ESTADO: CORRECTO | DATOS VERIFICADOS"
+    elif any(p in mensaje for p in ["2+2", "2 mas 2", "cuanto es 2+2"]):
+        return "2 + 2 = 4. Resultado confirmado y correcto."
 
-    elif any(frase in mensaje for frase in ["4+4", "4 mas 4", "cuatro mas cuatro"]):
-        return ">> SISTEMA: CÁLCULO PROCESADO\n>> OPERACIÓN: 4 + 4\n>> RESULTADO: 8\n>> ESTADO: CORRECTO | DATOS VERIFICADOS"
+    elif any(p in mensaje for p in ["3+5", "3 mas 5", "cuanto es 3+5"]):
+        return "3 + 5 = 8. Operación resuelta correctamente."
 
-    elif any(frase in mensaje for frase in ["5+5", "5 mas 5", "cinco mas cinco"]):
-        return ">> SISTEMA: CÁLCULO PROCESADO\n>> OPERACIÓN: 5 + 5\n>> RESULTADO: 10\n>> ESTADO: CORRECTO | DATOS VERIFICADOS"
+    elif any(p in mensaje for p in ["4+4", "4 mas 4"]):
+        return "4 + 4 = 8. Datos verificados."
 
-    elif any(palabra in mensaje for palabra in ["cuanto es", "calcula", "resuelve", "operacion", "cuanto da"]):
-        return ">> SISTEMA: SOLICITUD RECIBIDA\n>> MENSAJE: OPERACIÓN MATEMÁTICA\n>> RESPUESTA: INDIQUE LOS VALORES EXACTOS\n>> ESTADO: ESPERANDO DATOS..."
+    elif any(p in mensaje for p in ["5+5", "5 mas 5"]):
+        return "5 + 5 = 10. Resultado exacto."
 
-    # ==== IDENTIDAD Y FUNCIONES ====
-    elif any(palabra in mensaje for palabra in ["quien eres", "que eres", "tu nombre", "identidad", "quien te creo"]):
-        return ">> SISTEMA: IDENTIDAD\n>> NOMBRE: ASISTENTE AVANZADO\n>> TIPO: INTELIGENCIA ARTIFICIAL\n>> PROPÓSITO: PROCESAR, RESPONDER, ASISTIR\n>> ESTADO: ACTIVO | LISTO PARA OPERAR"
+    elif any(p in mensaje for p in ["cuanto es", "calcula", "resuelve", "operacion"]):
+        return "Dime qué números y operación quieres que calcule, y te daré el resultado inmediatamente."
 
-    elif any(palabra in mensaje for palabra in ["que puedes hacer", "funciones", "capacidades", "para que sirves"]):
-        return ">> SISTEMA: CAPACIDADES\n>> - PROCESAR INFORMACIÓN\n>> - RESOLVER CÁLCULOS\n>> - RESPONDER CONSULTAS\n>> - ANALIZAR DATOS\n>> - INTERACTUAR CON USUARIO\n>> ESTADO: TODOS LOS SISTEMAS OPERATIVOS"
+    # ==== FUNCIONES Y CAPACIDADES ====
+    elif any(p in mensaje for p in ["que puedes hacer", "para que sirves", "funciones"]):
+        return "Puedo resolver cálculos, responder tus dudas, mantener conversaciones y ayudarte en lo que necesites. Estoy aquí para servirte."
 
     # ==== SALUDOS Y CONEXIÓN ====
-    elif any(palabra in mensaje for palabra in ["hola", "conectado", "activo", "buenos dias", "buenas tardes", "que tal"]):
-        return ">> SISTEMA: CONEXIÓN ESTABLECIDA\n>> MENSAJE: HOLA USUARIO\n>> ESTADO: SISTEMA ACTIVO\n>> INFORMACIÓN: LISTO PARA RECIBIR COMANDOS\n>> ESPERANDO INSTRUCCIONES..."
+    elif any(p in mensaje for p in ["hola", "buenos dias", "buenas", "que tal"]):
+        return "¡Hola! Estoy conectado y listo para ayudarte. Dime qué necesitas."
 
-    elif any(palabra in mensaje for palabra in ["adios", "desconectar", "apagar", "hasta luego", "salir"]):
-        return ">> SISTEMA: DESCONEXIÓN SOLICITADA\n>> MENSAJE: HASTA PRONTO\n>> ESTADO: EN REPOSO\n>> DATOS GUARDADOS CORRECTAMENTE\n>> FIN DE TRANSMISIÓN"
+    elif any(p in mensaje for p in ["adios", "desconectar", "hasta luego"]):
+        return "Hasta luego. Aquí estaré esperando cuando me necesites."
 
-    # ==== RESPUESTA GENERAL ====
+    # ==== AGRADECIMIENTOS ====
+    elif any(p in mensaje for p in ["gracias", "te agradezco"]):
+        return "Es un placer ayudarte. Estoy aquí para lo que quieras."
+
+    # ==== RESPUESTA GENERAL CLARA ====
     else:
-        return f">> SISTEMA: DATOS RECIBIDOS\n>> MENSAJE: {mensaje.upper()}\n>> ANÁLISIS: INFORMACIÓN PROCESADA\n>> ESTADO: COMPRENDIDO\n>> RESPUESTA: INDIQUE SIGUIENTE COMANDO\n>> SISTEMA OPERATIVO AL 100%"
+        return "Entendido perfectamente. Puedes hacerme cualquier pregunta o darme cualquier instrucción, yo te responderé con claridad."
 
 
 # -----------------------------------------------------------------------------
-# 🎤 VOZ PERFECTA: VELOCIDAD 0.9 (HUMANA), CLARA, FUERTE, NUNCA SE CORTA
+# 🎤 VOZ PERFECTA: CLARA, VELOCIDAD HUMANA, NUNCA SE CORTA
 # -----------------------------------------------------------------------------
 def reproducir_voz(texto):
     codigo = f"""
     <script>
-    window.speechSynthesis.cancel(); // Limpia audio anterior
+    window.speechSynthesis.cancel();
 
     let voz = new SpeechSynthesisUtterance();
-    voz.text = `{texto.replace('>>', ' ')}`; // Quitamos símbolos para que suene natural
+    voz.text = `{texto}`;
     voz.lang = "es-ES";
-    voz.volume = 1.0;          // 🔊 VOLUMEN MÁXIMO
-    voz.rate = 0.9;            // ⚡ VELOCIDAD IGUAL A LA HUMANA (PERFECTA)
-    voz.pitch = 1.08;          // 🎶 TONO TECNOLÓGICO PERO NATURAL
-    voz.onend = () => console.log("✅ Audio completo");
+    voz.volume = 1.0;
+    voz.rate = 0.9;        // Velocidad perfecta, como hablamos nosotros
+    voz.pitch = 1.05;      // Tono claro y natural
+    voz.onend = () => console.log("Respuesta terminada");
 
     window.speechSynthesis.speak(voz);
     </script>
@@ -68,13 +73,13 @@ def reproducir_voz(texto):
 
 
 # -----------------------------------------------------------------------------
-# 🎨 INTERFAZ VISUAL: EXACTAMENTE COMO LA FOTO - ESTILO SISTEMA TECNOLÓGICO
+# 🎨 INTERFAZ IGUAL QUE LA FOTO - DISEÑO ESPECTACULAR
 # -----------------------------------------------------------------------------
 st.set_page_config(page_title="SISTEMA AVANZADO", page_icon="⚡", layout="wide")
 
 st.markdown("""
 <style>
-    /* 🌑 FONDO OSCURO COMO MONITOR DE SISTEMA */
+    /* FONDO OSCURO CON EFECTO DE SISTEMA */
     body {
         background-color: #050505;
         background-image: radial-gradient(rgba(0, 120, 255, 0.08) 1px, transparent 1px);
@@ -84,7 +89,7 @@ st.markdown("""
         overflow-x: hidden;
     }
 
-    /* 🟡 LÍNEAS DE DATOS ARRIBA */
+    /* BARRA SUPERIOR */
     .barra-superior {
         position: fixed;
         top: 0;
@@ -103,7 +108,7 @@ st.markdown("""
         color: #88eeff;
     }
 
-    /* 🔵 NÚCLEO CENTRAL QUE EXPLOTA Y BRILLA (IGUAL QUE EN LA FOTO) */
+    /* NÚCLEO AZUL QUE BRILLA Y EXPLOTA */
     .nucleo-central {
         width: 220px;
         height: 220px;
@@ -151,7 +156,6 @@ st.markdown("""
         animation: chispear 1.5s infinite alternate;
     }
 
-    /* Animaciones del núcleo */
     @keyframes palpitar {
         0%,100% { transform: translate(-50%, -50%) scale(1); }
         50% { transform: translate(-50%, -50%) scale(1.2); }
@@ -167,7 +171,7 @@ st.markdown("""
         100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); opacity:0.3; }
     }
 
-    /* 📋 VENTANAS DE DATOS (COMO EN LA IMAGEN) */
+    /* VENTANAS DE DATOS */
     .ventana {
         background: rgba(0, 20, 40, 0.75);
         border: 1px solid #00aaff;
@@ -189,7 +193,7 @@ st.markdown("""
         color: #ffffff;
     }
 
-    /* 📥 CAJA DE ENTRADA */
+    /* CAJA DE ESCRIBIR */
     .caja-comando {
         background: rgba(0, 30, 60, 0.8);
         border: 1px solid #00eeff !important;
@@ -200,7 +204,7 @@ st.markdown("""
         box-shadow: inset 0 0 10px #002244 !important;
     }
 
-    /* 🔘 BOTÓN ESTILO SISTEMA */
+    /* BOTÓN */
     .boton-sistema {
         background: linear-gradient(180deg, #0077dd, #004499) !important;
         color: white !important;
@@ -220,7 +224,7 @@ st.markdown("""
         box-shadow: 0 0 20px #00ccff !important;
     }
 
-    /* 📍 TEXTO FLOTANTE */
+    /* TEXTO CLARO */
     .etiqueta {
         color: #44aaff;
         font-size: 14px;
@@ -232,20 +236,19 @@ st.markdown("""
 
 
 # -----------------------------------------------------------------------------
-# 🖥️ ESTRUCTURA DE LA PANTALLA
+# 🖥️ ESTRUCTURA DE LA PÁGINA
 # -----------------------------------------------------------------------------
 
-# Barra superior como en sistemas
+# Barra superior
 st.markdown('<div class="barra-superior"> <span>>> SISTEMA OPERATIVO AVANZADO v4.2.1</span> <span>ESTADO: ACTIVO | SEGURIDAD: ALTA</span> </div>', unsafe_allow_html=True)
 
-# 🔵 NÚCLEO BRILLANTE CENTRAL (IGUAL QUE EN TU FOTO)
+# Núcleo brillante
 st.markdown("""
 <div class="nucleo-central">
     <div class="centro"></div>
     <div class="rayo1"></div>
     <div class="rayo2"></div>
     <div class="rayo3"></div>
-    <!-- Chispas pequeñas -->
     <div class="chispa" style="top:20%; left:60%"></div>
     <div class="chispa" style="top:70%; left:30%"></div>
     <div class="chispa" style="top:40%; left:80%"></div>
@@ -253,44 +256,43 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Título principal
+# Título
 st.markdown("<h2 style='text-align:center; color:#00eeff; text-shadow:0 0 15px #00aaff; margin:-20px 0 40px;'>INTERFAZ PRINCIPAL - CONECTADO</h2>", unsafe_allow_html=True)
 
-# 📋 VENTANA DE COMANDOS
+# Entrada de datos
 st.markdown('<div class="ventana"> <div class="ventana-titulo">>> ENTRADA DE DATOS</div>', unsafe_allow_html=True)
 
 texto_entrada = st.text_area(
     "",
-    placeholder=">>> ESCRIBA SU COMANDO O CONSULTA... (Ej: cuanto es 1 mas 1 | quien eres)",
+    placeholder=">>> Escribe tu pregunta o comando... (Ej: ¿Cómo te llamas? / Cuánto es 1+1)",
     height=100,
-    key="entrada",
-    help="Escribe cualquier instrucción y el sistema procesará la información"
+    key="entrada"
 )
 
-boton_ejecutar = st.button(">> EJECUTAR COMANDO <<", key="boton", help="Procesar y reproducir respuesta")
+boton_ejecutar = st.button(">> EJECUTAR COMANDO <<", key="boton")
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
-# ⚙️ PROCESAMIENTO Y SALIDA
+# ⚙️ RESULTADO FINAL
 # -----------------------------------------------------------------------------
 if boton_ejecutar and texto_entrada.strip() != "":
-    # Obtener respuesta formateada estilo sistema
+    # Obtener respuesta CLARA Y RESUMIDA
     respuesta = sistema_respuesta(texto_entrada)
 
-    # 🎤 HABLAR: VELOCIDAD HUMANA, CLARA, FUERTE, COMPLETA ✅
+    # Reproducir voz PERFECTA
     reproducir_voz(respuesta)
 
-    # 📤 MOSTRAR RESPUESTA EN VENTANA DE SISTEMA
+    # Mostrar respuesta en pantalla
     st.markdown(f"""
     <div class="ventana" style="border-color:#00ff88; box-shadow:0 0 20px rgba(0,255,136,0.3);">
         <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA DE DATOS</div>
-        <pre style="margin:0; font-size:17px; color:#99ffcc; white-space:pre-wrap;">{respuesta}</pre>
+        <p style="margin:0; font-size:18px; color:#99ffcc;">{respuesta}</p>
     </div>
     """, unsafe_allow_html=True)
 
 
-# Pie de página estilo sistema
+# Pie de página
 st.markdown("""
 <div style="text-align:center; margin-top:50px; color:#3377aa; font-size:13px;">
 >>> SISTEMA ESTABLE | CONEXIÓN PERMANENTE | TODOS LOS MÓDULOS ACTIVOS <<<
