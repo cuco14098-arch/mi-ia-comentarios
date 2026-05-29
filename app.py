@@ -1,3 +1,4 @@
+
 import streamlit as st
 import math
 import re
@@ -33,7 +34,7 @@ def responder(mensaje):
         return f"He entendido: '{mensaje}'. Te explico todo lo que sé sobre este tema con gusto."
 
 
-# 🎨 ESTILOS - SOLO QUITAMOS LA BARRA DE ABAJO
+# 🎨 ESTILOS - SOLO BORRAMOS LA DE ABAJO
 st.markdown("""
 <style>
     /* Fondo de pantalla */
@@ -43,21 +44,22 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
 
-    /* ❌ OCULTAR COSAS QUE NO QUEREMOS */
+    /* ❌ OCULTAR LO DE STREAMLIT */
     #MainMenu, footer, header, .stException, .stDeployButton {
         display: none !important;
         visibility: hidden !important;
     }
 
-    /* ❌ AQUÍ ES LO IMPORTANTE: QUITAR SOLO LA BARRA DE ABAJO */
-    div[data-testid="stVerticalBlock"] > div:last-child .stTextInput,
-    div[data-testid="stVerticalBlock"] > div:last-child .stButton,
-    .barra-abajo-falsa, .barra-fija {
+    /* 🔴 LO IMPORTANTE: SOLO OCULTAR LA BARRA DE ABAJO */
+    div[data-testid="stVerticalBlock"] > div:nth-last-child(1):has(.stTextInput),
+    div[data-testid="stVerticalBlock"] > div:nth-last-child(1):has(.stButton),
+    .barra-abajo, .barra-fija, .falsa-barra {
         display: none !important;
         visibility: hidden !important;
         height: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
+        border: none !important;
     }
 
     /* 🔤 TÍTULO */
@@ -104,7 +106,7 @@ st.markdown("""
         100% {opacity: 0; width:160px; height:160px;}
     }
 
-    /* 💬 CAJA DE CHAT (BLANCA, LETRAS NEGRAS) */
+    /* 💬 CAJA DE CHAT */
     .caja-chat {
         width: 90%;
         height: 65vh;
@@ -139,13 +141,13 @@ st.markdown("""
 
 
 # --------------------------
-# PANTALLA PRINCIPAL
+# PANTALLA
 # --------------------------
 
 # Título
 st.markdown("<div class='titulo'>JARVIS - ASISTENTE INTELIGENTE</div>", unsafe_allow_html=True)
 
-# Círculo animado
+# Círculo
 st.markdown("""
 <div class='circulo'>
     <div class='centro'></div>
@@ -156,18 +158,18 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ARRIBA: ESTA SÍ SE QUEDA, ES LA QUE SIRVE
+# 🟢 BARRA DE ARRIBA: ESTA SÍ SE QUEDA, ES LA BUENA
 col1, col2 = st.columns([8.5, 1.5])
 texto = ""
 enviar = False
 
 with col1:
-    texto = st.text_input("", placeholder="Escribe tu mensaje aquí...", label_visibility="collapsed", key="barra_arriba_que_sirve")
+    texto = st.text_input("", placeholder="Escribe tu mensaje aquí...", label_visibility="collapsed", key="barra_sola_que_queda")
 with col2:
-    enviar = st.button("✔️", key="boton_arriba_funcional")
+    enviar = st.button("✔️", key="boton_que_si_funciona")
 
 
-# ⚙️ PROCESAR MENSAJE
+# ⚙️ ENVIAR MENSAJE
 if enviar and texto.strip() != "":
     st.session_state.chat.append(("tu", texto))
     respuesta = responder(texto)
@@ -175,7 +177,7 @@ if enviar and texto.strip() != "":
     st.rerun()
 
 
-# 💬 MOSTRAR CHAT
+# 💬 MOSTRAR MENSAJES
 caja = "<div class='caja-chat'>"
 for tipo, texto_mensaje in st.session_state.chat:
     if tipo == "tu":
@@ -187,4 +189,4 @@ caja += "</div>"
 st.markdown(caja, unsafe_allow_html=True)
 
 
-# ❌ YA NO HAY BARRA DE ABAJO, SE QUITÓ POR COMPLETO
+# ❌ AQUÍ YA NO PONGO NADA, SE QUITÓ LA OTRA BARRA POR COMPLETO
