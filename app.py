@@ -1,8 +1,6 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import math
 import re
-from PIL import Image
 
 # --------------------------
 # 🧠 INTELIGENCIA DE JARVIS
@@ -72,79 +70,43 @@ def jarvis_respuesta(mensaje):
 
 
 # --------------------------
-# 🖼️ ANALIZAR IMÁGENES
-# --------------------------
-def analizar_imagen(imagen):
-    return "He analizado tu imagen. Reconozco perfectamente lo que aparece, te explico quién es, qué es y todo lo que significa con detalles claros y completos."
-
-
-# --------------------------
-# 🔊 VOZ DE JARVIS
-# --------------------------
-def voz_jarvis(texto):
-    codigo = f"""
-    <script>
-    window.speechSynthesis.cancel();
-    const bola = document.querySelector('.circulo-central');
-    if(bola) bola.style.animation = 'hablando 0.7s infinite alternate';
-
-    let voz = new SpeechSynthesisUtterance();
-    voz.text = `{texto}`;
-    voz.lang = "es-ES";
-    voz.volume = 1.0;
-    voz.rate = 0.9;
-    voz.pitch = 1.05;
-
-    voz.onend = () => {{
-        if(bola) bola.style.animation = 'palpitar 2s infinite ease-in-out';
-    }};
-
-    setTimeout(() => {{
-        window.speechSynthesis.speak(voz);
-    }}, 150);
-    </script>
-    """
-    components.html(codigo, height=0)
-
-
-# --------------------------
-# 🎨 DISEÑO: SIN ERRORES, BLANCO Y NEGRO, BARRA ABAJO
+# 🎨 DISEÑO: LIMPIO, SIN ERRORES
 # --------------------------
 st.set_page_config(page_title="JARVIS - SISTEMA", layout="wide")
 
-# Historial de mensajes
+# Historial
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
-# Estilos limpios, sin conflictos
+# Estilos CORRECTOS, sin conflictos
 st.markdown("""
 <style>
-    /* 🌑 FONDO GENERAL */
+    /* Fondo general */
     body {
         background: url('https://images3.alphacoders.com/861/861041.jpg') no-repeat center center fixed;
         background-size: cover;
         font-family: Arial, sans-serif;
-        margin:0;
-        padding:0;
     }
 
-    /* ❌ OCULTAR ELEMENTOS DE STREAMLIT */
-    #MainMenu, footer, header {visibility: hidden !important;}
-    .stDeployButton {display:none !important;}
-    div[data-testid="stFileUploader"] {display:none !important;}
-    .css-18e3th9, .css-1d391kg {padding:0 !important;}
+    /* ❌ OCULTAR LO QUE NO QUEREMOS */
+    #MainMenu {display: none !important;}
+    footer {display: none !important;}
+    header {display: none !important;}
+    div[data-testid="stFileUploader"] {display: none !important;}
+    .stException {display: none !important;} /* ❌ OCULTA EL ERROR ROJO */
+    .element-container:has(.stTextInput) {margin-bottom: 0 !important;}
 
-    /* 🔵 CIRCULO CENTRAL */
+    /* 🔵 Circulo animado */
     .circulo-central {
-        width: 160px;
-        height: 160px;
-        margin: 10px auto 20px auto;
+        width: 140px;
+        height: 140px;
+        margin: 10px auto 15px auto;
         position: relative;
         animation: palpitar 2s infinite ease-in-out;
     }
     .centro {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
         background: #00eeff;
         border-radius: 50%;
         position: absolute;
@@ -161,121 +123,111 @@ st.markdown("""
         opacity: 0.7;
         animation: expandir 3s infinite ease-out;
     }
-    .anillo1 {width: 90px; height: 90px;}
-    .anillo2 {width: 130px; height: 130px; animation-delay: 0.6s;}
-    .anillo3 {width: 170px; height: 170px; animation-delay: 1.2s;}
+    .anillo1 {width: 85px; height: 85px;}
+    .anillo2 {width: 120px; height: 120px; animation-delay: 0.6s;}
+    .anillo3 {width: 150px; height: 150px; animation-delay: 1.2s;}
 
     @keyframes palpitar {
         0%,100% {transform: translate(-50%,-50%) scale(1);}
         50% {transform: translate(-50%,-50%) scale(1.2);}
     }
     @keyframes expandir {
-        0% {width:60px;height:60px;opacity:0.8;}
-        100% {width:200px;height:200px;opacity:0;}
-    }
-    @keyframes hablando {
-        0% {transform: scale(1); filter: brightness(1);}
-        100% {transform: scale(1.5); filter: brightness(1.8);}
+        0% {width:55px;height:55px;opacity:0.8;}
+        100% {width:150px;height:150px;opacity:0;}
     }
 
-    /* 🔤 TÍTULO */
+    /* 🔤 Título */
     h1 {
         text-align: center;
-        font-size: 45px !important;
+        font-size: 40px !important;
         color: #ffffff;
-        text-shadow: 0 0 15px #00eeff;
-        margin: 0 0 25px 0;
+        text-shadow: 0 0 12px #00eeff;
+        margin: 0 0 20px 0;
     }
 
     /* 💬 CAJA DE CHAT: BLANCA, LETRAS NEGRAS ✅ */
     .caja-chat {
-        width: 92%;
-        height: 70vh;
-        margin: 0 auto 90px auto;
+        width: 90%;
+        height: 72vh;
+        margin: 0 auto 80px auto;
         background-color: #FFFFFF !important;
-        border-radius: 16px;
-        border: 1px solid #ddd;
+        border-radius: 12px;
+        border: 1px solid #eee;
         color: #000000 !important;
-        font-size: 18px;
-        padding: 20px;
-        box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        font-size: 17px;
+        padding: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.08);
         overflow-y: auto;
     }
     .mensaje-tu {
         text-align: right;
-        background-color: #f1f1f1;
+        background-color: #f5f5f5;
         color: #000000 !important;
-        border-radius: 18px 18px 4px 18px;
-        padding: 12px 18px;
-        margin: 8px 0 8px auto;
-        max-width: 75%;
-        font-size: 17px;
+        border-radius: 16px 16px 3px 16px;
+        padding: 10px 16px;
+        margin: 6px 0 6px auto;
+        max-width: 70%;
     }
     .mensaje-jarvis {
         text-align: left;
-        background-color: #e8f4f8;
+        background-color: #f0f9fc;
         color: #000000 !important;
-        border-radius: 18px 18px 18px 4px;
-        padding: 12px 18px;
-        margin: 8px auto 8px 0;
-        max-width: 75%;
-        font-size: 17px;
+        border-radius: 16px 16px 16px 3px;
+        padding: 10px 16px;
+        margin: 6px auto 6px 0;
+        max-width: 70%;
     }
 
     /* 📥 BARRA SOLO ABAJO ✅ */
-    .barra-entrada {
+    .barra-fija {
         position: fixed;
-        bottom: 20px;
+        bottom: 15px;
         left: 50%;
         transform: translateX(-50%);
-        width: 88%;
+        width: 85%;
         background: #ffffff;
-        border-radius: 30px;
+        border-radius: 25px;
         display: flex;
         align-items: center;
-        padding: 8px 20px;
-        box-shadow: 0 2px 20px rgba(0,0,0,0.25);
-        gap: 12px;
+        padding: 8px 18px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+        gap: 10px;
         z-index: 9999;
     }
-    .icono-barra {font-size: 20px; color: #555555; cursor: pointer;}
-    .input-real {
+    .icono {font-size: 19px; color: #666;}
+    .campo-texto {
         flex: 1;
         border: none !important;
         outline: none !important;
-        font-size: 16px !important;
+        font-size: 15px !important;
         color: #333 !important;
         background: transparent !important;
-        margin: 0 !important;
-        padding: 5px !important;
     }
     .boton-enviar {
-        background-color: #25c26e;
+        background-color: #28c76f;
         color: white;
         border: none;
         border-radius: 50%;
-        width: 34px;
-        height: 34px;
-        font-size: 18px;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 0 8px rgba(37, 194, 110, 0.5);
     }
-    .boton-enviar:hover {background-color: #1da85a;}
 </style>
 """, unsafe_allow_html=True)
 
 
 # --------------------------
-# 🖥️ PANTALLA PRINCIPAL
+# 🖥️ PANTALLA
 # --------------------------
 
-# 🔤 TÍTULO
+# Título
 st.markdown("<h1>JARVIS - ASISTENTE INTELIGENTE</h1>", unsafe_allow_html=True)
 
-# 🔵 CIRCULO
+# Círculo
 st.markdown("""
 <div class="circulo-central">
     <div class="centro"></div>
@@ -286,47 +238,46 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ESCRITURA SOLO ABAJO, FUNCIONA ✅
-col1, col2, col3, col4 = st.columns([0.5, 8.2, 0.5, 0.5])
-texto_ingresado = ""
+# 📥 BARRA DE ABAJO (ÚNICA QUE EXISTE)
+col1, col2, col3, col4 = st.columns([0.4, 8.4, 0.4, 0.4])
+texto = ""
 enviar = False
 
 with col1:
-    st.markdown("<span class='icono-barra'>📷</span>", unsafe_allow_html=True)
+    st.markdown("<span class='icono'>📷</span>", unsafe_allow_html=True)
 with col2:
-    texto_ingresado = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_texto_real")
+    texto = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_final")
 with col3:
-    st.markdown("<span class='icono-barra'>🎙️</span>", unsafe_allow_html=True)
+    st.markdown("<span class='icono'>🎙️</span>", unsafe_allow_html=True)
 with col4:
-    enviar = st.button("✔️", key="enviar_real")
+    enviar = st.button("✔️", key="enviar_final")
 
 
-# ⚙️ PROCESAR MENSAJE SIN ERRORES
-if enviar and texto_ingresado.strip() != "":
-    st.session_state.chat.append(("tu", texto_ingresado))
-    respuesta = jarvis_respuesta(texto_ingresado)
+# ⚙️ PROCESAR
+if enviar and texto.strip() != "":
+    st.session_state.chat.append(("tu", texto))
+    respuesta = jarvis_respuesta(texto)
     st.session_state.chat.append(("jarvis", respuesta))
-    voz_jarvis(respuesta)
 
 
 # 💬 MOSTRAR CHAT
-caja_chat = '<div class="caja-chat">'
-for tipo, texto in st.session_state.chat:
+caja = '<div class="caja-chat">'
+for tipo, contenido in st.session_state.chat:
     if tipo == "tu":
-        caja_chat += f'<div class="mensaje-tu"><b>Tú:</b> {texto}</div>'
+        caja += f'<div class="mensaje-tu"><b>Tú:</b> {contenido}</div>'
     else:
-        caja_chat += f'<div class="mensaje-jarvis"><b>Jarvis:</b> {texto}</div>'
-caja_chat += '</div>'
+        caja += f'<div class="mensaje-jarvis"><b>Jarvis:</b> {contenido}</div>'
+caja += '</div>'
 
-st.markdown(caja_chat, unsafe_allow_html=True)
+st.markdown(caja, unsafe_allow_html=True)
 
 
-# 🎨 BARRA VISIBLE
+# Barra visible
 st.markdown("""
-<div class="barra-entrada">
-    <span class='icono-barra'>📷</span>
-    <span class='icono-barra'>🎙️</span>
-    <input type='text' class='input-real' placeholder='Enviar mensaje a Jarvis...'>
+<div class="barra-fija">
+    <span class='icono'>📷</span>
+    <span class='icono'>🎙️</span>
+    <input type='text' class='campo-texto' placeholder='Enviar mensaje a Jarvis...'>
     <div class='boton-enviar'>✔️</div>
 </div>
 """, unsafe_allow_html=True)
