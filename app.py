@@ -4,27 +4,18 @@ from sklearn.linear_model import LogisticRegression
 import streamlit.components.v1 as components
 
 # ----------------------
-# 🧠 DATOS PARA QUE SEA INTELIGENTE (MÁS FRASES Y RESPUESTAS)
+# 🧠 DATOS Y APRENDIZAJE
 # ----------------------
 textos = [
-    # Saludos
     "hola", "hola jarvis", "buenos días", "buenas tardes", "buenas noches", "qué tal", "saludos",
-    # Despedidas
     "adiós", "hasta luego", "nos vemos", "me voy", "chao",
-    # Preguntas sobre él
     "quién eres", "cómo te llamas", "qué eres", "para qué sirves", "quién te creó",
-    # Preguntas generales
     "qué hora es", "qué día es hoy", "dime la hora", "qué fecha es",
-    # Ayuda / órdenes
     "ayúdame", "necesito ayuda", "hazme un favor", "puedes hacer algo por mí", "dime algo",
-    # Estados de ánimo
     "estoy feliz", "estoy contento", "estoy triste", "estoy mal", "estoy cansado", "estoy bien",
-    # Agradecimientos
     "gracias", "muchas gracias", "te agradezco", "muy amable",
-    # Preguntas variadas
     "qué es la inteligencia artificial", "cómo funcionas", "qué puedes hacer", "cuéntame un chiste",
     "cuéntame algo", "dime algo interesante", "cuál es tu misión", "estás ahí",
-    # Cualquier cosa
     "me gusta esto", "esto es genial", "esto es malo", "no me gusta", "está bien", "está mal"
 ]
 
@@ -34,13 +25,13 @@ etiquetas = [
     3,3,3,3,3,
     4,4,4,4,
     5,5,5,5,5,5,
-    6,6,6,6,6,
-    7,7,7,7,7,7,
+    6,6,6,6,6,6,
+    7,7,7,7,
     8,8,8,8,8,8,8,8,8,
     9,9,9,9,9,9
 ]
 
-# 🗣️ RESPUESTAS DE JARVIS (como en la película)
+# 🗣️ RESPUESTAS DE JARVIS
 respuestas = {
     1: "¡Hola señor! Qué gusto saludarte. Espero que tengas un día excelente. ¿En qué puedo servirte hoy?",
     2: "Hasta luego, señor. Aquí estaré esperando su regreso. Que tenga un buen día.",
@@ -53,23 +44,22 @@ respuestas = {
     9: "Entiendo perfectamente, señor. Tomo nota de su opinión. Soy capaz de aprender y mejorar con cada interacción. Gracias por decirme lo que piensa."
 }
 
-# 🎤 FUNCIÓN PARA QUE **HABLE** (con sonido en la página)
+# 🎤 FUNCIÓN DE VOZ CORREGIDA (AHORA SÍ FUNCIONA)
 def hablar(texto):
-    # Código mágico para que suene la voz en la pantalla
-    voz_html = f"""
+    codigo_voz = f"""
     <script>
-    const hablar = () => {
-        const mensaje = new SpeechSynthesisUtterance(`{texto}`);
-        mensaje.lang = 'es-ES';
+    function decir() {{
+        let mensaje = new SpeechSynthesisUtterance("{texto}");
+        mensaje.lang = "es-ES";
         mensaje.volume = 1;
         mensaje.rate = 1;
-        mensaje.pitch = 1.2;
+        mensaje.pitch = 1.1;
         window.speechSynthesis.speak(mensaje);
-    };
-    hablar();
+    }}
+    decir();
     </script>
     """
-    components.html(voz_html, height=0)
+    components.html(codigo_voz, height=0)
 
 # ----------------------
 # ⚙️ ENTRENAMOS EL CEREBRO
@@ -146,17 +136,16 @@ st.markdown("---")
 # 📥 CAJA PARA ESCRIBIR
 st.markdown('<div class="caja_entrada">', unsafe_allow_html=True)
 texto_usuario = st.text_input("✍️ Escribe lo que quieras decirme:", placeholder="Ej: Hola Jarvis, ¿quién eres?")
-enviar = st.button("🔊 HABLAR Y RESPONDER", type="primary", help="Jarvis te contestará con voz y texto")
+enviar = st.button("🔊 HABLAR Y RESPONDER", type="primary")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # ⚙️ PROCESAMOS Y HACEMOS QUE HABLE
 if enviar and texto_usuario.strip() != "":
-    # Buscamos la respuesta
     prediccion = modelo.predict(vectorizador.transform([texto_usuario.lower()]))[0]
     respuesta_final = respuestas.get(prediccion, 
         "Entiendo lo que dices señor. Es una información muy interesante. Estoy aprendiendo cada día más gracias a usted. ¿Quiere decirme algo más?")
     
-    # 🎤 ¡AQUÍ ES DONDE HABLA!
+    # 🎤 ¡AQUÍ HABLA!
     hablar(respuesta_final)
     
     # 📤 MOSTRAMOS EN PANTALLA
@@ -164,4 +153,4 @@ if enviar and texto_usuario.strip() != "":
 
 # 📌 PIE DE PÁGINA
 st.markdown("---")
-st.markdown('<p style="text-align:center; color:#80dfff; font-size:16px;">💡 Versión 2.0 • Creado 100% por ti • JARVIS que habla y responde 🎧</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center; color:#80dfff; font-size:16px;">💡 Versión 2.1 • Creado 100% por ti • JARVIS que habla y responde 🎧</p>', unsafe_allow_html=True)
