@@ -1,23 +1,34 @@
 import streamlit as st
-import joblib
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
 
-# Cargar modelo
-modelo = joblib.load("modelo_ia.pkl")
-vec = joblib.load("vectorizador_ia.pkl")
+# Datos para entrenar la IA
+textos = [
+    "muy bueno", "excelente", "me encanta", "genial", "buen servicio", "increíble",
+    "malo", "pésimo", "terrible", "no me gustó", "horrible", "muy mal"
+]
+etiquetas = [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
 
+# Creamos y entrenamos el modelo DIRECTAMENTE aquí
+vectorizador = CountVectorizer()
+X = vectorizador.fit_transform(textos)
+modelo = LogisticRegression()
+modelo.fit(X, etiquetas)
+
+# Interfaz de la aplicación
 st.set_page_config(page_title="Mi IA", page_icon="🧠")
 st.title("🧠 INTELIGENCIA ARTIFICIAL - CREADA POR TI ✨")
 st.subheader("¿Es un comentario POSITIVO o NEGATIVO?")
 st.markdown("---")
 
-texto = st.text_area("✍️ Escribe aquí lo que quieras analizar:")
+texto_usuario = st.text_area("✍️ Escribe aquí lo que quieras analizar:")
 
 if st.button("🔮 ANALIZAR"):
-    if not texto.strip():
+    if not texto_usuario.strip():
         st.warning("⚠️ Escribe algo primero...")
     else:
-        res = modelo.predict(vec.transform([texto]))[0]
-        if res == 1:
+        resultado = modelo.predict(vectorizador.transform([texto_usuario]))[0]
+        if resultado == 1:
             st.success("✅ COMENTARIO POSITIVO 😊")
             st.balloons()
         else:
