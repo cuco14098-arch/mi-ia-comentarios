@@ -5,7 +5,7 @@ import re
 from PIL import Image
 
 # -----------------------------------------------------------------------------
-# 🧠 INTELIGENCIA JARVIS: RESPONDE, LEE, RECONOCE
+# 🧠 INTELIGENCIA JARVIS: RECIBE, LEE, CONTESTA
 # -----------------------------------------------------------------------------
 def jarvis_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
@@ -108,27 +108,35 @@ def voz_jarvis(texto):
 
 
 # -----------------------------------------------------------------------------
-# 🎨 DISEÑO: BARRA ESCRIBE Y ENVÍA, CHAT UNO DEBAJO DEL OTRO
+# 🎨 DISEÑO: LIMPIO, SIN AZUL FEO, BARRA CON PALOMITA ✔️
 # -----------------------------------------------------------------------------
 st.set_page_config(page_title="JARVIS - SISTEMA", layout="wide")
 
-# Historial de mensajes
+# Historial de conversación
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
+# Ocultar elementos feos de Streamlit
 st.markdown("""
 <style>
+    /* 🌑 FONDO DE ITACHI */
     body {
         background: url('https://images3.alphacoders.com/861/861041.jpg') no-repeat center center fixed;
         background-size: cover;
         font-family: Arial, sans-serif;
     }
 
+    /* ❌ QUITAR COSAS DE ARRIBA */
+    .block-container {padding-top: 1rem !important;}
+    [data-testid="stFileUploader"] {display: none !important;}
+    [data-testid="stButton"] {display: none !important;}
+    div.stTextInput {margin-bottom: 0 !important;}
+
     /* 🔵 CIRCULO CENTRAL */
     .circulo-central {
         width: 160px;
         height: 160px;
-        margin: 20px auto;
+        margin: 10px auto 20px auto;
         position: relative;
         animation: palpitar 2s infinite ease-in-out;
     }
@@ -168,73 +176,102 @@ st.markdown("""
         100% {transform: scale(1.5); filter: brightness(1.8);}
     }
 
-    /* 🟡 TÍTULO GRANDE */
+    /* 🔤 TÍTULO */
     h1 {
         text-align: center;
-        font-size: 55px !important;
+        font-size: 45px !important;
         color: #ffffff;
-        text-shadow: 0 0 20px #00eeff;
-        margin: 10px 0 30px 0;
+        text-shadow: 0 0 15px #00eeff;
+        margin: 0 0 25px 0;
     }
 
-    /* 💬 CAJA DE CHAT GRANDE: OCUPA TODO EL ESPACIO */
+    /* 💬 CAJA DE MENSAJES: SIN AZUL FEO, LIMPIO */
     .caja-chat {
-        width: 95%;
-        min-height: 400px;
-        margin: 0 auto 100px auto;
-        background-color: rgba(0, 0, 0, 0.75);
-        border-radius: 12px;
-        border: 1px solid #00eeff;
+        width: 92%;
+        height: 65vh;
+        margin: 0 auto 90px auto;
+        background-color: rgba(0, 0, 0, 0.65);
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.2);
         color: #ffffff;
-        font-size: 20px;
-        padding: 25px;
-        box-shadow: 0 0 25px rgba(0,238,255,0.3);
+        font-size: 18px;
+        padding: 20px;
+        box-shadow: 0 0 30px rgba(0,238,255,0.15);
+        overflow-y: auto;
     }
     .mensaje-tu {
         text-align: right;
-        background-color: rgba(0,120,255,0.4);
-        border-radius: 15px;
-        padding: 10px 15px;
-        margin: 8px 0;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        border-radius: 18px 18px 4px 18px;
+        padding: 12px 18px;
+        margin: 8px 0 8px auto;
+        max-width: 75%;
+        font-size: 17px;
     }
     .mensaje-jarvis {
         text-align: left;
-        background-color: rgba(0,238,255,0.2);
-        border-radius: 15px;
-        padding: 10px 15px;
-        margin: 8px 0;
+        background-color: rgba(0, 238, 255, 0.12);
+        color: #f0f9ff;
+        border-radius: 18px 18px 18px 4px;
+        padding: 12px 18px;
+        margin: 8px auto 8px 0;
+        max-width: 75%;
+        font-size: 17px;
     }
 
-    /* 📥 BARRA DE ABAJO: SE ESCRIBE Y SE ENVÍA */
-    .barra-envio {
+    /* 📥 BARRA DE ABAJO: CON PALOMITA ✔️ PARA ENVIAR */
+    .barra-entrada {
         position: fixed;
-        bottom: 25px;
+        bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        width: 85%;
+        width: 88%;
         background: #ffffff;
         border-radius: 30px;
         display: flex;
         align-items: center;
-        padding: 12px 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        gap: 10px;
-        z-index: 999;
+        padding: 10px 20px;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+        gap: 12px;
+        z-index: 9999;
     }
-    .icono {font-size: 22px; color: #444; cursor:pointer;}
-    .campo-texto {flex:1; border:none; outline:none; font-size:17px; color:#333;}
+    .icono-barra {font-size: 20px; color: #555555;}
+    .texto-entrada {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        color: #333333;
+        background: transparent;
+    }
+    .boton-enviar {
+        background-color: #0099ff;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 0 8px rgba(0,153,255,0.5);
+    }
+    .boton-enviar:hover {background-color: #0077dd;}
 </style>
 """, unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
-# 🖥️ PANTALLA
+# 🖥️ PANTALLA PRINCIPAL
 # -----------------------------------------------------------------------------
 
 # 🔤 TÍTULO
 st.markdown("<h1>JARVIS - ASISTENTE INTELIGENTE</h1>", unsafe_allow_html=True)
 
-# 🔵 CIRCULO
+# 🔵 CIRCULO ANIMADO
 st.markdown("""
 <div class="circulo-central">
     <div class="centro"></div>
@@ -245,54 +282,50 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ESCRITURA QUE SÍ ENVÍA
-col1, col2, col3 = st.columns([0.7, 8.6, 0.7])
+# 📥 BARRA DE ESCRITURA CON PALOMITA ✔️ (FUNCIONA DE VERDAD)
+col1, col2, col3, col4 = st.columns([0.6, 8, 0.6, 0.6])
+enviar_mensaje = False
+texto_recibido = ""
+
 with col2:
-    with st.container():
-        texto_entrada = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada")
-        img_archivo = st.file_uploader("", type=["jpg","jpeg","png"], label_visibility="collapsed", key="img")
-        audio_archivo = st.file_uploader("", type=["mp3","wav","ogg"], label_visibility="collapsed", key="audio")
-        enviar = st.button("📤 ENVIAR", key="btn_enviar")
+    texto_recibido = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_texto")
+with col3:
+    enviar_mensaje = st.button("✔️", key="btn_enviar_def")
+with col1:
+    st.markdown("<span class='icono-barra'>📷</span>", unsafe_allow_html=True)
+with col4:
+    st.markdown("<span class='icono-barra'>🎙️</span>", unsafe_allow_html=True)
 
 
-# 📝 PROCESAR LO QUE ENVÍAS
-if enviar and texto_entrada.strip() != "":
-    st.session_state.chat.append(("tu", texto_entrada))
-    respuesta = jarvis_respuesta(texto_entrada)
+# ⚙️ PROCESAR LO QUE ESCRIBES Y ENVÍAS
+if enviar_mensaje and texto_recibido.strip() != "":
+    # Guardar mensaje tuyo
+    st.session_state.chat.append(("tu", texto_recibido))
+    # Obtener respuesta de Jarvis
+    respuesta = jarvis_respuesta(texto_recibido)
     st.session_state.chat.append(("jarvis", respuesta))
-    voz_jarvis(respuesta)
-
-elif enviar and img_archivo is not None:
-    st.session_state.chat.append(("tu", "[Enviaste una foto / imagen]"))
-    respuesta = analizar_imagen(img_archivo)
-    st.session_state.chat.append(("jarvis", respuesta))
-    voz_jarvis(respuesta)
-
-elif enviar and audio_archivo is not None:
-    st.session_state.chat.append(("tu", "[Enviaste un mensaje de audio]"))
-    respuesta = "He escuchado tu mensaje, lo entendí perfectamente y te explico todo con detalles."
-    st.session_state.chat.append(("jarvis", respuesta))
+    # Activar voz
     voz_jarvis(respuesta)
 
 
-# 💬 MOSTRAR CHAT UNO DEBAJO DEL OTRO
-chat_html = '<div class="caja-chat">'
+# 💬 MOSTRAR TODOS LOS MENSAJES (LIMPIO, SIN AZUL FEO)
+caja_html = '<div class="caja-chat">'
 for tipo, texto in st.session_state.chat:
     if tipo == "tu":
-        chat_html += f'<div class="mensaje-tu"><b>Tú:</b> {texto}</div>'
+        caja_html += f'<div class="mensaje-tu"><b>Tú:</b> {texto}</div>'
     else:
-        chat_html += f'<div class="mensaje-jarvis"><b>Jarvis:</b> {texto}</div>'
-chat_html += '</div>'
+        caja_html += f'<div class="mensaje-jarvis"><b>Jarvis:</b> {texto}</div>'
+caja_html += '</div>'
 
-st.markdown(chat_html, unsafe_allow_html=True)
+st.markdown(caja_html, unsafe_allow_html=True)
 
 
-# 🎨 BARRA VISIBLE IGUAL QUE TU FOTO
+# 🎨 BARRA VISIBLE IGUAL QUE QUIERES
 st.markdown("""
-<div class="barra-envio">
-    <span class="icono">📷</span>
-    <span class="icono">🎙️</span>
-    <input type="text" class="campo-texto" placeholder="Enviar mensaje a Jarvis...">
-    <span class="icono">➕</span>
+<div class="barra-entrada">
+    <span class="icono-barra">📷</span>
+    <span class="icono-barra">🎙️</span>
+    <input type="text" class="texto-entrada" placeholder="Enviar mensaje a Jarvis...">
+    <div class="boton-enviar">✔️</div>
 </div>
 """, unsafe_allow_html=True)
