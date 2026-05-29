@@ -34,7 +34,7 @@ def responder(mensaje):
         return f"He entendido: '{mensaje}'. Te explico todo lo que sé sobre este tema con gusto."
 
 
-# 🎨 ESTILOS - SOLO BORRAMOS LA DE ABAJO
+# 🎨 ESTILOS - SOLO OCULTAMOS LO DE STREAMLIT, NO TOCAMOS NUESTRAS BARRAS
 st.markdown("""
 <style>
     /* Fondo de pantalla */
@@ -44,22 +44,10 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
 
-    /* ❌ OCULTAR LO DE STREAMLIT */
+    /* ❌ OCULTAR SOLO EL MENÚ, PIE DE PÁGINA Y ERRORES */
     #MainMenu, footer, header, .stException, .stDeployButton {
         display: none !important;
         visibility: hidden !important;
-    }
-
-    /* 🔴 LO IMPORTANTE: SOLO OCULTAR LA BARRA DE ABAJO */
-    div[data-testid="stVerticalBlock"] > div:nth-last-child(1):has(.stTextInput),
-    div[data-testid="stVerticalBlock"] > div:nth-last-child(1):has(.stButton),
-    .barra-abajo, .barra-fija, .falsa-barra {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
     }
 
     /* 🔤 TÍTULO */
@@ -106,11 +94,11 @@ st.markdown("""
         100% {opacity: 0; width:160px; height:160px;}
     }
 
-    /* 💬 CAJA DE CHAT */
+    /* 💬 CAJA DE CHAT (BLANCA, LETRAS NEGRAS) */
     .caja-chat {
         width: 90%;
         height: 65vh;
-        margin: 0 auto 20px auto;
+        margin: 20px auto;
         background: #FFFFFF !important;
         border-radius: 14px;
         border: 1px solid #ddd;
@@ -136,18 +124,31 @@ st.markdown("""
         margin: 6px auto 6px 0;
         max-width: 75%;
     }
+
+    /* 🟢 ESTILO DE LA BARRA QUE SÍ SE QUEDA (LA DE ARRIBA) */
+    .barra-arriba {
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background: white;
+        padding: 8px 15px;
+        border-radius: 25px;
+        box-shadow: 0 1px 4px #ccc;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 
 # --------------------------
-# PANTALLA
+# PANTALLA PRINCIPAL
 # --------------------------
 
 # Título
 st.markdown("<div class='titulo'>JARVIS - ASISTENTE INTELIGENTE</div>", unsafe_allow_html=True)
 
-# Círculo
+# Círculo animado
 st.markdown("""
 <div class='circulo'>
     <div class='centro'></div>
@@ -158,18 +159,22 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 🟢 BARRA DE ARRIBA: ESTA SÍ SE QUEDA, ES LA BUENA
-col1, col2 = st.columns([8.5, 1.5])
-texto = ""
-enviar = False
+# 🟢 >>>> AQUÍ ESTÁ LA BARRA DE ARRIBA, LA ÚNICA QUE EXISTE Y SE QUEDA <<<<
+st.markdown("<div class='barra-arriba'>", unsafe_allow_html=True)
+col1, col2 = st.columns([9, 1])
 
 with col1:
-    texto = st.text_input("", placeholder="Escribe tu mensaje aquí...", label_visibility="collapsed", key="barra_sola_que_queda")
+    # AQUÍ ESCRIBES, ESTÁ VISIBLE Y FUNCIONA
+    texto = st.text_input("", placeholder="Escribe tu mensaje aquí...", label_visibility="collapsed", key="barra_unica_definitiva")
+
 with col2:
-    enviar = st.button("✔️", key="boton_que_si_funciona")
+    # AQUÍ ESTÁ EL BOTÓN, SE PUEDE PULSAR
+    enviar = st.button("✔️", key="boton_unico_definitivo")
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 
-# ⚙️ ENVIAR MENSAJE
+# ⚙️ FUNCIÓN DE ENVIAR
 if enviar and texto.strip() != "":
     st.session_state.chat.append(("tu", texto))
     respuesta = responder(texto)
@@ -177,7 +182,7 @@ if enviar and texto.strip() != "":
     st.rerun()
 
 
-# 💬 MOSTRAR MENSAJES
+# 💬 CAJA DE CHAT
 caja = "<div class='caja-chat'>"
 for tipo, texto_mensaje in st.session_state.chat:
     if tipo == "tu":
@@ -189,4 +194,4 @@ caja += "</div>"
 st.markdown(caja, unsafe_allow_html=True)
 
 
-# ❌ AQUÍ YA NO PONGO NADA, SE QUITÓ LA OTRA BARRA POR COMPLETO
+# ❌ >>>> AQUÍ NO HAY NADA, NO ESCRIBÍ NINGUNA BARRA DE ABAJO, POR ESO NO APARECE <<<<
