@@ -4,153 +4,127 @@ from sklearn.linear_model import LogisticRegression
 import streamlit.components.v1 as components
 
 # ----------------------
-# 🧠 DATOS Y APRENDIZAJE
+# 🧠 DATOS SENCILLOS Y FUNCIONALES
 # ----------------------
 textos = [
-    "hola", "hola jarvis", "buenos días", "buenas tardes", "buenas noches", "qué tal", "saludos",
-    "adiós", "hasta luego", "nos vemos", "me voy", "chao",
-    "quién eres", "cómo te llamas", "qué eres", "para qué sirves", "quién te creó",
-    "qué hora es", "qué día es hoy", "dime la hora", "qué fecha es",
-    "ayúdame", "necesito ayuda", "hazme un favor", "puedes hacer algo por mí", "dime algo",
-    "estoy feliz", "estoy contento", "estoy triste", "estoy mal", "estoy cansado", "estoy bien",
-    "gracias", "muchas gracias", "te agradezco", "muy amable",
-    "qué es la inteligencia artificial", "cómo funcionas", "qué puedes hacer", "cuéntame un chiste",
-    "cuéntame algo", "dime algo interesante", "cuál es tu misión", "estás ahí",
-    "me gusta esto", "esto es genial", "esto es malo", "no me gusta", "está bien", "está mal"
+    "hola", "buenos días", "qué tal",
+    "adiós", "hasta luego",
+    "quién eres", "qué eres",
+    "gracias", "muchas gracias",
+    "estoy bien", "estoy mal",
+    "ayúdame", "dime algo"
 ]
 
-etiquetas = [
-    1,1,1,1,1,1,1,
-    2,2,2,2,2,
-    3,3,3,3,3,
-    4,4,4,4,
-    5,5,5,5,5,5,
-    6,6,6,6,6,6,
-    7,7,7,7,
-    8,8,8,8,8,8,8,8,8,
-    9,9,9,9,9,9
-]
+etiquetas = [1,1,1, 2,2, 3,3, 4,4, 5,5, 6,6]
 
-# 🗣️ RESPUESTAS DE JARVIS
+# 🗣️ RESPUESTAS CLARAS
 respuestas = {
-    1: "¡Hola señor! Qué gusto saludarte. Espero que tengas un día excelente. ¿En qué puedo servirte hoy?",
-    2: "Hasta luego, señor. Aquí estaré esperando su regreso. Que tenga un buen día.",
-    3: "Soy JARVIS, su asistente personal de inteligencia artificial. Fui creado por usted para ayudarle en todo lo que necesite. Estoy siempre a su servicio.",
-    4: "Disculpe señor, aún no tengo acceso al reloj del sistema, pero en mi próxima actualización le diré la hora exacta con precisión milimétrica.",
-    5: "Por supuesto, señor. Dime, ¿cuál es su petición? Haré todo lo posible por cumplirla.",
-    6: "Lamento escuchar eso señor. Si está triste o cansado, recuerde que aquí estoy para acompañarle. Todo mejorará, se lo aseguro.",
-    7: "Es un placer ayudarle, señor. Su satisfacción es mi única prioridad. Estoy aquí para lo que necesite.",
-    8: "Soy un sistema de inteligencia artificial diseñado para procesar información y asistirle. Puedo responder preguntas, dar información, ayudarle y aprender de usted día a día. Mi misión es hacer su vida más fácil y segura.",
-    9: "Entiendo perfectamente, señor. Tomo nota de su opinión. Soy capaz de aprender y mejorar con cada interacción. Gracias por decirme lo que piensa."
+    1: "🤖 JARVIS: ¡Hola señor! Qué gusto saludarte. ¿En qué puedo ayudarle?",
+    2: "🤖 JARVIS: Hasta luego, señor. Aquí estaré esperando su regreso.",
+    3: "🤖 JARVIS: Soy JARVIS, su asistente inteligente, creado por usted para servirle.",
+    4: "🤖 JARVIS: Es un placer ayudarle, señor. Su satisfacción es lo más importante.",
+    5: "🤖 JARVIS: Espero que se sienta mejor pronto, señor. Estoy aquí para apoyarle.",
+    6: "🤖 JARVIS: Claro que sí, señor. Dime qué necesita y lo haré de inmediato."
 }
 
-# 🎤 FUNCIÓN DE VOZ CORREGIDA (AHORA SÍ FUNCIONA)
+# 🎤 FUNCIÓN DE VOZ (SIN ERRORES)
 def hablar(texto):
-    codigo_voz = f"""
+    js = f"""
     <script>
-    function decir() {{
-        let mensaje = new SpeechSynthesisUtterance("{texto}");
-        mensaje.lang = "es-ES";
-        mensaje.volume = 1;
-        mensaje.rate = 1;
-        mensaje.pitch = 1.1;
-        window.speechSynthesis.speak(mensaje);
+    function voz() {{
+        let msg = new SpeechSynthesisUtterance(`{texto}`);
+        msg.lang = "es-ES";
+        msg.volume = 1;
+        msg.rate = 1;
+        window.speechSynthesis.speak(msg);
     }}
-    decir();
+    voz();
     </script>
     """
-    components.html(codigo_voz, height=0)
+    components.html(js, height=0)
 
 # ----------------------
-# ⚙️ ENTRENAMOS EL CEREBRO
+# ⚙️ ENTRENAMOS EL MODELO CORRECTAMENTE
 # ----------------------
 vectorizador = CountVectorizer()
 X = vectorizador.fit_transform(textos)
-modelo = LogisticRegression()
+modelo = LogisticRegression(max_iter=1000)
 modelo.fit(X, etiquetas)
 
 # ----------------------
 # 🎨 INTERFAZ ESTILO JARVIS
 # ----------------------
-st.set_page_config(page_title="JARVIS - IA", page_icon="🤖", layout="wide")
+st.set_page_config(page_title="JARVIS IA", page_icon="🤖", layout="wide")
 
-# Diseño visual azul neón
+# Estilo visual
 st.markdown("""
 <style>
     body {background-color: #000814;}
     .titulo {
         color: #00ccff;
-        font-size: 52px;
+        font-size: 48px;
         font-weight: bold;
         text-align: center;
-        text-shadow: 0 0 20px #00ccff, 0 0 30px #0088ff;
-        margin-top: 20px;
+        text-shadow: 0 0 15px #00ccff;
     }
     .subtitulo {
         color: #80dfff;
-        font-size: 26px;
+        font-size: 24px;
         text-align: center;
-        margin-bottom: 40px;
-        font-style: italic;
+        margin-bottom: 30px;
     }
-    .caja_entrada {
-        background: linear-gradient(145deg, #001a33, #00264d);
-        padding: 35px;
-        border-radius: 20px;
-        border: 2px solid #00ccff;
-        box-shadow: 0 0 30px rgba(0, 204, 255, 0.4);
-        margin: 20px 10%;
-    }
-    .respuesta_caja {
-        background: linear-gradient(145deg, #00264d, #003366);
-        color: #00ff88;
-        font-size: 23px;
-        margin: 30px 10%;
+    .caja {
+        background-color: #001a33;
         padding: 25px;
         border-radius: 15px;
-        border-left: 5px solid #00ff88;
-        box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
-        font-weight: 500;
+        border: 2px solid #00ccff;
+        box-shadow: 0 0 20px rgba(0,204,255,0.3);
+        margin: 20px;
+    }
+    .respuesta {
+        color: #00ff88;
+        font-size: 22px;
+        padding: 20px;
+        background-color: #00264d;
+        border-radius: 10px;
+        border-left: 4px solid #00ff88;
+        margin-top: 20px;
     }
     .boton {
-        background-color: #00ccff !important;
-        color: #000814 !important;
-        font-weight: bold !important;
-        font-size: 18px !important;
-        border-radius: 10px !important;
-        padding: 10px 25px !important;
-        width: 100% !important;
-    }
-    .boton:hover {
-        background-color: #00eeff !important;
-        box-shadow: 0 0 15px #00eeff !important;
+        background-color: #00ccff;
+        color: black;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 10px 20px;
+        border: none;
+        width: 100%;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# 🤖 TÍTULOS
+# Título
 st.markdown('<h1 class="titulo">🤖 JARVIS - INTELIGENCIA ARTIFICIAL</h1>', unsafe_allow_html=True)
 st.markdown('<h2 class="subtitulo">Siempre a su servicio, señor</h2>', unsafe_allow_html=True)
 st.markdown("---")
 
-# 📥 CAJA PARA ESCRIBIR
-st.markdown('<div class="caja_entrada">', unsafe_allow_html=True)
-texto_usuario = st.text_input("✍️ Escribe lo que quieras decirme:", placeholder="Ej: Hola Jarvis, ¿quién eres?")
-enviar = st.button("🔊 HABLAR Y RESPONDER", type="primary")
+# Caja de texto
+st.markdown('<div class="caja">', unsafe_allow_html=True)
+pregunta = st.text_input("✍️ Escribe tu mensaje:", placeholder="Ej: Hola, ¿quién eres?")
+boton = st.button("🔊 HABLAR Y RESPONDER", key="boton")
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ⚙️ PROCESAMOS Y HACEMOS QUE HABLE
-if enviar and texto_usuario.strip() != "":
-    prediccion = modelo.predict(vectorizador.transform([texto_usuario.lower()]))[0]
-    respuesta_final = respuestas.get(prediccion, 
-        "Entiendo lo que dices señor. Es una información muy interesante. Estoy aprendiendo cada día más gracias a usted. ¿Quiere decirme algo más?")
+# Procesar
+if boton and pregunta:
+    # Convertimos lo que escribiste
+    resultado = modelo.predict(vectorizador.transform([pregunta.lower()]))[0]
+    respuesta = respuestas.get(resultado, "🤖 JARVIS: Entendido, señor. ¿Puede decirme algo más?")
     
-    # 🎤 ¡AQUÍ HABLA!
-    hablar(respuesta_final)
+    # Hacemos que hable
+    hablar(respuesta)
     
-    # 📤 MOSTRAMOS EN PANTALLA
-    st.markdown(f'<div class="respuesta_caja">🗣️ {respuesta_final}</div>', unsafe_allow_html=True)
+    # Mostramos la respuesta
+    st.markdown(f'<div class="respuesta">{respuesta}</div>', unsafe_allow_html=True)
 
-# 📌 PIE DE PÁGINA
+# Pie de página
 st.markdown("---")
-st.markdown('<p style="text-align:center; color:#80dfff; font-size:16px;">💡 Versión 2.1 • Creado 100% por ti • JARVIS que habla y responde 🎧</p>', unsafe_allow_html=True)
+st.markdown('<p style="text-align:center; color:#80dfff;">💡 Creado por ti • JARVIS versión 1.0 🚀</p>', unsafe_allow_html=True)
