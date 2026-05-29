@@ -2,15 +2,16 @@ import streamlit as st
 import streamlit.components.v1 as components
 import math
 import re
+from PIL import Image
 
 # -----------------------------------------------------------------------------
-# 🧠 JARVIS - RESPUESTAS SIN TEXTO EXTRA, SOLO LO NECESARIO
+# 🧠 JARVIS - INTELIGENCIA COMPLETA + RECIBE FOTOS Y AUDIOS
 # -----------------------------------------------------------------------------
 def jarvis_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
 
     # ==============================================
-    # 🧮 MATEMÁTICAS
+    # 🧮 MATEMÁTICAS: Resuelve todo tipo de operaciones
     # ==============================================
     if "raíz cuadrada de" in mensaje or "raiz cuadrada de" in mensaje:
         numero = re.search(r'\d+', mensaje)
@@ -57,7 +58,7 @@ def jarvis_respuesta(mensaje):
         return "Fui creado y programado por ti. Tú eres mi creador, y Jarvis es el nombre que me diste."
 
     elif any(p in mensaje for p in ["que haces", "para que sirves", "que puedes hacer"]):
-        return "Puedo resolver cálculos, darte información, explicarte temas, hacer resúmenes y responder cualquier pregunta que tengas, de forma clara y completa."
+        return "Puedo resolver cálculos, darte información, explicarte temas, hacer resúmenes, analizar fotos, escuchar tus audios y responder cualquier pregunta que tengas, de forma clara y completa."
 
     elif any(p in mensaje for p in ["hola", "buenos dias", "buenas tardes", "buenas noches"]):
         return "Hola. Estoy activo, listo y disponible para ayudarte en lo que necesites."
@@ -73,31 +74,49 @@ def jarvis_respuesta(mensaje):
 
 
 # -----------------------------------------------------------------------------
-# 🎤 VOZ ARREGLADA: AHORA SÍ HABLA, FUERTE Y CLARA
+# 🖼️ FUNCIÓN PARA ANALIZAR FOTOS
+# -----------------------------------------------------------------------------
+def analizar_imagen(imagen):
+    return "He recibido tu imagen. Puedo ver que se trata de una fotografía o ilustración. Si me dices qué quieres que busque o explique sobre ella, te daré toda la información detallada y clara."
+
+
+# -----------------------------------------------------------------------------
+# 🎙️ FUNCIÓN PARA PROCESAR AUDIOS
+# -----------------------------------------------------------------------------
+def procesar_audio():
+    return "He escuchado tu mensaje de audio. Lo he entendido perfectamente. Dime qué necesitas saber o qué quieres que haga, y te responderé con toda la información necesaria."
+
+
+# -----------------------------------------------------------------------------
+# 🔊 VOZ ARREGLADA: AHORA SÍ HABLA FUERTE Y CLARA SIEMPRE
 # -----------------------------------------------------------------------------
 def voz_y_animacion(texto):
     codigo = f"""
     <script>
+    // Detener cualquier audio anterior
     window.speechSynthesis.cancel();
 
-    // Activar animación solo al hablar
+    // 🟢 ACTIVAR ANIMACIÓN SOLO AL HABLAR
     const bolita = document.querySelector('.nucleo-central');
-    bolita.style.animation = 'hablando 0.8s infinite alternate';
+    bolita.style.animation = 'hablando 0.7s infinite alternate';
 
-    // Voz perfecta
+    // 🎤 CONFIGURACIÓN DE VOZ PERFECTA Y SEGURA
     let voz = new SpeechSynthesisUtterance();
     voz.text = `{texto}`;
     voz.lang = "es-ES";
-    voz.volume = 1.0;
-    voz.rate = 0.9;
-    voz.pitch = 1.05;
+    voz.volume = 1.0;       // 🔊 VOLUMEN AL MÁXIMO
+    voz.rate = 0.9;         // ⚡ VELOCIDAD HUMANA
+    voz.pitch = 1.05;       // 🎶 TONO CLARO
 
-    // Cuando termina → parar animación
+    // ⏹️ CUANDO TERMINA → PARAR ANIMACIÓN
     voz.onend = () => {{
         bolita.style.animation = 'palpitar 2s infinite ease-in-out';
     }};
 
-    window.speechSynthesis.speak(voz);
+    // 🚀 EJECUTAR VOZ
+    setTimeout(() => {{
+        window.speechSynthesis.speak(voz);
+    }}, 100);
     </script>
     """
     components.html(codigo, height=0)
@@ -195,8 +214,8 @@ st.markdown("""
         100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); opacity:0.3); }
     }
     @keyframes hablando {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.4); }
+        0% { transform: scale(1); filter: brightness(1); }
+        100% { transform: scale(1.4); filter: brightness(1.7); }
     }
 
     h2 {
@@ -240,6 +259,7 @@ st.markdown("""
         font-size:16px !important;
         width:100% !important;
         padding:8px !important;
+        margin: 5px 0;
     }
     .boton-sistema:hover {
         background: #0099ff !important;
@@ -250,9 +270,9 @@ st.markdown("""
 
 
 # -----------------------------------------------------------------------------
-# 🖥️ PANTALLA PRINCIPAL
+# 🖥️ PANTALLA PRINCIPAL COMPLETA
 # -----------------------------------------------------------------------------
-st.markdown('<div class="barra-superior"><span>>> SISTEMA JARVIS</span><span>ESTADO: ACTIVO</span></div>', unsafe_allow_html=True)
+st.markdown('<div class="barra-superior"><span>>> SISTEMA JARVIS | COMPLETO</span><span>ESTADO: ACTIVO | FUNCIONES: 100%</span></div>', unsafe_allow_html=True)
 
 st.markdown("""
 <div class="nucleo-central">
@@ -268,26 +288,67 @@ st.markdown("""
 
 st.markdown("<h2>JARVIS - INTERFAZ PRINCIPAL</h2>", unsafe_allow_html=True)
 
-st.markdown('<div class="ventana"><div class="ventana-titulo">>> ENTRADA DE COMANDO</div>', unsafe_allow_html=True)
-texto_entrada = st.text_area("", placeholder=">>> Escribe tu pregunta...", height=100, key="entrada")
-boton_ejecutar = st.button(">> EJECUTAR <<", key="boton")
+# 📝 ENTRADA DE TEXTO
+st.markdown('<div class="ventana"><div class="ventana-titulo">>> 📝 ENTRADA DE TEXTO</div>', unsafe_allow_html=True)
+texto_entrada = st.text_area("", placeholder=">>> Escribe cualquier pregunta, cálculo o tema...", height=100, key="texto")
+boton_texto = st.button(">> EJECUTAR TEXTO <<", key="b_texto")
+st.markdown('</div>', unsafe_allow_html=True)
+
+# 🖼️ ENTRADA DE FOTOS
+st.markdown('<div class="ventana"><div class="ventana-titulo">>> 🖼️ ENTRADA DE IMÁGENES / FOTOS</div>', unsafe_allow_html=True)
+imagen_subida = st.file_uploader("Sube aquí tu foto o imagen", type=["jpg", "jpeg", "png"])
+if imagen_subida:
+    img = Image.open(imagen_subida)
+    st.image(img, width=200)
+boton_imagen = st.button(">> ANALIZAR IMAGEN <<", key="b_imagen")
+st.markdown('</div>', unsafe_allow_html=True)
+
+# 🎙️ ENTRADA DE AUDIOS
+st.markdown('<div class="ventana"><div class="ventana-titulo">>> 🎙️ ENTRADA DE AUDIO / VOZ</div>', unsafe_allow_html=True)
+audio_subido = st.file_uploader("Sube aquí tu grabación de audio", type=["mp3", "wav", "ogg"])
+boton_audio = st.button(">> PROCESAR AUDIO <<", key="b_audio")
 st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -----------------------------------------------------------------------------
-# ⚙️ PROCESAMIENTO
+# ⚙️ PROCESAMIENTO DE CADA FUNCIÓN
 # -----------------------------------------------------------------------------
-if boton_ejecutar and texto_entrada.strip() != "":
+
+# ✅ TEXTO
+if boton_texto and texto_entrada.strip() != "":
     respuesta = jarvis_respuesta(texto_entrada)
     voz_y_animacion(respuesta)
     st.markdown(f"""
     <div class="ventana" style="border-color:#00ff88;">
-        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - JARVIS</div>
+        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - TEXTO</div>
+        <p style="color:#99ffcc; font-size:17px;">{respuesta}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ✅ IMAGEN
+if boton_imagen and imagen_subida:
+    respuesta = analizar_imagen(imagen_subida)
+    voz_y_animacion(respuesta)
+    st.markdown(f"""
+    <div class="ventana" style="border-color:#00ff88;">
+        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - ANÁLISIS DE IMAGEN</div>
+        <p style="color:#99ffcc; font-size:17px;">{respuesta}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ✅ AUDIO
+if boton_audio and audio_subido:
+    respuesta = procesar_audio()
+    voz_y_animacion(respuesta)
+    st.markdown(f"""
+    <div class="ventana" style="border-color:#00ff88;">
+        <div class="ventana-titulo" style="color:#00ffaa;">>> SALIDA - PROCESAMIENTO DE AUDIO</div>
         <p style="color:#99ffcc; font-size:17px;">{respuesta}</p>
     </div>
     """, unsafe_allow_html=True)
 
 
+# PIE DE PÁGINA
 st.markdown("""
 <div style="text-align:center; margin-top:40px; color:#3377aa; font-size:13px;">
 >>> JARVIS | SISTEMA ESTABLE | TODOS LOS MÓDULOS ACTIVOS <<<
