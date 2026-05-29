@@ -108,7 +108,7 @@ def voz_jarvis(texto):
 
 
 # --------------------------
-# 🎨 DISEÑO: BLANCO, LETRAS NEGRAS, BARRA ABAJO
+# 🎨 DISEÑO: SIN ERRORES, BLANCO Y NEGRO, BARRA ABAJO
 # --------------------------
 st.set_page_config(page_title="JARVIS - SISTEMA", layout="wide")
 
@@ -116,7 +116,7 @@ st.set_page_config(page_title="JARVIS - SISTEMA", layout="wide")
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
-# Ocultar cosas que no te gustan
+# Estilos limpios, sin conflictos
 st.markdown("""
 <style>
     /* 🌑 FONDO GENERAL */
@@ -124,16 +124,15 @@ st.markdown("""
         background: url('https://images3.alphacoders.com/861/861041.jpg') no-repeat center center fixed;
         background-size: cover;
         font-family: Arial, sans-serif;
+        margin:0;
+        padding:0;
     }
 
-    /* ❌ QUITAR ELEMENTOS FEOS */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    [data-testid="stFileUploader"] {display: none !important;}
-    div.stButton > button:first-child {border: none !important;}
-    .css-18e3th9 {padding-top: 0 !important; padding-bottom: 0 !important;}
-    .css-1d391kg {padding-top: 0 !important;}
+    /* ❌ OCULTAR ELEMENTOS DE STREAMLIT */
+    #MainMenu, footer, header {visibility: hidden !important;}
+    .stDeployButton {display:none !important;}
+    div[data-testid="stFileUploader"] {display:none !important;}
+    .css-18e3th9, .css-1d391kg {padding:0 !important;}
 
     /* 🔵 CIRCULO CENTRAL */
     .circulo-central {
@@ -188,15 +187,15 @@ st.markdown("""
         margin: 0 0 25px 0;
     }
 
-    /* 💬 CAJA DE CHAT: FONDO BLANCO, LETRAS NEGRAS ✅ */
+    /* 💬 CAJA DE CHAT: BLANCA, LETRAS NEGRAS ✅ */
     .caja-chat {
         width: 92%;
         height: 70vh;
         margin: 0 auto 90px auto;
-        background-color: #FFFFFF !important; /* BLANCO TOTAL */
+        background-color: #FFFFFF !important;
         border-radius: 16px;
         border: 1px solid #ddd;
-        color: #000000 !important; /* LETRAS NEGRAS */
+        color: #000000 !important;
         font-size: 18px;
         padding: 20px;
         box-shadow: 0 0 30px rgba(0,0,0,0.1);
@@ -223,7 +222,7 @@ st.markdown("""
         font-size: 17px;
     }
 
-    /* 📥 BARRA DE ESCRITURA: AHORA ABAJO ✅ */
+    /* 📥 BARRA SOLO ABAJO ✅ */
     .barra-entrada {
         position: fixed;
         bottom: 20px;
@@ -265,9 +264,6 @@ st.markdown("""
         box-shadow: 0 0 8px rgba(37, 194, 110, 0.5);
     }
     .boton-enviar:hover {background-color: #1da85a;}
-
-    /* ❌ QUITAR LA BARRA DE ARRIBA */
-    .barra-arriba {display: none !important;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -290,7 +286,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ESCRITURA: SOLO ABAJO, FUNCIONA ✅
+# 📥 BARRA DE ESCRITURA SOLO ABAJO, FUNCIONA ✅
 col1, col2, col3, col4 = st.columns([0.5, 8.2, 0.5, 0.5])
 texto_ingresado = ""
 enviar = False
@@ -305,7 +301,7 @@ with col4:
     enviar = st.button("✔️", key="enviar_real")
 
 
-# ⚙️ PROCESAR MENSAJE
+# ⚙️ PROCESAR MENSAJE SIN ERRORES
 if enviar and texto_ingresado.strip() != "":
     st.session_state.chat.append(("tu", texto_ingresado))
     respuesta = jarvis_respuesta(texto_ingresado)
@@ -313,7 +309,7 @@ if enviar and texto_ingresado.strip() != "":
     voz_jarvis(respuesta)
 
 
-# 💬 CHAT: BLANCO Y NEGRO ✅
+# 💬 MOSTRAR CHAT
 caja_chat = '<div class="caja-chat">'
 for tipo, texto in st.session_state.chat:
     if tipo == "tu":
@@ -325,7 +321,7 @@ caja_chat += '</div>'
 st.markdown(caja_chat, unsafe_allow_html=True)
 
 
-# 🎨 BARRA VISIBLE SOLO ABAJO
+# 🎨 BARRA VISIBLE
 st.markdown("""
 <div class="barra-entrada">
     <span class='icono-barra'>📷</span>
