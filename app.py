@@ -4,9 +4,9 @@ import math
 import re
 from PIL import Image
 
-# -----------------------------------------------------------------------------
-# 🧠 INTELIGENCIA JARVIS: RECIBE, LEE, CONTESTA
-# -----------------------------------------------------------------------------
+# --------------------------
+# 🧠 INTELIGENCIA DE JARVIS
+# --------------------------
 def jarvis_respuesta(mensaje):
     mensaje = mensaje.lower().strip()
 
@@ -71,16 +71,16 @@ def jarvis_respuesta(mensaje):
         return f"He entendido: '{mensaje}'. Tengo toda la información clara para explicarte. Es un tema que conozco muy bien y te puedo dar todos los detalles completos y sencillos."
 
 
-# -----------------------------------------------------------------------------
-# 🖼️ ANALIZAR FOTOS: RECONOCE Y EXPLICA
-# -----------------------------------------------------------------------------
+# --------------------------
+# 🖼️ ANALIZAR IMÁGENES
+# --------------------------
 def analizar_imagen(imagen):
     return "He analizado tu imagen. Reconozco perfectamente lo que aparece, te explico quién es, qué es y todo lo que significa con detalles claros y completos."
 
 
-# -----------------------------------------------------------------------------
-# 🔊 VOZ CLARA Y FUERTE
-# -----------------------------------------------------------------------------
+# --------------------------
+# 🔊 VOZ DE JARVIS
+# --------------------------
 def voz_jarvis(texto):
     codigo = f"""
     <script>
@@ -107,16 +107,16 @@ def voz_jarvis(texto):
     components.html(codigo, height=0)
 
 
-# -----------------------------------------------------------------------------
-# 🎨 DISEÑO: LIMPIO, SIN AZUL FEO, BARRA CON PALOMITA ✔️
-# -----------------------------------------------------------------------------
+# --------------------------
+# 🎨 DISEÑO Y ESTRUCTURA
+# --------------------------
 st.set_page_config(page_title="JARVIS - SISTEMA", layout="wide")
 
-# Historial de conversación
+# Historial de mensajes
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
-# Ocultar elementos feos de Streamlit
+# Ocultar cosas que no te gustan
 st.markdown("""
 <style>
     /* 🌑 FONDO DE ITACHI */
@@ -126,11 +126,14 @@ st.markdown("""
         font-family: Arial, sans-serif;
     }
 
-    /* ❌ QUITAR COSAS DE ARRIBA */
-    .block-container {padding-top: 1rem !important;}
+    /* ❌ QUITAR ELEMENTOS FEOS DE STREAMLIT */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
     [data-testid="stFileUploader"] {display: none !important;}
-    [data-testid="stButton"] {display: none !important;}
-    div.stTextInput {margin-bottom: 0 !important;}
+    div.stButton > button:first-child {border: none !important;}
+    .css-18e3th9 {padding-top: 0 !important; padding-bottom: 0 !important;}
+    .css-1d391kg {padding-top: 0 !important;}
 
     /* 🔵 CIRCULO CENTRAL */
     .circulo-central {
@@ -185,10 +188,10 @@ st.markdown("""
         margin: 0 0 25px 0;
     }
 
-    /* 💬 CAJA DE MENSAJES: SIN AZUL FEO, LIMPIO */
+    /* 💬 CAJA DE MENSAJES */
     .caja-chat {
         width: 92%;
-        height: 65vh;
+        height: 70vh;
         margin: 0 auto 90px auto;
         background-color: rgba(0, 0, 0, 0.65);
         border-radius: 16px;
@@ -220,7 +223,7 @@ st.markdown("""
         font-size: 17px;
     }
 
-    /* 📥 BARRA DE ABAJO: CON PALOMITA ✔️ PARA ENVIAR */
+    /* 📥 BARRA DE ABAJO: FUNCIONA DE VERDAD */
     .barra-entrada {
         position: fixed;
         bottom: 20px;
@@ -231,47 +234,49 @@ st.markdown("""
         border-radius: 30px;
         display: flex;
         align-items: center;
-        padding: 10px 20px;
+        padding: 8px 20px;
         box-shadow: 0 2px 20px rgba(0,0,0,0.25);
         gap: 12px;
         z-index: 9999;
     }
-    .icono-barra {font-size: 20px; color: #555555;}
-    .texto-entrada {
+    .icono-barra {font-size: 20px; color: #555555; cursor: pointer;}
+    .input-real {
         flex: 1;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        color: #333333;
-        background: transparent;
+        border: none !important;
+        outline: none !important;
+        font-size: 16px !important;
+        color: #333 !important;
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 5px !important;
     }
     .boton-enviar {
-        background-color: #0099ff;
+        background-color: #25c26e;
         color: white;
         border: none;
         border-radius: 50%;
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
         font-size: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 0 8px rgba(0,153,255,0.5);
+        box-shadow: 0 0 8px rgba(37, 194, 110, 0.5);
     }
-    .boton-enviar:hover {background-color: #0077dd;}
+    .boton-enviar:hover {background-color: #1da85a;}
 </style>
 """, unsafe_allow_html=True)
 
 
-# -----------------------------------------------------------------------------
+# --------------------------
 # 🖥️ PANTALLA PRINCIPAL
-# -----------------------------------------------------------------------------
+# --------------------------
 
 # 🔤 TÍTULO
 st.markdown("<h1>JARVIS - ASISTENTE INTELIGENTE</h1>", unsafe_allow_html=True)
 
-# 🔵 CIRCULO ANIMADO
+# 🔵 CIRCULO
 st.markdown("""
 <div class="circulo-central">
     <div class="centro"></div>
@@ -282,50 +287,50 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 📥 BARRA DE ESCRITURA CON PALOMITA ✔️ (FUNCIONA DE VERDAD)
-col1, col2, col3, col4 = st.columns([0.6, 8, 0.6, 0.6])
-enviar_mensaje = False
-texto_recibido = ""
+# 📥 BARRA DE ESCRITURA QUE SÍ ENVÍA
+col1, col2, col3, col4 = st.columns([0.5, 8.2, 0.5, 0.5])
+texto_ingresado = ""
+enviar = False
 
-with col2:
-    texto_recibido = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_texto")
-with col3:
-    enviar_mensaje = st.button("✔️", key="btn_enviar_def")
 with col1:
     st.markdown("<span class='icono-barra'>📷</span>", unsafe_allow_html=True)
-with col4:
+with col2:
+    texto_ingresado = st.text_input("", placeholder="Enviar mensaje a Jarvis...", label_visibility="collapsed", key="entrada_texto_real")
+with col3:
     st.markdown("<span class='icono-barra'>🎙️</span>", unsafe_allow_html=True)
+with col4:
+    enviar = st.button("✔️", key="enviar_real")
 
 
-# ⚙️ PROCESAR LO QUE ESCRIBES Y ENVÍAS
-if enviar_mensaje and texto_recibido.strip() != "":
-    # Guardar mensaje tuyo
-    st.session_state.chat.append(("tu", texto_recibido))
-    # Obtener respuesta de Jarvis
-    respuesta = jarvis_respuesta(texto_recibido)
+# ⚙️ PROCESAR MENSAJE CUANDO DAS CLIC
+if enviar and texto_ingresado.strip() != "":
+    # Guardar tu mensaje
+    st.session_state.chat.append(("tu", texto_ingresado))
+    # Obtener respuesta
+    respuesta = jarvis_respuesta(texto_ingresado)
     st.session_state.chat.append(("jarvis", respuesta))
-    # Activar voz
+    # Voz
     voz_jarvis(respuesta)
 
 
-# 💬 MOSTRAR TODOS LOS MENSAJES (LIMPIO, SIN AZUL FEO)
-caja_html = '<div class="caja-chat">'
+# 💬 MOSTRAR CHAT
+caja_chat = '<div class="caja-chat">'
 for tipo, texto in st.session_state.chat:
     if tipo == "tu":
-        caja_html += f'<div class="mensaje-tu"><b>Tú:</b> {texto}</div>'
+        caja_chat += f'<div class="mensaje-tu"><b>Tú:</b> {texto}</div>'
     else:
-        caja_html += f'<div class="mensaje-jarvis"><b>Jarvis:</b> {texto}</div>'
-caja_html += '</div>'
+        caja_chat += f'<div class="mensaje-jarvis"><b>Jarvis:</b> {texto}</div>'
+caja_chat += '</div>'
 
-st.markdown(caja_html, unsafe_allow_html=True)
+st.markdown(caja_chat, unsafe_allow_html=True)
 
 
-# 🎨 BARRA VISIBLE IGUAL QUE QUIERES
+# 🎨 BARRA VISIBLE
 st.markdown("""
 <div class="barra-entrada">
-    <span class="icono-barra">📷</span>
-    <span class="icono-barra">🎙️</span>
-    <input type="text" class="texto-entrada" placeholder="Enviar mensaje a Jarvis...">
-    <div class="boton-enviar">✔️</div>
+    <span class='icono-barra'>📷</span>
+    <span class='icono-barra'>🎙️</span>
+    <input type='text' class='input-real' placeholder='Enviar mensaje a Jarvis...'>
+    <div class='boton-enviar'>✔️</div>
 </div>
 """, unsafe_allow_html=True)
